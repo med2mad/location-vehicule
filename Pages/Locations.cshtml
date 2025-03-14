@@ -1,0 +1,66 @@
+﻿@page
+@model LocationsModel
+@{
+    ViewData["Title"] = "Réservations";
+}
+
+<div class="hero inner-page" style="background-image: url('images/hero_1_a.jpg');">
+    <div class="container">
+        <div class="row align-items-end ">
+            <div class="col-lg-5">
+
+                <div class="intro">
+                    <h1 style="margin-top:100px;"><strong>Réservations.</strong></h1>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4">
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Nom client</th>
+                <th>Téléphone</th>
+                <th>Place Début</th>
+                <th>Place Fin</th>
+                <th>Date Début</th>
+                <th>Date Fin</th>
+                <th>Tarif</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var location in Model.Locations)
+            {
+                <tr>
+                    <td>@location.NomClient</td>
+                    <td>@location.Tel</td>
+                    <td>@location.PlaceDebut</td>
+                    <td>@location.PlaceFin</td>
+                    <td>@location.DateDebut</td>
+                    <td>@location.DateFin</td>
+                    <td>@location.Tarif</td>
+                    <td>
+                        @switch (location.Status)
+                        {
+                            case "Complet":
+                                <span class="badge bg-success">Complet</span>
+                                break;
+                            case "Annulé":
+                                <span class="badge bg-danger">Annulé</span>
+                                break;
+                            default:
+                                <span class="badge bg-warning text-dark">Reservé</span>
+                                break;
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

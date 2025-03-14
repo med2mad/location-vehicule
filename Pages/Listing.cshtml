@@ -1,0 +1,77 @@
+﻿@page
+@model ListingModel
+@{
+    ViewData["Title"] = "Véhicules";
+}
+
+<div class="hero inner-page" style="background-image: url('images/hero_1_a.jpg');">
+
+    <div class="container">
+        <div class="row align-items-end ">
+            <div class="col-lg-5">
+
+                <div class="intro">
+                    <h1><strong>Véhicules</strong></h1>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="site-section bg-light">
+    <div class="container">
+
+        <div class="row">
+            @foreach (var vehicule in Model.Vehicules)
+            {
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="listing d-block  align-items-stretch">
+                        <div class="listing-img h-100 mr-4">
+                            <img src="~/images/@vehicule.Photo" alt="@vehicule.Photo" class="img-fluid">
+                        </div>
+
+                        <div class="listing-contents h-100">
+                            <h3>@vehicule.Model.Nom</h3>
+                            <div class="rent-price">
+                                <strong>@vehicule.Prix</strong><span class="mx-1">/</span>jour
+                            </div>
+                            <div class="d-block d-md-flex mb-3 border-bottom pb-3">
+                                <div class="listing-feature pr-4">
+                                    <span class="caption">Bagage:</span>
+                                    <span class="number">@vehicule.Model.Bagage Kg</span>
+                                </div>
+                                <div class="listing-feature pr-4">
+                                    <span class="caption">Couleur:</span>
+                                    <span class="number">@vehicule.Couleur</span>
+                                </div>
+                                <div class="listing-feature pr-4">
+                                    <span class="caption">Passagers:</span>
+                                    <span class="number">@vehicule.Model.Passagers</span>
+                                </div>
+                            </div>
+                            <div>
+                                <p>@vehicule.Model.Description.</p>
+                                <p><a asp-page="Rent" asp-route-VehiculeId="@vehicule.Id" class="btn btn-primary btn-sm">Réservez maintenant</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+       
+
+        <div class="row">
+            <div class="col-5">
+                <div class="custom-pagination">
+                    <a href="#">1</a>
+                    <span>2</span>
+                    <a href="#">3</a>
+                    <a href="#">4</a>
+                    <a href="#">5</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
