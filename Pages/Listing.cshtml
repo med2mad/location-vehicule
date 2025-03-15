@@ -28,34 +28,36 @@
             {
                 <div class="col-md-6 col-lg-4 mb-4">
                     <div class="listing d-block  align-items-stretch">
-                        <div class="listing-img h-100 mr-4">
-                            <img src="~/images/@vehicule.Photo" alt="@vehicule.Photo" class="img-fluid">
-                        </div>
+                        <a asp-page="Rent" asp-route-VehiculeId="@vehicule.Id">
+                            <div class="listing-img h-100 mr-4">
+                                <img src="~/images/@vehicule.Photo" alt="@vehicule.Photo" class="img-fluid">
+                            </div>
 
-                        <div class="listing-contents h-100">
-                            <h3>@vehicule.Model.Nom</h3>
-                            <div class="rent-price">
-                                <strong>@vehicule.Prix</strong><span class="mx-1">/</span>jour
-                            </div>
-                            <div class="d-block d-md-flex mb-3 border-bottom pb-3">
-                                <div class="listing-feature pr-4">
-                                    <span class="caption">Bagage:</span>
-                                    <span class="number">@vehicule.Model.Bagage Kg</span>
+                            <div class="listing-contents h-100">
+                                <h3>@vehicule.Model.Nom</h3>
+                                <div class="rent-price">
+                                    <strong>@vehicule.Prix MAD</strong>@* <span class="mx-1">/</span>jour *@
                                 </div>
-                                <div class="listing-feature pr-4">
-                                    <span class="caption">Couleur:</span>
-                                    <span class="number">@vehicule.Couleur</span>
+                                <div class="d-block d-md-flex mb-3 border-bottom pb-3">
+                                    <div class="listing-feature pr-4">
+                                        <span class="caption">Bagage:</span>
+                                        <span class="number">@vehicule.Model.Bagage Kg</span>
+                                    </div>
+                                    <div class="listing-feature pr-4">
+                                        <span class="caption">Couleur:</span>
+                                        <span class="number">@vehicule.Couleur</span>
+                                    </div>
+                                    <div class="listing-feature pr-4">
+                                        <span class="caption">Passagers:</span>
+                                        <span class="number">@vehicule.Model.Passagers</span>
+                                    </div>
                                 </div>
-                                <div class="listing-feature pr-4">
-                                    <span class="caption">Passagers:</span>
-                                    <span class="number">@vehicule.Model.Passagers</span>
-                                </div>
+@*                              <div>
+                                    <p>@vehicule.Model.Description.</p>
+                                    <p><a asp-page="Rent" asp-route-VehiculeId="@vehicule.Id" class="btn btn-primary btn-sm">Réservez maintenant</a></p>
+                                </div> *@
                             </div>
-                            <div>
-                                <p>@vehicule.Model.Description.</p>
-                                <p><a asp-page="Rent" asp-route-VehiculeId="@vehicule.Id" class="btn btn-primary btn-sm">Réservez maintenant</a></p>
-                            </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             }

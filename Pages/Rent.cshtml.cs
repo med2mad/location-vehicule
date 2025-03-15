@@ -16,11 +16,4 @@ public class RentModel(ApplicationDbContext context) : PageModel
         Vehicule = context.Vehicules.Include(v => v.Model).FirstOrDefault(v => v.Id == VehiculeId);
     }
 
-    public IActionResult OnPost()
-    {
-        context.Locations.Add(Location);
-        context.SaveChanges();
-
-        return RedirectToPage("Reserved");
-    }
 }

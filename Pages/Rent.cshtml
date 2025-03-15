@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Reservez";
 }
-@section Styles {
+@section Head {
     <style>
         .form-control {
             max-width: 337px;
@@ -11,12 +11,8 @@
     </style>
 }
 
-
-
 @if (Model.Vehicule != null)
 {
-    <h1>@Model.Vehicule.Id</h1>
-
 <div class="hero inner-page" style="background-image: url('images/hero_1_a.jpg');">
     <div class="container">
         <div class="row align-items-end ">
@@ -43,12 +39,12 @@
                         <div class="listing-contents h-100">
                             <h3>@Model.Vehicule.Model.Nom</h3>
                             <div class="rent-price">
-                                <strong>@Model.Vehicule.Prix</strong><span class="mx-1">/</span>jour
+                                <strong>@Model.Vehicule.Prix MAD</strong>@* <span class="mx-1">/</span>jour *@
                             </div>
                             <div class="d-block d-md-flex mb-3 border-bottom pb-3">
                                 <div class="listing-feature pr-4">
                                     <span class="caption">Bagage:</span>
-                                    <span class="number">@Model.Vehicule.Model.Bagage Kg</span>
+                                    <span class="number">@Model.Vehicule.Model.Bagage kg</span>
                                 </div>
                                 <div class="listing-feature pr-4">
                                     <span class="caption">Couleur:</span>
@@ -68,8 +64,8 @@
             </div>
 
             <div class="col-lg-6">
-                <form class="trip-form" method="post">
-                    <input type="hidden" asp-for="Location.VehiculeId" value="@Model.Vehicule.Id" />
+                <form class="trip-form" method="get" asp-page="Payment">
+                    <input type="hidden" name="VehiculeId" value="@Model.Vehicule.Id" />
 
                     <div class="mb-1 d-flex align-items-center justify-content-end">
                         <label asp-for="Location.NomClient" class="form-label mr-1">Nom Complet : </label>
@@ -106,14 +102,14 @@
                             <option value="Agadir">Agadir</option>
                         </select>
                     </div>
-                    <div class="mb-1 d-flex align-items-center justify-content-end">
+@*                  <div class="mb-1 d-flex align-items-center justify-content-end">
                         <label asp-for="Location.Tarif" class="form-label mr-1">Tarif : </label>
                         <select asp-for="Location.Tarif" class="custom-select form-control">
-                            <option value="Par Jour" selected>Par Jour</option>
-                            <option value="Par Heure">Par Heure</option>
-                            <option value="Kilometrage">Kilométrage</option>
+                            <option value="Jour" selected>Par Jour</option>
+                            <option value="Heure">Par Heure</option>
+                            <option value="Kilomètre">Kilométrage</option>
                         </select>
-                    </div>
+                    </div> *@
 
                     <div class="mb-3 mb-md-0">
                         <input type="submit" value="Réservez" class="btn btn-primary btn-block py-3">

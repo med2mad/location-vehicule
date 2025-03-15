@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>CarRental &mdash; Free Website Template by Colorlib</title>
+    <title>CarRental</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -20,7 +20,7 @@
     <!-- MAIN CSS -->
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true">
 
-    @RenderSection("Styles", required: false)
+    @RenderSection("Head", required: false)
 </head>
 <body>
 
@@ -47,9 +47,8 @@
                     </div>
 
                     <div class="col-9  text-right">
-
                         <span class="d-inline-block d-lg-none"><a href="#" class=" site-menu-toggle js-menu-toggle py-5 "><span class="icon-menu h3 text-black"></span></a></span>
-
+                        
                         <nav class="site-navigation text-right ml-auto d-none d-lg-block" role="navigation">
                             <ul class="site-menu main-menu js-clone-nav ml-auto ">
                                 <li><a href="index" class="nav-link">Accueil</a></li>
@@ -57,11 +56,10 @@
                                 <li><a href="blog" class="nav-link">Blog</a></li>
                                 <li class="active"><a href="about" class="nav-link">À propos de nous</a></li>
                                 <li><a href="contact" class="nav-link">Contact</a></li>
-                                <li><a href="Locations" class="nav-link">Login</a></li>
+                                <li><a href="Payment" class="nav-link">Login</a></li>
                             </ul>
                         </nav>
                     </div>
-
 
                 </div>
             </div>
@@ -80,7 +78,7 @@
                     <p class="mb-0 opa-7">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati, laboriosam.</p>
                 </div>
                 <div class="col-lg-5 text-md-right">
-                    <a href="#" class="btn btn-primary btn-white">Louez une voiture maintenant</a>
+                    <a href="#" class="btn btn-primary btn-white h-100">Louez une voiture maintenant</a>
                 </div>
             </div>
         </div>

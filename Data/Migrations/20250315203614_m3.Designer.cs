@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RPtest.Data;
 
@@ -11,9 +12,11 @@ using RPtest.Data;
 namespace RPtest.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250315203614_m3")]
+    partial class m3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -314,7 +317,9 @@ namespace RPtest.Data.Migrations
                         .IsUnique()
                         .HasFilter("[ConducteurId] IS NOT NULL");
 
-                    b.HasIndex("VehiculeId");
+                    b.HasIndex("VehiculeId")
+                        .IsUnique()
+                        .HasFilter("[VehiculeId] IS NOT NULL");
 
                     b.ToTable("Locations");
                 });
@@ -448,8 +453,8 @@ namespace RPtest.Data.Migrations
                         .HasForeignKey("RPtest.Models.Location", "ConducteurId");
 
                     b.HasOne("RPtest.Models.Vehicule", "Vehicule")
-                        .WithMany("Locations")
-                        .HasForeignKey("VehiculeId");
+                        .WithOne("Location")
+                        .HasForeignKey("RPtest.Models.Location", "VehiculeId");
 
                     b.Navigation("Conducteur");
 
@@ -477,7 +482,7 @@ namespace RPtest.Data.Migrations
 
             modelBuilder.Entity("RPtest.Models.Vehicule", b =>
                 {
-                    b.Navigation("Locations");
+                    b.Navigation("Location");
                 });
 #pragma warning restore 612, 618
         }
