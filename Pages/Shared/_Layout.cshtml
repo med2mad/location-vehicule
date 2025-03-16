@@ -20,6 +20,8 @@
     <!-- MAIN CSS -->
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true">
 
+     <!-- Your custom JS -->
+
     @RenderSection("Head", required: false)
 </head>
 <body>
@@ -167,7 +169,6 @@
     <script src="~/js/aos.js" asp-append-version="true"></script>
 
     <script src="~/js/main.js" asp-append-version="true"></script>
-
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
