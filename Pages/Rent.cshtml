@@ -55,9 +55,9 @@
                                     <span class="number">@Model.Vehicule.Model.Passagers</span>
                                 </div>
                             </div>
-                            <div>
+@*                             <div>
                                 <p>@Model.Vehicule.Model.Description</p>
-                            </div>
+                            </div> *@
                         </div>
                     </div>
                 </div>
@@ -69,19 +69,19 @@
 
                     <div class="mb-1 d-flex align-items-center justify-content-end">
                         <label asp-for="Location.NomClient" class="form-label mr-1">Nom Complet : </label>
-                        <input asp-for="Location.NomClient" class="form-control">
+                        <input asp-for="Location.NomClient" class="form-control" required>
                     </div>
                     <div class="mb-1 d-flex align-items-center justify-content-end">
                         <label asp-for="Location.Tel" class="form-label mr-1">N° Télephone : </label>
-                        <input asp-for="Location.Tel" class="form-control">
+                        <input asp-for="Location.Tel" class="form-control" required>
                     </div>
                     <div class="mb-1 d-flex align-items-center justify-content-end form-control-wrap">
                         <label asp-for="Location.DateDebut" class="form-label mr-1">Date Début : </label>
-                        <input asp-for="Location.DateDebut" type="date" class="form-control">
+                        <input asp-for="Location.DateDebut" type="date" class="form-control" required>
                     </div>
                     <div class="mb-1 d-flex align-items-center justify-content-end form-control-wrap">
                         <label asp-for="Location.DateFin" class="form-label mr-1">Date Fin : </label>
-                        <input asp-for="Location.DateFin" type="date" class="form-control">
+                        <input asp-for="Location.DateFin" type="date" class="form-control" required>
                     </div>
 
                     <div class="mb-1 d-flex align-items-center justify-content-end">

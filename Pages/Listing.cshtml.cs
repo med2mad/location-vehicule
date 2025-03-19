@@ -14,7 +14,7 @@ public class ListingModel(ApplicationDbContext context) : PageModel
         var query = context.Vehicules.Include(v => v.Model).AsQueryable();
         if (!string.IsNullOrEmpty(model))
         {
-            query = query.Where(v => v.Model.Nom == model);
+            query = query.Where(v => v.Model.Description == model);
         }
         if (!string.IsNullOrEmpty(type))
         {

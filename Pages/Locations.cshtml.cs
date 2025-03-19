@@ -12,7 +12,7 @@ public class LocationsModel(ApplicationDbContext context) : PageModel
 
     public void OnGet()
     {
-        Locations = context.Locations.Include(l => l.Vehicule).ToList();
+        Locations = context.Locations.Include(l => l.Vehicule).OrderByDescending(l => l.Id).ToList();
     }
 }
 

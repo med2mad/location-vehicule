@@ -14,7 +14,6 @@ public class EmailSender : IEmailSender
             Credentials = new NetworkCredential("mohamed.leghdaich@gmail.com", "agrf ducd hnvr rcpv") //password got by "Manage your Google Account" -> Security -> Search "App passwords"
         };
 
-        return client.SendMailAsync(new MailMessage(from: "mohamed.leghdaich@gmail.com", to: Email,
-                                                        subject: Subject, body: Message));
+        return client.SendMailAsync(new MailMessage(from: "mohamed.leghdaich@gmail.com", to: Email, subject: Subject, body: Message));
     }
 }

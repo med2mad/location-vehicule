@@ -15,5 +15,4 @@ public class RentModel(ApplicationDbContext context) : PageModel
     {
         Vehicule = context.Vehicules.Include(v => v.Model).FirstOrDefault(v => v.Id == VehiculeId);
     }
-
 }

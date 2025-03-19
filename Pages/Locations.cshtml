@@ -1,7 +1,10 @@
 ﻿@page
+@using System
 @model LocationsModel
 @{
     ViewData["Title"] = "Réservations";
+    Random x = new Random();
+    int r = 0;
 }
 
 <div class="hero inner-page" style="background-image: url('images/hero_1_a.jpg');">
@@ -23,27 +26,28 @@
     <table class="table table-bordered table-striped">
         <thead class="table-dark">
             <tr>
+                <th>N Réservation</th>
                 <th>Nom client</th>
                 <th>Téléphone</th>
-                <th>Place Début</th>
-                <th>Place Fin</th>
+                <th>Place de Début</th>
+                <th>Place de Fin</th>
                 <th>Date Début</th>
                 <th>Date Fin</th>
-                <th>Tarif</th>
                 <th>Status</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var location in Model.Locations)
             {
+                r = x.Next(10000, 100000);
                 <tr>
+                    <td>#@r</td>
                     <td>@location.NomClient</td>
                     <td>@location.Tel</td>
                     <td>@location.PlaceDebut</td>
                     <td>@location.PlaceFin</td>
-                    <td>@location.DateDebut</td>
-                    <td>@location.DateFin</td>
-                    <td>@location.Tarif</td>
+                    <td>@location.DateDebut.ToString("dd/MM/yyyy")</td>
+                    <td>@location.DateFin.ToString("dd/MM/yyyy")</td>
                     <td>
                         @switch (location.Status)
                         {

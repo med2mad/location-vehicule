@@ -4,43 +4,88 @@
     ViewData["Title"] = "Accueil";
 }
 
-<div class="hero" style="background-image: url('images/hero_1_a.jpg');">
+@section Head{
+    <style>
+        body{
+            background-color: #f6f5f5 !important;
+        }
+        .listing {
+            transition: transform 0.3s ease-in-out;
+            margin-bottom:0;
+            padding-bottom:0;
+        }
+        .listing:hover{
+            transform: translateY(-10px);
+        }
+        .listing-img .img-fluid {
+            border-top:solid white 5px;
+        }
+        .vehicule {
+            opacity: 0; /* Initially hidden */
+            transform: translateX(100px); /* Move right initially */
+        }
+        .containerHero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        .hero {
+            border-radius: 0px 0px 100px 100px;
+            opacity: 0; /* Initially hidden */
+            transform: translateY(-100px); /* Move left initially */
+        }
+
+
+    </style>
+}
+
+<div class="hero" style="background-image: url('images/header3.png');">
 
     <div class="container">
         <div class="row align-items-center justify-content-center">
             <div class="col-lg-10">
 
-                <div class="row mb-5">
+                <div class="row mb-1" style="margin-top:100px;">
                     <div class="col-lg-7 intro">
-                    <h1><strong>Louer une voiture</strong> est à portée de main.</h1>
+@*                         <h1 class="mb-3"><strong>Louer une voiture</strong> est à portée de main.</h1> *@
+                        <h1 class="mb-3" style="color:white;">Votre prochaine <strong>aventure</strong>.</h1>
                     </div>
                 </div>
 
-                <form method="get" asp-page="/Listing" class="trip-form">
+                <form method="get" asp-page="/Listing" class="trip-form mb-2">
 
-                    <div class="row align-items-center">
-
-                        <div class="mb-3 mb-md-0 col-md-3">
-                            <label for="model">Model : </label>
-                            <select name="model"id="model" class="custom-select form-control">
-                                <option value="" selected></option>
-                                <option value="Ferrari">Ferrari</option>
-                                <option value="Toyota">Toyota</option>
-                                <option value="Ford">Ford</option>
-                                <option value="Lamborghini">Lamborghini</option>
-                            </select>
-                        </div>
+                    <div class="row align-items-end justify-content-center">
                         <div class="mb-3 mb-md-0 col-md-3">
                             <label for="type">Type : </label>
                             <select name="type" id="type" class="custom-select form-control">
                                 <option value="" selected></option>
                                 <option value="Voiture">Voiture</option>
-                                <option value="Sport Car">Sport Car</option>
+                                <option value="Sports Car">Sports Car</option>
                                 <option value="Camion">Camion</option>
                                 <option value="Camionette">Camionette</option>
                                 <option value="Minibus">Mini Bus</option>
+                                <option value="Moto">Moto</option>
                             </select>
                         </div>
+
+                        <div class="mb-3 mb-md-0 col-md-3">
+                            <label for="model">Modèles  : </label>
+                            <select name="model" id="model" class="custom-select form-control">
+                                <option value="" selected></option>
+                                <option value="Dacia">Dacia</option>
+                                <option value="Peugeot">Peugeot</option>
+                                <option value="Ford">Ford</option>
+                                <option value="BMW">BMW</option>
+                                <option value="Lamborghini">Lamborghini</option>
+                                <option value="Hyundai">Hyundai</option>
+                                <option value="Mitsubishi">Mitsubishi</option>
+                                <option value="Suzuki">Suzuki</option>
+                                <option value="Honda">Honda</option>
+                            </select>
+                        </div>
+
                         <div class="mb-3 mb-md-0 col-md-3">
                             <label for="couleur">Couleur : </label>
                             <select name="couleur" id="couleur" class="custom-select form-control">
@@ -54,7 +99,7 @@
                             </select>
                         </div>
                         <div class="mb-3 mb-md-0 col-md-3">
-                            <input type="submit" value="Chercher" class="btn btn-primary w-100" style="padding:30px 25px">
+                            <input type="submit" value="Chercher" class="btn btn-primary w-100" style="padding:16px 25px;">
                         </div>
                     </div>
 
@@ -65,16 +110,59 @@
     </div>
 </div>
 
+<div class="site-section bg-light" style="padding-bottom:0; padding-top:10px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7">
+                <h2 class="section-heading mb-4"><strong>Meilleurs Choix du Moment</strong></h2>
+            </div>
+        </div>
 
+        <div class="row">
+            @foreach (var vehicule in Model.Vehicules)
+            {
+                <div class="col-md-3 mb-4 listing vehicule">
+                    <div class="listing d-block  align-items-stretch">
+                        <a asp-page="Rent" asp-route-VehiculeId="@vehicule.Id">
+                            <div class="listing-img h-100 mr-4">
+                                <img src="images/@vehicule.Photo" alt="@vehicule.Photo" class="img-fluid">
+                            </div>
+                            <div class="listing-contents h-100">
+                                <h3>@vehicule.Model.Nom</h3>
+                                <div class="rent-price">
+                                    <strong>@vehicule.Prix MAD</strong>
+                                </div>
+                                <div class="d-block d-md-flex mb-3 border-bottom pb-3">
+                                    <div class="listing-feature pr-4">
+                                        <span class="caption">Bagage</span>
+                                        <span class="number">@vehicule.Model.Bagage kg</span>
+                                    </div>
+                                    <div class="listing-feature pr-4">
+                                        <span class="caption">Couleur</span>
+                                        <span class="number">@vehicule.Couleur</span>
+                                    </div>
+                                    <div class="listing-feature pr-4">
+                                    <span class="caption">Passagers</span>
+                                        <span class="number">@vehicule.Model.Passagers</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
 
-<div class="site-section">
+<div class="site-section" style="background-color: white !important;">
     <div class="container">
         <h2 class="section-heading"><strong>Comment ça fonctionne?</strong></h2>
 
-        <div class="row mb-5">
+        <div class="row">
             <div class="col-lg-4 mb-4 mb-lg-0">
                 <div class="step">
-                    <span>1</span>
+                    <span style="z-index:99;">1</span>
                     <div class="step-inner">
                         <span class="number text-primary">01.</span>
                         <h3>Sélectionnez un véhicule</h3>
@@ -84,7 +172,7 @@
             </div>
             <div class="col-lg-4 mb-4 mb-lg-0">
                 <div class="step">
-                    <span>2</span>
+                    <span style="z-index:99;">2</span>
                     <div class="step-inner">
                         <span class="number text-primary">02.</span>
                         <h3>Remplissez le formulaire</h3>
@@ -94,7 +182,7 @@
             </div>
             <div class="col-lg-4 mb-4 mb-lg-0">
                 <div class="step">
-                    <span>3</span>
+                    <span style="z-index:99;">3</span>
                     <div class="step-inner">
                         <span class="number text-primary">03.</span>
                         <h3>Paiement</h3>
@@ -103,240 +191,102 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-4 mx-auto">
-                <a href="#" class="d-flex align-items-center play-now mx-auto">
-                    <span class="icon">
-                        <span class="icon-play"></span>
-                    </span>
-                    <span class="caption">Video Comment ça Marche</span>
-                </a>
-            </div>
+        @*         <div class="row">
+        <div class="col-lg-4 mx-auto">
+        <a href="#" class="d-flex align-items-center play-now mx-auto">
+        <span class="icon">
+        <span class="icon-play"></span>
+        </span>
+        <span class="caption">Video Comment ça Marche</span>
+        </a>
         </div>
+        </div> *@
     </div>
 </div>
 
-<div class="site-section">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-7 text-center order-lg-2">
-                <div class="img-wrap-1 mb-5">
-                    <img src="images/feature_01.png" alt="Image" class="img-fluid">
-                </div>
-            </div>
-            <div class="col-lg-4 ml-auto order-lg-1">
-                <h3 class="mb-4 section-heading"><strong>Vous pouvez facilement profiter de notre promotion pour la location d'une voiture.</strong></h3>
-                <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repudiandae, explicabo iste a labore id est quas, doloremque veritatis! Provident odit pariatur dolorem quisquam, voluptatibus voluptates optio accusamus, vel quasi quidem!</p>
-
-                <p><a href="Listing" class="btn btn-primary">Liste de Véhicules</a></p>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-<div class="site-section bg-light">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-7">
-                <h2 class="section-heading"><strong>Meilleurs Choix du Moment</strong></h2>
-                <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6 col-lg-4 mb-4">
-
-                <div class="listing d-block  align-items-stretch">
-                    <a asp-page="Rent" asp-route-VehiculeId="6">
-                        <div class="listing-img h-100 mr-4">
-                            <img src="images/car_6.jpg" alt="Image" class="img-fluid">
-                        </div>
-                        <div class="listing-contents h-100">
-                            <h3>Mitsubishi Pajero</h3>
-                            <div class="rent-price">
-                                <strong>600,00 MAD</strong><span class="mx-1">@* /</span>day *@
-                            </div>
-                            <div class="d-block d-md-flex mb-3 border-bottom pb-3">
-                                <div class="listing-feature pr-4">
-                                    <span class="caption">Bagage:</span>
-                                    <span class="number">8,00 kg</span>
-                                </div>
-                                <div class="listing-feature pr-4">
-                                    <span class="caption">Couleur:</span>
-                                    <span class="number">Bleu</span>
-                                </div>
-                                <div class="listing-feature pr-4">
-                                <span class="caption">Passagers:</span>
-                                    <span class="number">4</span>
-                                </div>
-                            </div>
-                            <div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos eos at eum, voluptatem quibusdam.</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-lg-4 mb-4">
-
-                <div class="listing d-block  align-items-stretch">
-                    <a asp-page="Rent" asp-route-VehiculeId="5">
-                        <div class="listing-img h-100 mr-4">
-                            <img src="images/car_5.jpg" alt="Image" class="img-fluid">
-                        </div>
-                        <div class="listing-contents h-100">
-                            <h3>Nissan Moco</h3>
-                            <div class="rent-price">
-                                <strong>500,00 MAD</strong><span class="mx-1">@* /</span>day *@
-                            </div>
-                            <div class="d-block d-md-flex mb-3 border-bottom pb-3">
-                                <div class="listing-feature pr-4">
-                                    <span class="caption">Bagage:</span>
-                                    <span class="number">8,00 kg</span>
-                                </div>
-                                <div class="listing-feature pr-4">
-                                    <span class="caption">Couleur:</span>
-                                    <span class="number">Blanc</span>
-                                </div>
-                                <div class="listing-feature pr-4">
-                                    <span class="caption">Passagers:</span>
-                                    <span class="number">4</span>
-                                </div>
-                            </div>
-                            <div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos eos at eum, voluptatem quibusdam.</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-
-            <div class="col-md-6 col-lg-4 mb-4">
-
-                <div class="listing d-block  align-items-stretch">
-                    <a asp-page="Rent" asp-route-VehiculeId="4">
-                        <div class="listing-img h-100 mr-4">
-                            <img src="images/car_4.jpg" alt="Image" class="img-fluid">
-                        </div>
-                        <div class="listing-contents h-100">
-                            <h3>Ford Fitta</h3>
-                            <div class="rent-price">
-                                <strong>400,00 MAD</strong><span class="mx-1">@* /</span>day *@
-                            </div>
-                            <div class="d-block d-md-flex mb-3 border-bottom pb-3">
-                                <div class="listing-feature pr-4">
-                                    <span class="caption">Bagage:</span>
-                                    <span class="number">12,00 kg</span>
-                                </div>
-                                <div class="listing-feature pr-4">
-                                    <span class="caption">Couleur:</span>
-                                <span class="number">Blanc</span>
-                                </div>
-                                <div class="listing-feature pr-4">
-                                    <span class="caption">Passagers:</span>
-                                    <span class="number">4</span>
-                                </div>
-                            </div>
-                            <div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos eos at eum, voluptatem quibusdam.</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<div class="site-section">
+<div class="site-section" style="background-color: #f6f5f5 !important; padding-bottom:0;">
     <div class="container">
         <div class="row">
             <div class="col-lg-7">
                 <h2 class="section-heading"><strong>Caractéristiques</strong></h2>
-                <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-lg-4 mb-5">
-                <div class="service-1 dark">
-                    <span class="service-1-icon">
-                        <span class="icon-home"></span>
-                    </span>
-                    <div class="service-1-contents">
-                        <h3>Lorem ipsum dolor</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati, laboriosam.</p>
-                        <p class="mb-0"><a href="#">Learn more</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 mb-5">
-                <div class="service-1 dark">
-                    <span class="service-1-icon">
-                        <span class="icon-gear"></span>
-                    </span>
-                    <div class="service-1-contents">
-                        <h3>Lorem ipsum dolor</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati, laboriosam.</p>
-                        <p class="mb-0"><a href="#">Learn more</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 mb-5">
-                <div class="service-1 dark">
-                    <span class="service-1-icon">
-                        <span class="icon-watch_later"></span>
-                    </span>
-                    <div class="service-1-contents">
-                        <h3>Lorem ipsum dolor</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati, laboriosam.</p>
-                        <p class="mb-0"><a href="#">Learn more</a></p>
-                    </div>
-                </div>
-            </div>
 
-            <div class="col-lg-4 mb-5">
-                <div class="service-1 dark">
+            <div class="col-lg-4 mb-1">
+                <div class="service-1 dark text-center">
                     <span class="service-1-icon">
-                        <span class="icon-verified_user"></span>
+                        <span class="icon-airline_seat_recline_extra"></span>
                     </span>
                     <div class="service-1-contents">
-                        <h3>Lorem ipsum dolor</h3>
+                        <h3>Expérience Client Optimale</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati, laboriosam.</p>
-                        <p class="mb-0"><a href="#">Learn more</a></p>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 mb-5">
-                <div class="service-1 dark">
+            <div class="col-lg-4 mb-1">
+                <div class="service-1 dark text-center">
                     <span class="service-1-icon">
-                        <span class="icon-video_library"></span>
+                        <span class="icon-wifi"></span>
                     </span>
                     <div class="service-1-contents">
-                        <h3>Lorem ipsum dolor</h3>
+                        <h3>Technologie moderne</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati, laboriosam.</p>
-                        <p class="mb-0"><a href="#">Learn more</a></p>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 mb-5">
-                <div class="service-1 dark">
+            <div class="col-lg-4 mb-1">
+                <div class="service-1 dark text-center">
+                    <span class="service-1-icon">
+                        <span class="icon-money"></span>
+                    </span>
+                    <div class="service-1-contents">
+                        <h3>Offres et Tarifs Avantageux</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati, laboriosam.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-1">
+                <div class="service-1 dark text-center">
+                    <span class="service-1-icon">
+                        <span class="icon-apps"></span>
+                    </span>
+                    <div class="service-1-contents">
+                        <h3>Large Choix</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati, laboriosam.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-1">
+                <div class="service-1 dark text-center">
                     <span class="service-1-icon">
                         <span class="icon-vpn_key"></span>
                     </span>
                     <div class="service-1-contents">
-                        <h3>Lorem ipsum dolor</h3>
+                        <h3>Fiabilité et Sécurité</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati, laboriosam.</p>
-                        <p class="mb-0"><a href="#">Learn more</a></p>
                     </div>
                 </div>
             </div>
-
+            <div class="col-lg-4 mb-1">
+                <div class="service-1 dark text-center">
+                    <span class="service-1-icon">
+                        <span class="icon-headset_mic"></span>
+                    </span>
+                    <div class="service-1-contents">
+                        <h3>Toujours en contact</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati, laboriosam.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="~/js/gsap.js"></script>
+
+}
