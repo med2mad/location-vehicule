@@ -16,12 +16,12 @@
     gsap.to(".vehicule", {
         opacity: 1,
         x: 0, // Move to original position
-        duration: 1.5,
-        ease: "power3.out",
+        duration: 1,
+        ease: "none",
         stagger: 0.3, // Delay between elements
         scrollTrigger: {
             trigger: ".vehicule",
-            start: "top 80%", // Triggers when top of div is 80% in view
+            start: "top 100%", // Triggers when top of div is 100% in view
             toggleActions: "play none none none",
         }
     });

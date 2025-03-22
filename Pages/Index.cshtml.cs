@@ -5,12 +5,16 @@ using RPtest.Data;
 using RPtest.Models;
 
 namespace RPtest.Pages;
-public class IndexModel(ApplicationDbContext context) : PageModel
+public class IndexModel(ApplicationDbContext _context) : PageModel
 {
     public List<Vehicule> Vehicules { get; set; } = new List<Vehicule>();
+    public List<string> Marques { get; set; } = new();
+    public Location Location { get; set; } //just for dd/MM/yyyy format
 
     public void OnGet()
     {
-        Vehicules = context.Vehicules.Include(v => v.Model).Take(8).OrderByDescending(v => v.Id).ToList();
+        Vehicules = _context.Vehicules.Include(v => v.Model).Where(v => v.Photo != "car_9.jpg").Take(8).OrderByDescending(v => v.Id).ToList();
+        Marques = _context.Models.Select(m => m.Marque).Distinct().ToList();
+
     }
 }

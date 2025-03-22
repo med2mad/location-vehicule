@@ -76,17 +76,17 @@
                         <input asp-for="Location.Tel" class="form-control" required>
                     </div>
                     <div class="mb-1 d-flex align-items-center justify-content-end form-control-wrap">
-                        <label asp-for="Location.DateDebut" class="form-label mr-1">Date Début : </label>
-                        <input asp-for="Location.DateDebut" type="date" class="form-control" required>
+                        <label asp-for="Location.DateDepart" class="form-label mr-1">Date de Départ : </label>
+                        <input asp-for="Location.DateDepart" type="date" class="form-control" required>
                     </div>
                     <div class="mb-1 d-flex align-items-center justify-content-end form-control-wrap">
-                        <label asp-for="Location.DateFin" class="form-label mr-1">Date Fin : </label>
-                        <input asp-for="Location.DateFin" type="date" class="form-control" required>
+                        <label asp-for="Location.DateRetour" class="form-label mr-1">Date de Retour : </label>
+                        <input asp-for="Location.DateRetour" type="date" class="form-control" required>
                     </div>
 
                     <div class="mb-1 d-flex align-items-center justify-content-end">
-                        <label asp-for="Location.PlaceDebut" class="form-label mr-1">Place de Début : </label>
-                            <select asp-for="Location.PlaceDebut" class="custom-select form-control">
+                        <label asp-for="Location.LieuDepart" class="form-label mr-1">Lieu de Départ : </label>
+                        <select asp-for="Location.LieuRetour" class="custom-select form-control">
                             <option value="Casablanca">Casablanca</option>
                             <option value="Rabat">Rabat</option>
                             <option value="Mekness">Mekness</option>
@@ -94,8 +94,8 @@
                         </select>
                     </div>
                     <div class="mb-1 d-flex align-items-center justify-content-end">
-                        <label asp-for="Location.PlaceFin" class="form-label mr-1">Place de Fin : </label>
-                        <select asp-for="Location.PlaceFin" class="custom-select form-control">
+                        <label asp-for="Location.LieuDepart" class="form-label mr-1">Lieu de Retour : </label>
+                        <select asp-for="Location.LieuRetour" class="custom-select form-control">
                             <option value="Casablanca">Casablanca</option>
                             <option value="Rabat">Rabat</option>
                             <option value="Mekness">Mekness</option>

@@ -1,0 +1,43 @@
+﻿@page
+@model RPtest.Pages.AddCarModel
+@{
+	Layout = "Dashboard";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Ajouter un Véhicule</h2>
+    <form>
+        <div class="mb-3">
+            <label for="marque" class="form-label">Marque</label>
+            <select name="marque" id="marque" class="custom-select form-control" required>
+                <option value="" selected></option>
+                @foreach (var marque in Model.Marques)
+                {
+                    <option value="@marque">@marque</option>
+                }
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="model" class="form-label">Modèle</label>
+            <input type="text" class="form-control" id="model" name="model" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="couleur" class="form-label">Couleur</label>
+            <input type="text" class="form-control" id="couleur" name="couleur" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="prix" class="form-label">Prix</label>
+            <input type="number" class="form-control" id="prix" name="prix" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="photo" class="form-label">Photo</label>
+            <input type="file" class="form-control" id="photo" name="photo" accept="image/*" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Soumettre</button>
+    </form>
+</div>

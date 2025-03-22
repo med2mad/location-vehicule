@@ -17,9 +17,6 @@
         .listing:hover{
             transform: translateY(-10px);
         }
-        .listing-img .img-fluid {
-            border-top:solid white 5px;
-        }
         .vehicule {
             opacity: 0; /* Initially hidden */
             transform: translateX(100px); /* Move right initially */
@@ -36,8 +33,6 @@
             opacity: 0; /* Initially hidden */
             transform: translateY(-100px); /* Move left initially */
         }
-
-
     </style>
 }
 
@@ -58,19 +53,33 @@
 
                     <div class="row align-items-end justify-content-center">
                         <div class="mb-3 mb-md-0 col-md-3">
-                            <label for="type">Type : </label>
-                            <select name="type" id="type" class="custom-select form-control">
+                            <label for="marque">Marque : </label>
+                            <select name="marque" id="marque" class="custom-select form-control">
                                 <option value="" selected></option>
-                                <option value="Voiture">Voiture</option>
+                                @foreach (var marque in Model.Marques)
+                                {
+                                    <option value="@marque">@marque</option>
+                                }
+@*                              <option value="Voiture">Voiture</option>
                                 <option value="Sports Car">Sports Car</option>
                                 <option value="Camion">Camion</option>
                                 <option value="Camionette">Camionette</option>
                                 <option value="Minibus">Mini Bus</option>
-                                <option value="Moto">Moto</option>
+                                <option value="Moto">Moto</option> *@
                             </select>
                         </div>
 
                         <div class="mb-3 mb-md-0 col-md-3">
+                            <label asp-for="Location.DateDepart" class="form-label mr-1">Date Début : </label>
+                            <input asp-for="Location.DateDepart" name="Location.DateDepart" type="date" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3 mb-md-0 col-md-3">
+                            <label asp-for="Location.DateRetour" class="form-label mr-1">Date Fin : </label>
+                            <input asp-for="Location.DateRetour" name="Location.dateRetour" type="date" class="form-control" required>
+                        </div>
+
+@*                         <div class="mb-3 mb-md-0 col-md-3">
                             <label for="model">Modèles  : </label>
                             <select name="model" id="model" class="custom-select form-control">
                                 <option value="" selected></option>
@@ -85,7 +94,6 @@
                                 <option value="Honda">Honda</option>
                             </select>
                         </div>
-
                         <div class="mb-3 mb-md-0 col-md-3">
                             <label for="couleur">Couleur : </label>
                             <select name="couleur" id="couleur" class="custom-select form-control">
@@ -97,7 +105,7 @@
                                 <option value="Vert">Vert</option>
                                 <option value="Gris">Gris</option>
                             </select>
-                        </div>
+                        </div> *@
                         <div class="mb-3 mb-md-0 col-md-3">
                             <input type="submit" value="Chercher" class="btn btn-primary w-100" style="padding:16px 25px;">
                         </div>
@@ -114,17 +122,17 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-7">
-                <h2 class="section-heading mb-4"><strong>Meilleurs Choix du Moment</strong></h2>
+                <h2 class="section-heading" style="margin-bottom:0; margin-top:20px"><strong>Meilleurs Choix du Moment</strong></h2>
             </div>
         </div>
 
         <div class="row">
             @foreach (var vehicule in Model.Vehicules)
             {
-                <div class="col-md-3 mb-4 listing vehicule">
-                    <div class="listing d-block  align-items-stretch">
+                <div class="col-md-3 mb-4 listing vehicule" style="border: solid 10px #f6f5f5">
+                    <div class="listing d-block  align-items-stretch" style="padding:0;">
                         <a asp-page="Rent" asp-route-VehiculeId="@vehicule.Id">
-                            <div class="listing-img h-100 mr-4">
+                            <div class="listing-img h-100 mr-4" style="margin-top:0;">
                                 <img src="images/@vehicule.Photo" alt="@vehicule.Photo" class="img-fluid">
                             </div>
                             <div class="listing-contents h-100">
@@ -132,7 +140,7 @@
                                 <div class="rent-price">
                                     <strong>@vehicule.Prix MAD</strong>
                                 </div>
-                                <div class="d-block d-md-flex mb-3 border-bottom pb-3">
+                                <div class="d-block d-md-flex  pb-3">
                                     <div class="listing-feature pr-4">
                                         <span class="caption">Bagage</span>
                                         <span class="number">@vehicule.Model.Bagage kg</span>

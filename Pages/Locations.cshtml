@@ -2,24 +2,11 @@
 @using System
 @model LocationsModel
 @{
+    Layout = "Dashboard";
     ViewData["Title"] = "Réservations";
     Random x = new Random();
     int r = 0;
 }
-
-<div class="hero inner-page" style="background-image: url('images/hero_1_a.jpg');">
-    <div class="container">
-        <div class="row align-items-end ">
-            <div class="col-lg-5">
-
-                <div class="intro">
-                    <h1 style="margin-top:100px;"><strong>Réservations.</strong></h1>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="container mt-4">
 
@@ -44,10 +31,10 @@
                     <td>#@r</td>
                     <td>@location.NomClient</td>
                     <td>@location.Tel</td>
-                    <td>@location.PlaceDebut</td>
-                    <td>@location.PlaceFin</td>
-                    <td>@location.DateDebut.ToString("dd/MM/yyyy")</td>
-                    <td>@location.DateFin.ToString("dd/MM/yyyy")</td>
+                    <td>@location.LieuDepart</td>
+                    <td>@location.LieuRetour</td>
+                    <td>@location.DateDepart.ToString("dd/MM/yyyy")</td>
+                    <td>@location.DateRetour.ToString("dd/MM/yyyy")</td>
                     <td>
                         @switch (location.Status)
                         {

@@ -34,7 +34,7 @@
             {
                 <div class="col-md-6 col-lg-4 mb-4 listingHover">
                     <div class="listing d-block  align-items-stretch">
-                        <a asp-page="Rent" asp-route-VehiculeId="@vehicule.Id">
+                        <a asp-page="Rent" asp-route-VehiculeId="@vehicule.Id" asp-route-DateDepart="@Model.Location.DateDepart.ToString("yyyy-MM-dd")" asp-route-DateRetour="@Model.Location.DateRetour.ToString("yyyy-MM-dd")">
                             <div class="listing-img h-100 mr-4">
                                 <img src="~/images/@vehicule.Photo" alt="@vehicule.Photo" class="img-fluid">
                             </div>

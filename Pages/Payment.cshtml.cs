@@ -27,7 +27,7 @@ public class PaymentModel(ApplicationDbContext context) : PageModel
         message += " - Numéro de réservation : #35647\n";
         message += " - Comande effectuée le : " + DateTime.Now.ToString("dd-MM-yyyy") + "\n";
         message += " - Véhicule : " + v.Model.Nom + "\n";
-        message += " - Réservé pour : " + Location.DateDebut.ToString("dd-MM-yyyy") + "\n";
+        message += " - Réservé pour : " + Location.DateDepart.ToString("dd-MM-yyyy") + "\n";
         message += " - Montant total : " + v.Prix + " DH\n";
         message += "\n";
         message += "Si vous avez la moindre question, n’hésitez pas à nous contacter.";
