@@ -11,9 +11,19 @@
         .listingHover:hover {
             transform: translateY(-10px);
         }
+        label{
+            font-size: 0.9rem;
+            margin-bottom:0;
+        }
+        input, select {
+            height:35px !important;
+            padding: 5px !important;
+        }
     </style>
 }
 <div class="hero inner-page" style="background-image: url('images/header3.png');">
+    
+
     <div class="container">
         <div class="row align-items-end ">
             <div class="col-lg-5">
@@ -21,7 +31,96 @@
                     <h1><strong>Véhicules</strong></h1>
                 </div>
             </div>
+
+
+
+
+            <div class="row align-items-center justify-content-center">
+            <div class="col-lg-10">
+                <form method="post" class="trip-form mb-2" style="padding:0 10px 5px 10px;">
+
+                    <div class="row align-items-end justify-content-center">
+                        <div class="mb-3 mb-md-0 col-md-3">
+                            <label for="type" id="typelab">Type : </label>
+                            <select asp-for="Model.Type" id="type" class="custom-select form-control">
+                                <option value=""></option>
+                                <option value="Voiture">Voiture</option>
+                                <option value="Luxe">Luxe</option>
+                                <option value="Sports Car">Sports Car</option>
+                                <option value="Camion">Camion</option>
+                                <option value="Camionette">Camionette</option>
+                                <option value="Minibus">Mini Bus</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 mb-md-0 col-md-3">
+                            <label for="marque">Marque : </label>
+                                <select asp-for="Model.Marque" id="marques" class="custom-select form-control">
+                                <option value="" selected></option>
+                                @foreach (var marque in Model.Marques)
+                                {
+                                    <option value="@marque">@marque</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="mb-3 mb-md-0 col-md-3">
+                            <label for="model" id="modellab" class="form-label">Modèle :</label>
+                            <select asp-for="Model.Nom" id="modeles" class="custom-select form-control">
+                                <option value="" selected></option>
+                                @foreach (var nom_model in Model.Marques_Models)
+                                {
+                                    <option value="@nom_model.Nom">@nom_model.Marque : @nom_model.Nom</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="mb-3 mb-md-0 col-md-3">
+                            <label for="couleur" id="couleurlab">Couleur : </label>
+                            <select asp-for="Vehicule.Couleur" id="couleur" class="custom-select form-control">
+                                <option value="" selected></option>
+                                <option value="Blanc">Blanc</option>
+                                <option value="Noir">Noir</option>
+                                <option value="Rouge">Rouge</option>
+                                <option value="Bleu">Bleu</option>
+                                <option value="Vert">Vert</option>
+                                <option value="Gris">Gris</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 mb-md-0 col-md-3">
+                            <label for="prixmin" id="prixminlab" class="form-label">Prix Minimum :</label>
+                            <input asp-for="PrixMin" id="prixmin" type="number" class="form-control">
+                        </div>
+                        <div class="mb-3 mb-md-0 col-md-3">
+                            <label for="prixmax" id="prixmaxlab" class="form-label">Prix Maximum :</label>
+                            <input asp-for="PrixMax" id="prixmax" type="number" class="form-control">
+                        </div>
+                        <div class="mb-3 mb-md-0 col-md-3">
+                            <label for="climatisation" id="climatisationlab">Climatisation :</label>
+                            <select asp-for="Climatisation" id="climatisation" class="custom-select form-control">
+                                <option value="" selected></option>
+                                <option value="Avec">Avec</option>
+                                <option value="Sans">Sans</option>
+                            </select>
+                        </div>
+@*                      <div class="mb-3 mb-md-0 col-md-3">
+                            <label for="immatriculation" id="immatriculationlab" class="form-label">Immatriculationlab</label>
+                            <input name="immatriculation" id="immatriculation" class="form-control" required>
+                        </div> *@
+
+                        <div class="mb-3 mb-md-0 col-md-3">
+                            <input type="submit" value="Chercher" class="btn btn-primary w-100" style="height:50px !important;"/>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
         </div>
+
+
+
+
+
+        </div>
+        
     </div>
 </div>
 
@@ -44,7 +143,7 @@
                                 <div class="rent-price">
                                     <strong>@vehicule.Prix MAD</strong>@* <span class="mx-1">/</span>jour *@
                                 </div>
-                                <div class="d-block d-md-flex mb-3 border-bottom pb-3">
+                                <div class="d-block d-md-flex">
                                     <div class="listing-feature pr-4">
                                         <span class="caption">Bagage</span>
                                         <span class="number">@vehicule.Model.Bagage Kg</span>
@@ -54,7 +153,7 @@
                                         <span class="number">@vehicule.Couleur</span>
                                     </div>
                                     <div class="listing-feature pr-4">
-                                        <span class="caption">Passagers</span>
+                                        <span class="caption">Places</span>
                                         <span class="number">@vehicule.Model.Passagers</span>
                                     </div>
                                 </div>
@@ -84,3 +183,38 @@
 
     </div>
 </div>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            let marquesSelect = document.getElementById("marques");
+            let modelesSelect = document.getElementById("modeles");
+            let modelesParMarque = JSON.parse('@Html.Raw(Model.ModelsJ)');
+
+            marquesSelect.addEventListener("change", function () {
+                let selectedMarque = marquesSelect.value;
+                modelesSelect.innerHTML = "";
+                let newOption = document.createElement("option");
+                newOption.value = ""; newOption.text = "";
+                modelesSelect.appendChild(newOption);
+
+                for (let key in modelesParMarque) {
+                    if (modelesParMarque[key].Marque == selectedMarque || !selectedMarque) {
+                        let newOption = document.createElement("option");
+                        newOption.value = modelesParMarque[key].Nom;
+                        newOption.text = modelesParMarque[key].Marque + " : " + modelesParMarque[key].Nom;
+                        modelesSelect.appendChild(newOption);
+                    }
+                }
+            });
+
+            modelesSelect.addEventListener("change", function () {
+                let selectedModel = modelesSelect.options[modelesSelect.selectedIndex].text;
+                selectedModel = selectedModel.split(" : ")[0];
+                if (selectedModel)
+                    marquesSelect.value = selectedModel;
+            });
+        });
+    </script>
+}

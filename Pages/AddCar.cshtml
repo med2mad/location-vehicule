@@ -21,7 +21,7 @@
 }
 <div class="container">
     <h2 class="mb-4">Ajouter un Véhicule</h2>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         <div class="mb-3">
             <label asp-for="Model.Marque" class="form-label">Marque</label>
             <select asp-for="Model.Marque" class="custom-select form-control" required>
@@ -39,7 +39,7 @@
                 <option value="" selected></option>
                 @foreach (var nom_model in Model.Marques_Models)
                 {
-                    <option value="@nom_model">@nom_model.Marque : @nom_model.Nom</option>
+                    <option value="@nom_model.Nom">@nom_model.Marque : @nom_model.Nom</option>
                 }
             </select>
         </div>
@@ -61,7 +61,7 @@
 
         <div class="mb-3">
             <label for="photo" class="form-label">Photo</label>
-            <input type="file" name="photo" accept="image/*" id="photo" style="height:35px; padding:5px;" class="form-control">
+            <input type="file" name="imageFile" accept="image/*" id="photo" style="height:35px; padding:5px;" class="form-control">
         </div>
 
         <button type="submit" class="btn btn-primary">OK</button>
@@ -70,7 +70,6 @@
 
 
 @section Scripts{
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -91,23 +90,31 @@
             $('#Model_Marque').on('change', function () {
                 let marqueSelectionnee = $(this).val();
                 let $modele = $('#Model_Nom');
-
-                $modele.empty().append('<option value="">Sélectionner un modèle...</option>');
-
-                for (let key in modelesParMarque) {
-                    if (modelesParMarque[key].Marque === marqueSelectionnee) {
-                        $modele.append(new Option(modelesParMarque[key].Nom, modelesParMarque[key].Nom));
+                let texteActuel = $modele.val();
+                if (marqueSelectionnee) {
+                    $modele.find('option').remove();
+                    for (let key in modelesParMarque) {
+                        if (modelesParMarque[key].Marque === marqueSelectionnee) {
+                            $modele.append(new Option(modelesParMarque[key].Marque + " : " + modelesParMarque[key].Nom, modelesParMarque[key].Nom));
+                        }
                     }
+                    $modele.val(texteActuel).trigger('change.select2');
+                }
+                else {
+                    $modele.find('option').remove();
+                    let texteActuel = $modele.val();
+                    for (let key in modelesParMarque) {
+                        $modele.append(new Option(modelesParMarque[key].Marque + " : " + modelesParMarque[key].Nom, modelesParMarque[key].Nom));
+                    }
+                    $modele.val(texteActuel).trigger('change.select2');
                 }
             });
 
             $('#Model_Nom').on('change', function () {
-                let selectedModel = $(this).val();
-
-                for (let key in modelesParMarque) {
-                    if (modelesParMarque[key].Nom === selectedModel) {
-                        $('#Model_Marque').val(modelesParMarque[key].Marque);
-                    }
+                let selectedModel = $('#Model_Nom option:selected').text();
+                if (selectedModel.includes(" : ")) {
+                    const value1 = selectedModel.split(" : ")[0];
+                    $('#Model_Marque').val(value1).trigger('change.select2');
                 }
             });
         });

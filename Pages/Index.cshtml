@@ -33,6 +33,10 @@
             opacity: 0; /* Initially hidden */
             transform: translateY(-100px); /* Move left initially */
         }
+        label {
+            font-size: 0.9rem;
+            margin-bottom:0;
+        }
     </style>
 }
 
@@ -49,7 +53,7 @@
                     </div>
                 </div>
 
-                <form method="get" asp-page="/Listing" class="trip-form mb-2">
+                <form method="get" asp-page="/Listing" class="trip-form mb-2" style="padding:0 10px 5px 10px;">
 
                     <div class="row align-items-end justify-content-center">
                         <div class="mb-3 mb-md-0 col-md-3">
@@ -60,17 +64,11 @@
                                 {
                                     <option value="@marque">@marque</option>
                                 }
-@*                              <option value="Voiture">Voiture</option>
-                                <option value="Sports Car">Sports Car</option>
-                                <option value="Camion">Camion</option>
-                                <option value="Camionette">Camionette</option>
-                                <option value="Minibus">Mini Bus</option>
-                                <option value="Moto">Moto</option> *@
                             </select>
                         </div>
 
                         <div class="mb-3 mb-md-0 col-md-3">
-                            <label asp-for="Location.DateDepart" class="form-label mr-1">Date Début : </label>
+                            <label asp-for="Location.DateDepart"  class="form-label mr-1">Date Début : </label>
                             <input asp-for="Location.DateDepart" name="Location.DateDepart" type="date" style="height:35px; padding:5px;" class="form-control" required>
                         </div>
 
@@ -79,33 +77,6 @@
                             <input asp-for="Location.DateRetour" name="Location.dateRetour" type="date" style="height:35px; padding:5px;" class="form-control" required>
                         </div>
 
-@*                         <div class="mb-3 mb-md-0 col-md-3">
-                            <label for="model">Modèles  : </label>
-                            <select name="model" id="model" class="custom-select form-control">
-                                <option value="" selected></option>
-                                <option value="Dacia">Dacia</option>
-                                <option value="Peugeot">Peugeot</option>
-                                <option value="Ford">Ford</option>
-                                <option value="BMW">BMW</option>
-                                <option value="Lamborghini">Lamborghini</option>
-                                <option value="Hyundai">Hyundai</option>
-                                <option value="Mitsubishi">Mitsubishi</option>
-                                <option value="Suzuki">Suzuki</option>
-                                <option value="Honda">Honda</option>
-                            </select>
-                        </div>
-                        <div class="mb-3 mb-md-0 col-md-3">
-                            <label for="couleur">Couleur : </label>
-                            <select name="couleur" id="couleur" class="custom-select form-control">
-                                <option value="" selected></option>
-                                <option value="Blanc">Blanc</option>
-                                <option value="Noir">Noir</option>
-                                <option value="Rouge">Rouge</option>
-                                <option value="Bleu">Bleu</option>
-                                <option value="Vert">Vert</option>
-                                <option value="Gris">Gris</option>
-                            </select>
-                        </div> *@
                         <div class="mb-3 mb-md-0 col-md-3">
                             <input type="submit" value="Chercher" class="btn btn-primary w-100" style="padding:16px 25px;">
                         </div>
@@ -129,11 +100,11 @@
         <div class="row">
             @foreach (var vehicule in Model.Vehicules)
             {
-                <div class="col-lg-3 col-md-4 col-12 listing vehicule" style="border: solid 10px #f6f5f5">
-                    <div class="listing d-block  align-items-stretch" style="padding:0;">
+                <div class="col-lg-3 col-md-4 col-6 listing vehicule" style="border: solid 10px #f6f5f5">
+                    <div class="listing d-block  align-items-stretch text-center" style="padding:0;">
                         <a asp-page="Rent" asp-route-VehiculeId="@vehicule.Id">
-                            <div class="listing-img h-100 mr-4" style="margin-top:0;">
-                                <img src="images/@vehicule.Photo" alt="@vehicule.Photo" class="img-fluid">
+                            <div class="listing-img h-100 mr-4" style="margin-top:0; text-align:center;">
+                                <img src="images/@vehicule.Photo" alt="@vehicule.Photo" class="img-fluid" style="max-height:180px;">
                             </div>
                             <div class="listing-contents h-100">
                                 <h3>@vehicule.Model.Marque @vehicule.Model.Nom</h3>
@@ -150,7 +121,7 @@
                                         <span class="number">@vehicule.Couleur</span>
                                     </div>
                                     <div class="listing-feature pr-2">
-                                    <span class="caption">Passagers</span>
+                                        <span class="caption">Places</span>
                                         <span class="number">@vehicule.Model.Passagers</span>
                                     </div>
                                 </div>

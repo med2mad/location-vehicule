@@ -3,17 +3,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RPtest.Data;
 using RPtest.Models;
-using System.Text;
 using System.Text.Json;
 
 namespace RPtest.Pages;
-
 public class AddCarModel(ApplicationDbContext _context) : PageModel
 {
-    [BindProperty]
-    public Vehicule Vehicule { get; set; }
-    [BindProperty]
-    public Model Model { get; set; }
+    [BindProperty] public Vehicule Vehicule { get; set; }
+    [BindProperty] public Model Model { get; set; }
 
     public List<string> Marques { get; set; } = new();
     public List<Model> Marques_Models { get; set; } = new();
@@ -26,7 +22,7 @@ public class AddCarModel(ApplicationDbContext _context) : PageModel
         ModelsJ = JsonSerializer.Serialize(Marques_Models);
     }
 
-    public IActionResult OnPost()
+    public async Task<IActionResult> OnPost(IFormFile imageFile)
     {
         var x = _context.Models.Select(m => new Model { Id = m.Id, Marque = m.Marque, Nom = m.Nom }).FirstOrDefault(m => m.Marque == Model.Marque && m.Nom == Model.Nom);
         int id = 0;
@@ -43,7 +39,15 @@ public class AddCarModel(ApplicationDbContext _context) : PageModel
             id = x.Id;
         }
 
-        _context.Vehicules.Add(new Vehicule { ModelId = id, Prix = Vehicule.Prix, Immatriculation = Vehicule.Immatriculation });
+        string fileName = Path.GetFileName(imageFile.FileName);
+        string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
+        string filePath = Path.Combine(uploadsFolder, fileName);
+        using (var fileStream = new FileStream(filePath, FileMode.Create))
+        {
+            await imageFile.CopyToAsync(fileStream);
+        }
+        _context.Vehicules.Add(new Vehicule { ModelId = id, Prix = Vehicule.Prix, Immatriculation = Vehicule.Immatriculation, Photo = fileName });
+
         _context.SaveChanges();
 
         TempData["message"] = "Véhicule Ajouté!";
