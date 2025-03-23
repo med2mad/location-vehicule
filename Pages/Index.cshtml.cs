@@ -13,7 +13,7 @@ public class IndexModel(ApplicationDbContext _context) : PageModel
 
     public void OnGet()
     {
-        Vehicules = _context.Vehicules.Include(v => v.Model).Where(v => v.Photo != "car_9.jpg").Take(8).OrderByDescending(v => v.Id).ToList();
+        Vehicules = _context.Vehicules.Include(v => v.Model).Take(8).OrderByDescending(v => v.Id).ToList();
         Marques = _context.Models.Select(m => m.Marque).Distinct().ToList();
 
     }

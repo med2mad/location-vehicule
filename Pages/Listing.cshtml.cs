@@ -26,6 +26,6 @@ public class ListingModel(ApplicationDbContext context) : PageModel
         //{
         //    query = query.Where(v => v.Couleur == couleur);
         //}
-        Vehicules = query.Where(v => v.Photo != "car_9.jpg").ToList();
+        Vehicules = query.ToList();
     }
 }

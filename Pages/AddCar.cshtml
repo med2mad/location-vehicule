@@ -1,15 +1,30 @@
 ﻿@page
 @model RPtest.Pages.AddCarModel
+@using System;
+@using System.Text.Json;
 @{
 	Layout = "Dashboard";
 }
 
-<div class="container mt-5">
+@section Head{
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet">
+}
+
+@if (TempData["message"]!=null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["message"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+<div class="container">
     <h2 class="mb-4">Ajouter un Véhicule</h2>
-    <form>
+    <form method="post">
         <div class="mb-3">
-            <label for="marque" class="form-label">Marque</label>
-            <select name="marque" id="marque" class="custom-select form-control" required>
+            <label asp-for="Model.Marque" class="form-label">Marque</label>
+            <select asp-for="Model.Marque" class="custom-select form-control" required>
                 <option value="" selected></option>
                 @foreach (var marque in Model.Marques)
                 {
@@ -19,25 +34,83 @@
         </div>
 
         <div class="mb-3">
-            <label for="model" class="form-label">Modèle</label>
-            <input type="text" class="form-control" id="model" name="model" required>
+            <label asp-for="Model.Nom" class="form-label">Modèle</label>
+            <select asp-for="Model.Nom" class="custom-select form-control" required>
+                <option value="" selected></option>
+                @foreach (var nom_model in Model.Marques_Models)
+                {
+                    <option value="@nom_model">@nom_model.Marque : @nom_model.Nom</option>
+                }
+            </select>
+        </div>
+
+@*         <div class="mb-3">
+            <label asp-for="Vehicule.Couleur" class="form-label">Couleur</label>
+            <input asp-for="Vehicule.Couleur" style="height:35px; padding:5px;" class="form-control">
+        </div> *@
+
+        <div class="mb-3">
+            <label asp-for="Vehicule.Prix" class="form-label"></label>
+            <input asp-for="Vehicule.Prix" type="number" style="height:35px; padding:5px; border:solid gray 1px;" class="form-control" required>
         </div>
 
         <div class="mb-3">
-            <label for="couleur" class="form-label">Couleur</label>
-            <input type="text" class="form-control" id="couleur" name="couleur" required>
-        </div>
-
-        <div class="mb-3">
-            <label for="prix" class="form-label">Prix</label>
-            <input type="number" class="form-control" id="prix" name="prix" required>
+            <label asp-for="Vehicule.Immatriculation" class="form-label"></label>
+            <input asp-for="Vehicule.Immatriculation" style="height:35px; padding:5px; border:solid gray 1px;" class="form-control" required>
         </div>
 
         <div class="mb-3">
             <label for="photo" class="form-label">Photo</label>
-            <input type="file" class="form-control" id="photo" name="photo" accept="image/*" required>
+            <input type="file" name="photo" accept="image/*" id="photo" style="height:35px; padding:5px;" class="form-control">
         </div>
 
-        <button type="submit" class="btn btn-primary">Soumettre</button>
+        <button type="submit" class="btn btn-primary">OK</button>
     </form>
 </div>
+
+
+@section Scripts{
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#Model_Marque').select2({
+                tags: true,  // Permet d'ajouter de nouvelles valeurs
+                placeholder: "",
+                allowClear: true
+            });
+
+            $('#Model_Nom').select2({
+                tags: true,  // Permet d'ajouter de nouvelles valeurs
+                placeholder: "",
+                allowClear: true
+            });
+
+            let modelesParMarque = JSON.parse('@Html.Raw(Model.ModelsJ)');
+
+            $('#Model_Marque').on('change', function () {
+                let marqueSelectionnee = $(this).val();
+                let $modele = $('#Model_Nom');
+
+                $modele.empty().append('<option value="">Sélectionner un modèle...</option>');
+
+                for (let key in modelesParMarque) {
+                    if (modelesParMarque[key].Marque === marqueSelectionnee) {
+                        $modele.append(new Option(modelesParMarque[key].Nom, modelesParMarque[key].Nom));
+                    }
+                }
+            });
+
+            $('#Model_Nom').on('change', function () {
+                let selectedModel = $(this).val();
+
+                for (let key in modelesParMarque) {
+                    if (modelesParMarque[key].Nom === selectedModel) {
+                        $('#Model_Marque').val(modelesParMarque[key].Marque);
+                    }
+                }
+            });
+        });
+
+    </script>
+}
