@@ -1,0 +1,98 @@
+﻿@page
+@model RPtest.Pages.CarsList
+@using System;
+@using System.Text.Json;
+@{
+	Layout = "Dashboard";
+    ViewData["Title"] = "List de Véhicules";
+}
+
+@section Head{
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.jqueryui.min.css">
+    <style>
+        #carsTable th, #carsTable td {
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+}
+
+
+<table id="carsTable" class="display">
+    <thead>
+        <tr>
+            <th>photo</th>
+            <th>model</th>
+            <th>immatriculation</th>
+            <th>prix</th>
+            <th>climatisation</th>
+            <th>vidange</th>
+        </tr>
+    </thead>
+</table>
+
+
+@section Scripts{
+    <script src="https://cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/2.2.2/js/dataTables.jqueryui.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#carsTable').DataTable({
+                ajax: '/CarsList?handler=GetCars',
+                columns: [
+                    { data: "photo", render: function (data) { return `<img src="${data}" width="150">`; } },
+                    { data: "model" },
+                    { data: "immatriculation" },
+                    { data: "prix" },
+                    { data: "climatisation", render: function (data) { return data ? "Avec" : "Sans"; } },
+                    {
+                        data: "vidange", render: function (data, type, row, meta) {
+                            let cell = $('td').eq(meta.col); // Get the cell
+                            let result = timeAgo(data);
+                            if (result.includes("Vidange")) {
+                                cell.css("background-color", "pink");
+                            }
+                            return result;
+                        }
+                    }
+                ],
+                language: {
+                    search: "Rechercher :",
+                    lengthMenu: "Afficher _MENU_ entrées par page",
+                    info: "",
+                    infoEmpty: "Aucune entrée disponible",
+                    infoFiltered: "(filtré à partir de _MAX_ entrées au total)",
+                    zeroRecords: "Aucun résultat trouvé",
+                    paginate: {
+                        first: "Premier",
+                        last: "Dernier",
+                        next: ">",
+                        previous: "<"
+                    }
+                }
+            });
+        });
+
+        function timeAgo(dateString) {
+            let date = new Date(dateString); // Convert string to Date
+            let now = new Date();
+            let seconds = Math.floor((now - date) / 1000);
+
+            let intervals = {
+                year: 31536000,
+                month: 2592000,
+                day: 86400,
+                hour: 3600,
+                minute: 60
+            };
+
+            let yearsDifference = Math.floor(seconds / intervals.year);
+            if (yearsDifference >= 1) {
+                return `<span style="color: red; font-weight: bold;">Vidange</span>`;
+            }
+
+            return dateString;
+        }
+    </script>
+}

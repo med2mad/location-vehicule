@@ -10,6 +10,7 @@ public class AddCarModel(ApplicationDbContext _context) : PageModel
 {
     [BindProperty] public Vehicule Vehicule { get; set; }
     [BindProperty] public Model Model { get; set; }
+    [BindProperty] public string Climatisation { get; set; }
 
     public List<string> Marques { get; set; } = new();
     public List<Model> Marques_Models { get; set; } = new();
@@ -29,7 +30,7 @@ public class AddCarModel(ApplicationDbContext _context) : PageModel
 
         if (x == null)
         {
-            Model m = new Model { Marque = Model.Marque, Nom = Model.Nom };
+            Model m = new Model { Marque = Model.Marque, Nom = Model.Nom, Passagers = Model.Passagers, Type = Model.Type };
             _context.Models.Add(m);
             _context.SaveChanges();
             id = m.Id;
@@ -46,7 +47,7 @@ public class AddCarModel(ApplicationDbContext _context) : PageModel
         {
             await imageFile.CopyToAsync(fileStream);
         }
-        _context.Vehicules.Add(new Vehicule { ModelId = id, Prix = Vehicule.Prix, Immatriculation = Vehicule.Immatriculation, Photo = fileName });
+        _context.Vehicules.Add(new Vehicule { ModelId = id, Prix = Vehicule.Prix, Climatisation = (this.Climatisation == "Avec"), Couleur = Vehicule.Couleur, Immatriculation = Vehicule.Immatriculation, Date = DateTime.UtcNow, Vidange = DateTime.UtcNow, Photo = fileName });
 
         _context.SaveChanges();
 

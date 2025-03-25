@@ -9,11 +9,11 @@ using RPtest.Data;
 
 #nullable disable
 
-namespace RPtest.Data.Migrations
+namespace RPtest.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250323223509_m9")]
-    partial class m9
+    [Migration("20250325050137_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -260,10 +260,6 @@ namespace RPtest.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CVC")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("ConducteurId")
                         .HasColumnType("int");
 
@@ -272,14 +268,6 @@ namespace RPtest.Data.Migrations
 
                     b.Property<DateTime>("DateRetour")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Expiration")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LieuDepart")
                         .IsRequired()
@@ -290,10 +278,6 @@ namespace RPtest.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NomClient")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Rib")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -358,6 +342,46 @@ namespace RPtest.Data.Migrations
                     b.ToTable("Models");
                 });
 
+            modelBuilder.Entity("RPtest.Models.Paiement", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CVC")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Expiration")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("LocationId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Montant")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Rib")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LocationId");
+
+                    b.ToTable("Paiements");
+                });
+
             modelBuilder.Entity("RPtest.Models.Vehicule", b =>
                 {
                     b.Property<int>("Id")
@@ -377,6 +401,9 @@ namespace RPtest.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Immatriculation")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -390,6 +417,9 @@ namespace RPtest.Data.Migrations
 
                     b.Property<decimal>("Prix")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("Vidange")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -464,6 +494,15 @@ namespace RPtest.Data.Migrations
                     b.Navigation("Vehicule");
                 });
 
+            modelBuilder.Entity("RPtest.Models.Paiement", b =>
+                {
+                    b.HasOne("RPtest.Models.Location", "Location")
+                        .WithMany("Paiement")
+                        .HasForeignKey("LocationId");
+
+                    b.Navigation("Location");
+                });
+
             modelBuilder.Entity("RPtest.Models.Vehicule", b =>
                 {
                     b.HasOne("RPtest.Models.Model", "Model")
@@ -476,6 +515,11 @@ namespace RPtest.Data.Migrations
             modelBuilder.Entity("RPtest.Models.Conducteur", b =>
                 {
                     b.Navigation("Location");
+                });
+
+            modelBuilder.Entity("RPtest.Models.Location", b =>
+                {
+                    b.Navigation("Paiement");
                 });
 
             modelBuilder.Entity("RPtest.Models.Model", b =>

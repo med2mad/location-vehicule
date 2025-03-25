@@ -4,10 +4,18 @@
 @using System.Text.Json;
 @{
 	Layout = "Dashboard";
+    ViewData["Title"] = "Ajouter un Véhicule";
 }
 
 @section Head{
-<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet">
+    <style>
+        input, select{
+            height: 35px !important;
+            padding: 5px !important;
+            border: solid gray 1px !important;
+        }
+    </style>
 }
 
 @if (TempData["message"]!=null)
@@ -44,19 +52,54 @@
             </select>
         </div>
 
-@*         <div class="mb-3">
+        <div class="mb-3">
             <label asp-for="Vehicule.Couleur" class="form-label">Couleur</label>
-            <input asp-for="Vehicule.Couleur" style="height:35px; padding:5px;" class="form-control">
-        </div> *@
+            <select asp-for="Vehicule.Couleur" class="form-control">
+                <option value="" selected></option>
+                <option value="Blanc">Blanc</option>
+                <option value="Noir">Noir</option>
+                <option value="Rouge">Rouge</option>
+                <option value="Bleu">Bleu</option>
+                <option value="Vert">Vert</option>
+                <option value="Gris">Gris</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Model.Type" class="form-label">Type : </label>
+            <select asp-for="Model.Type" id="type" class="custom-select form-control">
+                <option value="" selected></option>
+                <option value="Voiture">Voiture</option>
+                <option value="Luxe">Luxe</option>
+                <option value="Sports Car">Sports Car</option>
+                <option value="Camion">Camion</option>
+                <option value="Camionette">Camionette</option>
+                <option value="Mini Bus">Mini Bus</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Climatisation" class="form-label">Climatisation</label>
+            <select asp-for="Climatisation" class="form-control">
+                <option value="" selected></option>
+                <option value="Avec">Avec</option>
+                <option value="Sans">Sans</option>
+            </select>
+        </div>
 
         <div class="mb-3">
             <label asp-for="Vehicule.Prix" class="form-label"></label>
-            <input asp-for="Vehicule.Prix" type="number" style="height:35px; padding:5px; border:solid gray 1px;" class="form-control" required>
+            <input asp-for="Vehicule.Prix" type="number" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Model.Passagers" class="form-label">Places</label>
+            <input asp-for="Model.Passagers" type="number" class="form-control" required>
         </div>
 
         <div class="mb-3">
             <label asp-for="Vehicule.Immatriculation" class="form-label"></label>
-            <input asp-for="Vehicule.Immatriculation" style="height:35px; padding:5px; border:solid gray 1px;" class="form-control" required>
+            <input asp-for="Vehicule.Immatriculation" class="form-control">
         </div>
 
         <div class="mb-3">

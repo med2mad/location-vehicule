@@ -1,0 +1,103 @@
+﻿@page
+@model RPtest.Pages.HomeBoardModel
+@{
+    ViewData["Title"] = "Accueil";
+    Layout = "Dashboard";
+}
+
+<!-- Main Content -->
+
+    <div class="container-fluid">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h2>Résumé du Mois : @DateTime.Now.ToString("MM/yyyy")</h2>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="row align-items-center justify-content-around">
+            <div class="col-md-3 mb-4">
+                <div class="card text-white bg-primary">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="card-title">Réservations</h6>
+                                <h2 class="mb-0">@Model.nombresReservations</h2>
+                            </div>
+                            <i class="fas fa-calendar fa-3x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card text-white bg-success">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="card-title">Véhicules Prêts</h6>
+                                <h2 class="mb-0">@Model.vehiculesRestant</h2>
+                            </div>
+                            <i class="fas fa-car fa-3x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card text-white bg-danger">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="card-title">Réservations Annulées</h6>
+                                <h2 class="mb-0">@Model.reservationsAnnulee</h2>
+                            </div>
+                            <i class="fa fa-arrow-left fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <canvas id="paymentsChart"></canvas>
+
+
+        @section Scripts {
+
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    fetch('/HomeBoard?handler=PaymentsData').then(response => response.json()).then(data => {  
+                        let labels = data.map(item => item.month);
+                        let values = data.map(item => item.total);
+                    
+                        let ctx = document.getElementById('paymentsChart').getContext('2d');
+                        new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    label: 'Payement 2024/2025 (DH)',
+                                    data: values,
+                                    borderColor: 'blue',
+                                    backgroundColor: 'rgba(0, 0, 255, 0.2)',
+                                    borderWidth: 2,
+                                    fill: true
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                plugins: {
+                                    legend: { display: true }
+                                },
+                                scales: {
+                                    y: { beginAtZero: true }
+                                }
+                            }
+                        });
+                    });
+                });
+            </script>
+
+        }
+    </div>

@@ -13,6 +13,8 @@ public class Vehicule
     public bool? Climatisation { get; set; } = null;
     public string Photo { get; set; } = string.Empty;
     public decimal Prix { get; set; }
+    public DateTime Date { get; set; } = DateTime.UtcNow;
+    public DateTime Vidange { get; set; } = DateTime.UtcNow;
 
     [ForeignKey("Model")]
     public int? ModelId { get; set; }

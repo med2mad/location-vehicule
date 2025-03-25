@@ -35,7 +35,7 @@ https://github.com/Ecwid/payment-gateway-template/blob/master/index.html
 						<div class="payment-method">
 							<div class="payment-method__header">
 								<div class="font-weight-bold">
-									Méthode de paiement :
+									Méthodes de paiement :
 								</div>
 								<img src="~/images/images/cartes-min.png" border="0" align="absmiddle" hspace="3" style="height: 27px; padding-left: 10px;">
 							</div>
@@ -62,32 +62,32 @@ https://github.com/Ecwid/payment-gateway-template/blob/master/index.html
 														<div class="card-body">
 
 															<form id="paymentForm" method="post">
-																<input type="hidden" name="z" value="@Model.VehiculeId" />
+																<input type="hidden" name="VId" value="@Model.VehiculeId" />
 
 																<div class="mb-3">
-																	<label asp-for="Location.Rib" class="form-label">Numéro de carte de paiement</label>
-																	<input type="" asp-for="Location.Rib" class="form-control" placeholder="1234 5678 9012 3456" required>
+																	<label asp-for="Paiement.Rib" class="form-label">Numéro de carte de paiement</label>
+																	<input type="" asp-for="Paiement.Rib" class="form-control" placeholder="1234 5678 9012 3456" required>
 																</div>
 
 																<div class="row">
 																	<div class="col-md-6 mb-3">
-																		<label asp-for="Location.Expiration" class="form-label">Date d'Expiration</label>
-																		<input asp-for="Location.Expiration" class="form-control" pattern="^\d{2}/\d{2}$" placeholder="MM/YY" required>
+																		<label asp-for="Paiement.Expiration" class="form-label">Date d'Expiration</label>
+																		<input asp-for="Paiement.Expiration" class="form-control" pattern="^\d{2}/\d{2}$" placeholder="MM/YY" required>
 																	</div>
 																	<div class="col-md-6 mb-3">
-																		<label asp-for="Location.CVC" class="form-label">CVC</label>
-																		<input asp-for="Location.CVC" class="form-control" pattern="^\d{3}$" placeholder="123" required>
+																		<label asp-for="Paiement.CVC" class="form-label">CVC</label>
+																		<input asp-for="Paiement.CVC" class="form-control" pattern="^\d{3}$" placeholder="123" required>
 																	</div>
 																</div>
 
 																<div class="mb-3">
-																	<label asp-for="Location.Email" class="form-label">Email</label>
-																	<input asp-for="Location.Email" type="email"  class="form-control" placeholder="exemple@gmail.com" required>
+																	<label asp-for="Paiement.Email" class="form-label">Email</label>
+																	<input asp-for="Paiement.Email" type="email" class="form-control" placeholder="exemple@gmail.com" required>
 																</div>
 
 																<div class="mb-3">
 																	<label asp-for="Vehicule.Prix" class="form-label">Montant à payer (MAD)</label>
-																	<input asp-for="Vehicule.Prix" class="form-control" readonly>
+																	<input asp-for="Vehicule.Prix" max="@Model.Vehicule.Prix" name="Paiement.Montant" class="form-control">
 																</div>
 
 																<button type="submit" class="btn btn-primary w-100 h-100">Payer maintenant</button>

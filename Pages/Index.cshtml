@@ -68,12 +68,12 @@
                         </div>
 
                         <div class="mb-3 mb-md-0 col-md-3">
-                            <label asp-for="Location.DateDepart"  class="form-label mr-1">Date Début : </label>
+                            <label asp-for="Location.DateDepart"  class="form-label mr-1">Date Départ : </label>
                             <input asp-for="Location.DateDepart" name="Location.DateDepart" type="date" style="height:35px; padding:5px;" class="form-control" required>
                         </div>
 
                         <div class="mb-3 mb-md-0 col-md-3">
-                            <label asp-for="Location.DateRetour" class="form-label mr-1">Date Fin : </label>
+                            <label asp-for="Location.DateRetour" class="form-label mr-1">Date Retour : </label>
                             <input asp-for="Location.DateRetour" name="Location.dateRetour" type="date" style="height:35px; padding:5px;" class="form-control" required>
                         </div>
 
@@ -101,7 +101,7 @@
             @foreach (var vehicule in Model.Vehicules)
             {
                 <div class="col-lg-3 col-md-4 col-6 listing vehicule" style="border: solid 10px #f6f5f5">
-                    <div class="listing d-block  align-items-stretch text-center" style="padding:0;">
+                    <div class="listing d-block  align-items-stretch" style="padding:0;">
                         <a asp-page="Rent" asp-route-VehiculeId="@vehicule.Id">
                             <div class="listing-img h-100 mr-4" style="margin-top:0; text-align:center;">
                                 <img src="images/@vehicule.Photo" alt="@vehicule.Photo" class="img-fluid" style="max-height:180px;">
@@ -111,18 +111,18 @@
                                 <div class="rent-price">
                                     <strong>@vehicule.Prix MAD</strong>
                                 </div>
-                                <div class="d-block d-md-flex  pb-3">
+                                <div class="d-block d-md-flex  pb-3" style="justify-content:space-between;">
                                     <div class="listing-feature pr-3">
-                                        <span class="caption">Bagage</span>
-                                        <span class="number">@vehicule.Model.Bagage kg</span>
+                                        <div class="caption">Bagage</div>
+                                        <div class="number">@vehicule.Model.Bagage kg</div>
                                     </div>
                                     <div class="listing-feature pr-2">
-                                        <span class="caption">Couleur</span>
-                                        <span class="number">@vehicule.Couleur</span>
+                                        <div class="caption">Couleur</div>
+                                        <div class="number">@vehicule.Couleur</div>
                                     </div>
                                     <div class="listing-feature pr-2">
-                                        <span class="caption">Places</span>
-                                        <span class="number">@vehicule.Model.Passagers</span>
+                                        <div class="caption">Places</div>
+                                        <div class="number">@vehicule.Model.Passagers</div>
                                     </div>
                                 </div>
                             </div>

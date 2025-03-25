@@ -3,20 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RPtest.Data;
 
 #nullable disable
 
-namespace RPtest.Data.Migrations
+namespace RPtest.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250313213042_m2")]
-    partial class m2
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -263,24 +260,24 @@ namespace RPtest.Data.Migrations
                     b.Property<int?>("ConducteurId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DateDebut")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateFin")
+                    b.Property<DateTime>("DateDepart")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
+                    b.Property<DateTime>("DateRetour")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LieuDepart")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LieuRetour")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NomClient")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PlaceDebut")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PlaceFin")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -305,9 +302,7 @@ namespace RPtest.Data.Migrations
                         .IsUnique()
                         .HasFilter("[ConducteurId] IS NOT NULL");
 
-                    b.HasIndex("VehiculeId")
-                        .IsUnique()
-                        .HasFilter("[VehiculeId] IS NOT NULL");
+                    b.HasIndex("VehiculeId");
 
                     b.ToTable("Locations");
                 });
@@ -323,14 +318,11 @@ namespace RPtest.Data.Migrations
                     b.Property<decimal>("Bagage")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Carburant")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("Climatise")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Description")
+                    b.Property<string>("Marque")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -350,6 +342,46 @@ namespace RPtest.Data.Migrations
                     b.ToTable("Models");
                 });
 
+            modelBuilder.Entity("RPtest.Models.Paiement", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CVC")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Expiration")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("LocationId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Montant")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Rib")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LocationId");
+
+                    b.ToTable("Paiements");
+                });
+
             modelBuilder.Entity("RPtest.Models.Vehicule", b =>
                 {
                     b.Property<int>("Id")
@@ -358,9 +390,19 @@ namespace RPtest.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Carburant")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("Climatisation")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Couleur")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Immatriculation")
                         .IsRequired()
@@ -375,6 +417,9 @@ namespace RPtest.Data.Migrations
 
                     b.Property<decimal>("Prix")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("Vidange")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -441,12 +486,21 @@ namespace RPtest.Data.Migrations
                         .HasForeignKey("RPtest.Models.Location", "ConducteurId");
 
                     b.HasOne("RPtest.Models.Vehicule", "Vehicule")
-                        .WithOne("Location")
-                        .HasForeignKey("RPtest.Models.Location", "VehiculeId");
+                        .WithMany("Locations")
+                        .HasForeignKey("VehiculeId");
 
                     b.Navigation("Conducteur");
 
                     b.Navigation("Vehicule");
+                });
+
+            modelBuilder.Entity("RPtest.Models.Paiement", b =>
+                {
+                    b.HasOne("RPtest.Models.Location", "Location")
+                        .WithMany("Paiement")
+                        .HasForeignKey("LocationId");
+
+                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("RPtest.Models.Vehicule", b =>
@@ -463,6 +517,11 @@ namespace RPtest.Data.Migrations
                     b.Navigation("Location");
                 });
 
+            modelBuilder.Entity("RPtest.Models.Location", b =>
+                {
+                    b.Navigation("Paiement");
+                });
+
             modelBuilder.Entity("RPtest.Models.Model", b =>
                 {
                     b.Navigation("Vehicules");
@@ -470,7 +529,7 @@ namespace RPtest.Data.Migrations
 
             modelBuilder.Entity("RPtest.Models.Vehicule", b =>
                 {
-                    b.Navigation("Location");
+                    b.Navigation("Locations");
                 });
 #pragma warning restore 612, 618
         }

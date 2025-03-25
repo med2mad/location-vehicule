@@ -15,22 +15,24 @@ public class ListingModel(ApplicationDbContext _context) : PageModel
     public List<string> Marques { get; set; } = new();
     public List<Model> Marques_Models { get; set; } = new();
     public string ModelsJ { get; set; } = "[]";
-    public void OnGet()
+    public int? min { get; set; } = null;
+    public int? max { get; set; } = null;
+
+    [BindProperty(SupportsGet = true)] public Vehicule Vehicule { get; set; }
+    [BindProperty(SupportsGet = true)] public Model Model { get; set; }
+    [BindProperty(SupportsGet = true)] public int? PrixMin { get; set; } = null;
+    [BindProperty(SupportsGet = true)] public int? PrixMax { get; set; } = null;
+    [BindProperty(SupportsGet = true)] public string Climatisation { get; set; }
+
+    public IActionResult OnGet()
     {
         Marques = _context.Models.Select(m => m.Marque).Distinct().ToList();
         Marques_Models = _context.Models.Select(m => new Model { Marque = m.Marque, Nom = m.Nom }).OrderBy(m => m.Marque).ToList();
         ModelsJ = JsonSerializer.Serialize(Marques_Models);
+        var x = _context.Vehicules.Select(v => v.Prix).AsQueryable();
+        min = (int)Math.Floor(x.Min()); if (PrixMin == null) PrixMin = min;
+        max = (int)Math.Ceiling(x.Max()); if (PrixMax == null) PrixMax = max;
 
-        Vehicules = _context.Vehicules.Include(v => v.Model).ToList();
-    }
-
-    [BindProperty] public Vehicule Vehicule { get; set; }
-    [BindProperty] public Model Model { get; set; }
-    [BindProperty] public int PrixMin { get; set; }
-    [BindProperty] public int PrixMax { get; set; }
-    [BindProperty] public string Climatisation { get; set; }
-    public IActionResult OnPost()
-    {
         var query = _context.Vehicules.Include(v => v.Model).AsQueryable();
         if (!string.IsNullOrEmpty(Model.Marque))
         {
@@ -40,9 +42,9 @@ public class ListingModel(ApplicationDbContext _context) : PageModel
         {
             query = query.Where(v => v.Model.Nom == Model.Nom);
         }
-        if (Vehicule.Climatisation == true)
+        if (!string.IsNullOrEmpty(Climatisation))
         {
-            query = query.Where(v => v.Climatisation == Vehicule.Climatisation);
+            query = query.Where(v => v.Climatisation == (Climatisation == "Avec"));
         }
         if (!string.IsNullOrEmpty(Model.Type))
         {

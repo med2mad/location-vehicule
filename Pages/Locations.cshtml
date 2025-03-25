@@ -4,11 +4,16 @@
 @{
     Layout = "Dashboard";
     ViewData["Title"] = "Réservations";
-    Random x = new Random();
-    int r = 0;
 }
 
 <div class="container mt-4">
+
+
+        <div class="row mb-4">
+            <div class="col-12">
+                <h2>Réservations</h2>
+            </div>
+        </div>
 
     <table class="table table-bordered table-striped">
         <thead class="table-dark">
@@ -16,19 +21,18 @@
                 <th>N Réservation</th>
                 <th>Nom client</th>
                 <th>Téléphone</th>
-                <th>Place de Début</th>
-                <th>Place de Fin</th>
-                <th>Date Début</th>
-                <th>Date Fin</th>
+                <th>Lieu de Départ</th>
+                <th>Lieu de Retour</th>
+                <th>Date de Début</th>
+                <th>Date de Retour</th>
                 <th>Status</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var location in Model.Locations)
             {
-                r = x.Next(10000, 100000);
                 <tr>
-                    <td>#@r</td>
+                    <td>#@location.Id.ToString("D6")</td>
                     <td>@location.NomClient</td>
                     <td>@location.Tel</td>
                     <td>@location.LieuDepart</td>
@@ -45,7 +49,7 @@
                                 <span class="badge bg-danger">Annulé</span>
                                 break;
                             default:
-                                <span class="badge bg-warning text-dark">Reservé</span>
+                                <span class="badge bg-warning text-dark">Réservé</span>
                                 break;
                         }
                     </td>

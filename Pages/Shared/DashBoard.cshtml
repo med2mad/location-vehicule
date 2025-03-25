@@ -1,71 +1,141 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-    <title>CarRental</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="~/fonts/icomoon/style.css" asp-append-version="true">
-
-    <link rel="stylesheet" href="~/css/bootstrap.min.css" asp-append-version="true">
-    <link rel="stylesheet" href="~/css/bootstrap-datepicker.css" asp-append-version="true">
-    <link rel="stylesheet" href="~/css/jquery.fancybox.min.css" asp-append-version="true">
-    <link rel="stylesheet" href="~/css/owl.carousel.min.css" asp-append-version="true">
-    <link rel="stylesheet" href="~/css/owl.theme.default.min.css" asp-append-version="true">
-    <link rel="stylesheet" href="~/fonts/flaticon/font/flaticon.css" asp-append-version="true">
-    <link rel="stylesheet" href="~/css/aos.css" asp-append-version="true">
-
-    <!-- MAIN CSS -->
-    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
-            display: flex;
+            padding-top: 56px;
         }
-
-        #sidebar {
-            min-width: 250px;
-            max-width: 250px;
-            background: #343a40;
-            color: white;
-            padding-top: 20px;
+        .sidebar {
             height: 100vh;
+            position: fixed;
+            width: 250px;
+            background: linear-gradient(to bottom,#495057,#1d2024 );
+            padding-top: 20px;
+            border-right: solid 5px #a0a5ad;
+            transition: all 0.3s;
         }
-
-            #sidebar a {
-                color: white;
-                text-decoration: none;
-                display: block;
-                padding: 10px;
-            }
-
-                #sidebar a:hover {
-                    background: #495057;
-                }
-
-        .content {
-            flex-grow: 1;
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #d1d1d1;
+            display: block;
+            transition: all 0.3s;
+        }
+        .sidebar a:hover {
+            color: #ffffff;
+            background-color: #495057;
+        }
+        .sidebar a i {
+            margin-right: 10px;
+        }
+        .sidebar .active {
+            color: #ffffff;
+            background-color: #007bff;
+        }
+        .main-content {
+            margin-left: 250px;
             padding: 20px;
         }
+        .logo{
+            width: 100%;
+            max-width: 240px;
+        }
+         @@media (max-width: 768px) {
+                .sidebar {
+                    width: 0;
+                    overflow: hidden;
+                }
+                .main-content {
+                    margin-left: 0;
+                }
+                .sidebar.show {
+                    width: 250px;
+                }
+            }
     </style>
 
     @RenderSection("Head", required: false)
 </head>
 <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" id="sidebarToggle">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand ms-2" href="#">Tableau de Bord</a>
+            @* <div class="d-flex align-items-center">
+                <span class="text-white me-3">Admin</span>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                        <i class="fas fa-user-circle"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#">Profil</a></li>
+                        <li><a class="dropdown-item" href="#">Paramètres</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Déconnexion</a></li>
+                    </ul>
+                </div>
+            </div> *@
+        </div>
+    </nav>
 
-    <div id="sidebar" class="d-flex flex-column p-3">
-        <h4 class="text-center" style="background-color:white; border-radius:15px;"><img class="normal-logo" src="~/logo.png" style="width: 200px;" alt="logo"></h4>
-        <a href="/MainBoard"><i class=""></i> Accueil</a>
-		<a href="/Locations"><i class=""></i> Réservations</a>
-		<a href="/AddCar"><i class=""></i> Ajout de Véhicules</a>
-        <a href="/Index"><i class=""></i>Déconnection</a>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="text-center mb-4">
+            <img src="~/logo.png" class="rounded-circle logo" alt="Logo">
+            <h5 class="text-white mt-2">Administration</h5>
+        </div>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a href="/HomeBoard" class="nav-link @(ViewData["Title"]?.ToString() == "Accueil"?"active":"")">
+                    <i class="fas fa-home"></i> Accueil
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/Locations" class="nav-link @(ViewData["Title"]?.ToString() == "Réservations"?"active":"")">
+                    <i class="fas fa-calendar-check"></i> Réservations
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/CarsList" class="nav-link @(ViewData["Title"]?.ToString() == "List de Véhicules"?"active":"")">
+                    <i class="fas fa-car"></i> Liste de Véhicules
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/AddCar" class="nav-link @(ViewData["Title"]?.ToString() == "Ajouter un Véhicule"?"active":"")">
+                    <i class="fas fa-plus-circle"></i> Ajout de Véhicules
+                </a>
+            </li>
+            <li class="nav-item mt-4">
+                <a href="/Index" class="nav-link text-danger">
+                    <i class="fas fa-sign-out-alt"></i> Déconnexion
+                </a>
+            </li>
+        </ul>
     </div>
 
-    <div class="content">
+    <div class="main-content">
         @RenderBody()
     </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Toggle sidebar on mobile
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('show');
+        });
+    </script>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

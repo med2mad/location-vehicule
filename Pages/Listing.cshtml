@@ -19,16 +19,19 @@
             height:35px !important;
             padding: 5px !important;
         }
+        .form-range{
+            padding:0 !important;
+        }
     </style>
 }
-<div class="hero inner-page" style="background-image: url('images/header3.png');">
+<div class="hero inner-page" style="background-image: url('images/header3.png'); height:310px !important;">
     
 
     <div class="container">
         <div class="row align-items-end ">
             <div class="col-lg-5">
                 <div class="intro">
-                    <h1><strong>Véhicules</strong></h1>
+                    <h1 style="margin-top:100px;"><strong>Véhicules</strong></h1>
                 </div>
             </div>
 
@@ -37,19 +40,19 @@
 
             <div class="row align-items-center justify-content-center">
             <div class="col-lg-10">
-                <form method="post" class="trip-form mb-2" style="padding:0 10px 5px 10px;">
+                <form method="get" class="trip-form mb-2" style="padding:0 10px 5px 10px;">
 
                     <div class="row align-items-end justify-content-center">
                         <div class="mb-3 mb-md-0 col-md-3">
                             <label for="type" id="typelab">Type : </label>
                             <select asp-for="Model.Type" id="type" class="custom-select form-control">
-                                <option value=""></option>
+                                <option value="" selected></option>
                                 <option value="Voiture">Voiture</option>
                                 <option value="Luxe">Luxe</option>
                                 <option value="Sports Car">Sports Car</option>
                                 <option value="Camion">Camion</option>
                                 <option value="Camionette">Camionette</option>
-                                <option value="Minibus">Mini Bus</option>
+                                <option value="Mini Bus">Mini Bus</option>
                             </select>
                         </div>
                         <div class="mb-3 mb-md-0 col-md-3">
@@ -73,6 +76,14 @@
                             </select>
                         </div>
                         <div class="mb-3 mb-md-0 col-md-3">
+                            <label for="climatisation" id="climatisationlab">Climatisation :</label>
+                            <select asp-for="Climatisation" id="climatisation" class="custom-select form-control">
+                                <option value="" selected></option>
+                                <option value="Avec">Avec</option>
+                                <option value="Sans">Sans</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 mb-md-0 col-md-3">
                             <label for="couleur" id="couleurlab">Couleur : </label>
                             <select asp-for="Vehicule.Couleur" id="couleur" class="custom-select form-control">
                                 <option value="" selected></option>
@@ -85,20 +96,26 @@
                             </select>
                         </div>
                         <div class="mb-3 mb-md-0 col-md-3">
-                            <label for="prixmin" id="prixminlab" class="form-label">Prix Minimum :</label>
-                            <input asp-for="PrixMin" id="prixmin" type="number" class="form-control">
+                            <label style="position:relative; top:10px;">Prix Minimum</label>
+                            <div style="position:relative; top:10px; display:flex; gap:10px; justify-content:center;">
+                                <div>
+                                    <label for="prixmin" id="prixminlab" class="form-label">@Model.PrixMin</label>
+                                </div>
+                                <div>
+                                    <input asp-for="PrixMin" type="range" class="form-range" min="@Model.min" max="@Model.max" step="1" oninput="updateMin(this.value)" id="prixmin">
+                                </div>
+                            </div>
                         </div>
                         <div class="mb-3 mb-md-0 col-md-3">
-                            <label for="prixmax" id="prixmaxlab" class="form-label">Prix Maximum :</label>
-                            <input asp-for="PrixMax" id="prixmax" type="number" class="form-control">
-                        </div>
-                        <div class="mb-3 mb-md-0 col-md-3">
-                            <label for="climatisation" id="climatisationlab">Climatisation :</label>
-                            <select asp-for="Climatisation" id="climatisation" class="custom-select form-control">
-                                <option value="" selected></option>
-                                <option value="Avec">Avec</option>
-                                <option value="Sans">Sans</option>
-                            </select>
+                            <label style="position:relative; top:10px;">Prix Maximum</label>
+                            <div style="position:relative; top:10px; display:flex; gap:10px; justify-content:center;">
+                                <div>
+                                    <label for="prixmax" id="prixmaxlab" class="form-label">@Model.PrixMax</label>
+                                </div>
+                                <div>
+                                    <input asp-for="PrixMax" type="range" class="form-range" min="@Model.min" max="@Model.max" step="1" oninput="updateMax(this.value)" id="prixmax">
+                                </div>
+                            </div>                                
                         </div>
 @*                      <div class="mb-3 mb-md-0 col-md-3">
                             <label for="immatriculation" id="immatriculationlab" class="form-label">Immatriculationlab</label>
@@ -143,18 +160,18 @@
                                 <div class="rent-price">
                                     <strong>@vehicule.Prix MAD</strong>@* <span class="mx-1">/</span>jour *@
                                 </div>
-                                <div class="d-block d-md-flex">
-                                    <div class="listing-feature pr-4">
-                                        <span class="caption">Bagage</span>
-                                        <span class="number">@vehicule.Model.Bagage Kg</span>
+                                <div class="d-block d-md-flex" style="justify-content:space-between;">
+                                    <div class="listing-feature">
+                                        <div class="caption">Bagage</div>
+                                        <div class="number">@vehicule.Model.Bagage Kg</div>
                                     </div>
-                                    <div class="listing-feature pr-4">
-                                        <span class="caption">Couleur</span>
-                                        <span class="number">@vehicule.Couleur</span>
+                                    <div class="listing-feature">
+                                        <div class="caption">Couleur</div>
+                                        <div class="number">@vehicule.Couleur</div>
                                     </div>
-                                    <div class="listing-feature pr-4">
-                                        <span class="caption">Places</span>
-                                        <span class="number">@vehicule.Model.Passagers</span>
+                                    <div class="listing-feature">
+                                        <div class="caption">Places</div>
+                                        <div class="number">@vehicule.Model.Passagers</div>
                                     </div>
                                 </div>
 @*                              <div>
@@ -216,5 +233,12 @@
                     marquesSelect.value = selectedModel;
             });
         });
+
+        function updateMin(value) {
+            document.getElementById("prixminlab").textContent = value;
+        }
+        function updateMax(value) {
+            document.getElementById("prixmaxlab").textContent = value;
+        }
     </script>
 }
