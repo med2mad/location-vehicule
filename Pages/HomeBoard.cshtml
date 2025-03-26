@@ -1,18 +1,12 @@
 ﻿@page
 @model RPtest.Pages.HomeBoardModel
 @{
-    ViewData["Title"] = "Accueil";
+    ViewData["Title"] = "Résumé du Mois : " + @DateTime.Now.ToString("MM/yyyy");
     Layout = "Dashboard";
 }
 
 <!-- Main Content -->
 
-    <div class="container-fluid">
-        <div class="row mb-4">
-            <div class="col-12">
-                <h2>Résumé du Mois : @DateTime.Now.ToString("MM/yyyy")</h2>
-            </div>
-        </div>
 
         <!-- Stats Cards -->
         <div class="row align-items-center justify-content-around">
@@ -21,7 +15,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <h6 class="card-title">Réservations</h6>
+                                <h6 class="card-title">Locations</h6>
                                 <h2 class="mb-0">@Model.nombresReservations</h2>
                             </div>
                             <i class="fa-solid fa-calendar-days fa-3x"></i>
@@ -90,7 +84,7 @@
                             data: {
                                 labels: labels,
                                 datasets: [{
-                                    label: 'Payement 2024/2025 (DH)',
+                                    label: 'Payements 2024/2025 (DH)',
                                     data: values,
                                     borderColor: 'blue',
                                     backgroundColor: 'rgba(0, 0, 255, 0.2)',
@@ -119,4 +113,4 @@
             </script>
 
         }
-    </div>
+

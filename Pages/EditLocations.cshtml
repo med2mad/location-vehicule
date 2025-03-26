@@ -1,0 +1,79 @@
+﻿@page
+@model RPtest.Pages.EditLocationsModel
+@{
+    Layout = "Dashboard";
+    ViewData["Title"] = "Modifier la Location N : #" + @Model.Location.Id.ToString("D6");
+}
+
+@section Head {
+    <style>
+        input {
+            margin-bottom:30px;
+            border:solid gray 1px;
+        }
+
+        .col-md-6{
+            border-right: solid #d1d1d1 1px;
+        }
+    </style>
+}
+
+
+<form method="post">
+    <input type="hidden" asp-for="Location.Id" />
+
+    <div class="row">
+
+        <div class="col-md-6">
+			<div class="form-group">
+				<label for="date" id="datelab">Date</label>
+				<input id="date" readonly class="form-control" value="@Model.Location.Date.ToString("dd/MM/yyyy")" style="color:gray;" />
+			</div>
+
+			<div class="form-group">
+				<label asp-for="Location.NomClient">Nom client</label>
+				<input asp-for="Location.NomClient" class="form-control" />
+			</div>
+
+			<div class="form-group">
+				<label asp-for="Location.Tel">Téléphone</label>
+				<input asp-for="Location.Tel" class="form-control" />
+			</div>
+
+            <div class="form-group">
+                <label asp-for="Location.Status">Statut</label>
+                <select asp-for="Location.Status" class="form-control">
+                    <option>En cours</option>
+                    <option>Complet</option>
+                    <option>Annulé</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Location.LieuDepart">Lieu de Départ</label>
+                <input asp-for="Location.LieuDepart" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Location.LieuRetour">Lieu de Retour</label>
+                <input asp-for="Location.LieuRetour" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Location.DateDepart">Date de Départ</label>
+                <input asp-for="Location.DateDepart" type="date" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Location.DateRetour">Date de Retour</label>
+                <input asp-for="Location.DateRetour" type="date" class="form-control" />
+            </div>
+        </div>
+
+    </div>
+
+    <button type="submit" class="btn btn-success">Enregistrer</button>
+    <a asp-page="ListLocations" class="btn btn-secondary">Retour</a>
+</form>

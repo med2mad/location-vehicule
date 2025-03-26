@@ -5,14 +5,6 @@
 	ViewData["Title"] = "Villes";
 }
 
-<div class="container mt-4">
-
-    <div class="row mb-4">
-        <div class="col-12">
-            <h2>Villes</h2>
-        </div>
-    </div>
-
     <p>
         <a asp-page="/AddVille" class="btn btn-success"> + Ajouter une ville</a>
     </p>
@@ -30,7 +22,7 @@
                 <tr>
                     <td>@ville.Nom</td>
                     <td>
-                        <a asp-page="Edit" asp-route-id="@ville.Id" class="btn btn-primary">Modifier</a>
+                        <a asp-page="EditVille" asp-route-id="@ville.Id" class="btn btn-primary">Modifier</a>
                         <form method="post" asp-page-handler="Delete" asp-route-id="@ville.Id" style="display:inline;">
                             <button type="submit" class="btn btn-danger">Supprimer</button>
                         </form>
@@ -39,5 +31,3 @@
             }
         </tbody>
     </table>
-</div>
-

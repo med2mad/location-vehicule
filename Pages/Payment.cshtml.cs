@@ -46,11 +46,11 @@ public class PaymentModel(ApplicationDbContext context) : PageModel
         var v = context.Vehicules.Include(v => v.Model).FirstOrDefault(v => v.Id == VId);
         string message = "Cher(e),\"" + Location.NomClient + "\"\n";
         message += "Nous avons bien reçu votre réservation. Voici les détails de votre achat :\n";
-        message += " - Numéro de réservation : #" + LId.ToString("D6") + "\n";
-        message += " - Comande effectuée le : " + DateTime.Now.ToString("dd-MM-yyyy") + "\n";
-        message += " - Véhicule : " + v.Model.Nom + "\n";
+        message += " - Numéro de Location : #" + LId.ToString("D6") + "\n";
+        message += " - Commande effectuée le : " + now.ToString("dd-MM-yyyy") + "\n";
+        message += " - Véhicule : " + v.Model.Marque + " " + v.Model.Nom + "\n";
         message += " - Réservé pour : " + Location.DateDepart.ToString("dd-MM-yyyy") + "\n";
-        message += " - Montant total : " + v.Prix + " DH\n";
+        message += " - Montant : " + Paiement.Montant + " DH\n";
         message += "\n";
         message += "Si vous avez la moindre question, n’hésitez pas à nous contacter.";
 

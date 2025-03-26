@@ -1,0 +1,75 @@
+﻿@page
+@using System
+@model ListLocationsModel
+@{
+    Layout = "Dashboard";
+    ViewData["Title"] = "Locations";
+}
+
+@section Head {
+    <style>
+        td{
+            vertical-align:middle;
+        }
+        .photo{
+            width:100px;
+        }
+        .button{
+            font-size: 0.8rem;
+            width: 70px;
+            padding: 8px 5px;
+        }
+    </style>
+}
+
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr style="text-align:center;">
+                <th>N°</th>
+                <th>Date</th>
+                <th>Nom client</th>
+                <th>Téléphone</th>
+                <th>Véhicule</th>
+                <th>Lieu de Départ</th>
+                <th>Lieu de Retour</th>
+                <th>Statut</th>
+                <th style="width:80px;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var location in Model.Locations)
+            {
+                <tr>
+                    <td>#@location.Id.ToString("D6")</td>
+                    <td>@location.Date.ToString("dd/MM/yyyy")</td>
+                    <td>@location.NomClient</td>
+                    <td>@location.Tel</td>
+                    <td style="text-align:center;">
+                        <img src="images/@location.Vehicule.Photo" alt="@location.Vehicule.Model.Nom" class="photo" /><br />
+                        @location.Vehicule.Model.Marque @location.Vehicule.Model.Nom
+                    </td>
+                    <td>@location.LieuDepart</td>
+                    <td>@location.LieuRetour</td>
+                    <td>
+                        @switch (location.Status)
+                        {
+                            case "Complet":
+                                <span class="badge bg-success">Complet</span>
+                                break;
+                            case "Annulé":
+                                <span class="badge bg-danger">Annulé</span>
+                                break;
+                            default:
+                                <span class="badge bg-warning text-dark">En cours</span>
+                                break;
+                        }
+                    </td>
+                    <td style="text-align:center;  width:80px;">
+                        <a asp-page="EditLocations" asp-route-id="@location.Id" class="btn btn-primary button" style="margin-bottom:3px;">Modifier</a>
+                        <a asp-page="Delete" asp-route-id="@location.Id" class="btn btn-danger button">Supprimer</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

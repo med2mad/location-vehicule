@@ -49,17 +49,26 @@
             max-width: 240px;
         }
          @@media (max-width: 768px) {
-                .sidebar {
-                    width: 0;
-                    overflow: hidden;
-                }
-                .main-content {
-                    margin-left: 0;
-                }
-                .sidebar.show {
-                    width: 250px;
-                }
+            .sidebar {
+                width: 0;
+                overflow: hidden;
             }
+            .main-content {
+                margin-left: 0;
+            }
+            .sidebar.show {
+                width: 250px;
+            }
+        }
+
+        .adminheader {
+            background: linear-gradient(to bottom, #495057, #566273);
+            color:white;
+            padding:10px;
+            text-align:center;
+            font-size:1.5rem;
+            font-weight:normal;
+        }
     </style>
 
     @RenderSection("Head", required: false)
@@ -102,12 +111,12 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="/Locations" class="nav-link @(ViewData["Title"]?.ToString() == "Réservations"?"active":"")">
-                    <i class="fa-solid fa-calendar-days"></i> Réservations
+                <a href="/ListLocations" class="nav-link @(ViewData["Title"]?.ToString() == "Locations"?"active":"")">
+                    <i class="fa-solid fa-calendar-days"></i> Locations
                 </a>
             </li>
             <li class="nav-item">
-                <a href="/CarsList" class="nav-link @(ViewData["Title"]?.ToString() == "List de Véhicules"?"active":"")">
+                <a href="/CarsList" class="nav-link @(ViewData["Title"]?.ToString() == "Véhicules"?"active":"")">
                     <i class="fas fa-car"></i> Liste de Véhicules
                 </a>
             </li>
@@ -139,6 +148,8 @@
             </li>
         </ul>
     </div>
+    
+    <h2 class="adminheader">@ViewData["Title"]</h2>
 
     <div class="main-content">
         @RenderBody()

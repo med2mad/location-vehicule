@@ -5,14 +5,15 @@
     ViewData["Title"] = "Modifier la Ville";
 }
 
-<h2>Modifier la Ville</h2>
 
-<form method="post">
-    <input type="hidden" asp-for="Ville.Id" />
-    <div class="form-group">
-        <label>Nom de la Ville</label>
-        <input asp-for="Ville.Nom" class="form-control" required />
-    </div>
-    <button type="submit" class="btn btn-success">Enregistrer</button>
-    <a asp-page="Index" class="btn btn-secondary">Annuler</a>
-</form>
+    <form method="post">
+        <input type="hidden" asp-for="Ville.Id" />
+
+        <div class="form-group mb-3">
+            <label>Nom de la Ville</label>
+            <input asp-for="Ville.Nom" class="form-control" required />
+        </div>
+
+        <button type="submit" class="btn btn-success">Enregistrer</button>
+        <a asp-page="ListeVilles" class="btn btn-secondary">Annuler</a>
+    </form>

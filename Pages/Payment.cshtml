@@ -43,7 +43,7 @@ https://github.com/Ecwid/payment-gateway-template/blob/master/index.html
 								<div class="form-area">
 									<div class="form-area__content">
 										<p>
-											Pour finaliser votre réservation, commencez le processus de payement en remplissant soigneusement 
+											Pour finaliser votre Location, commencez le processus de payement en remplissant soigneusement
 											vos informations de carte bancaire dans le formulaire sécurisé. Assurez-vous que les détails fournis
 											sont corrects avant de valider votre paiement.
 										</p>
@@ -87,7 +87,7 @@ https://github.com/Ecwid/payment-gateway-template/blob/master/index.html
 
 																<div class="mb-3">
 																	<label asp-for="Paiement.Montant" class="form-label">Montant à payer (MAD)</label>
-																	<input asp-for="Paiement.Montant" type="number" max="@Math.Ceiling(@Model.Paiement.Montant)" min="0" class="form-control">
+																	<input asp-for="Paiement.Montant" type="number" max="@Math.Ceiling(@Model.Paiement.Montant)" min="0" class="form-control" required>
 																</div>
 
 																<button type="submit" class="btn btn-primary w-100 h-100">Payer maintenant</button>
