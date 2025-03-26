@@ -12,12 +12,18 @@ public class PaymentModel(ApplicationDbContext context) : PageModel
     public int VehiculeId { get; set; }
     [BindProperty(SupportsGet = true)]
     public Location Location { get; set; }
-    [BindProperty(SupportsGet = true)]
-    public Paiement Paiement { get; set; }
+    [BindProperty]
+    public Paiement Paiement { get; set; } = new();
+
+    [BindProperty(SupportsGet = true)] public string villeDepart { get; set; }
+    [BindProperty(SupportsGet = true)] public string quartierDepart { get; set; } = string.Empty;
+    [BindProperty(SupportsGet = true)] public string villeRetour { get; set; }
+    [BindProperty(SupportsGet = true)] public string quartierRetour { get; set; } = string.Empty;
 
     public void OnGet()
     {
         Vehicule = context.Vehicules.Include(v => v.Model).FirstOrDefault(v => v.Id == VehiculeId);
+        Paiement.Montant = Vehicule.Prix;
     }
 
     public IActionResult OnPost(int VId)
@@ -26,6 +32,8 @@ public class PaymentModel(ApplicationDbContext context) : PageModel
 
         Location.VehiculeId = VId;
         Location.Date = now;
+        Location.LieuDepart = villeDepart + " " + quartierDepart;
+        Location.LieuRetour = villeRetour + " " + quartierRetour;
         context.Locations.Add(Location);
         context.SaveChanges();
         var LId = Location.Id;

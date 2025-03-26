@@ -1,0 +1,27 @@
+﻿@page
+@model RPtest.Pages.EditQuartierModel
+@{
+	Layout = "Dashboard";
+	ViewData["Title"] = "Modifier le Quartier";
+}
+
+<h2>Modifier un quartier</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="Quartier.Id" />
+
+    <div class="mb-3">
+        <label class="form-label">Ville</label>
+        <select asp-for="Quartier.VilleId" asp-items="@(new SelectList(Model.Villes, "Id", "Nom"))" class="form-control"></select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Nom du quartier</label>
+        <input asp-for="Quartier.Nom" class="form-control" />
+        <span asp-validation-for="Quartier.Nom" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">Enregistrer</button>
+
+    <a asp-page="ListQuartier" class="btn btn-secondary">Annuler</a>
+</form>

@@ -8,11 +8,10 @@ using System.Globalization;
 namespace RPtest.Pages;
 public class HomeBoardModel(ApplicationDbContext _context) : PageModel
 {
-    [BindProperty(SupportsGet = true)]
-    public Paiement Paiement { get; set; }
     public int nombresReservations { get; set; }
-    public int vehiculesRestant { get; set; }
+    //public int vehiculesRestant { get; set; }
     public int reservationsAnnulee { get; set; }
+    public decimal revenu { get; set; }
 
     public void OnGet()
     {
@@ -22,14 +21,16 @@ public class HomeBoardModel(ApplicationDbContext _context) : PageModel
             .Where(l => l.Date.Year == now.Year && l.Date.Month == now.Month && l.Status != "Annulé")
             .Count();
 
-        int NvehiculesReserves = _context.Locations
-            .Where(l => l.DateDepart.Year == now.Year && l.DateDepart.Month == now.Month && l.Status == "Réservé")
-            .Count();
-        vehiculesRestant = _context.Vehicules.Count() - NvehiculesReserves;
+        //int NvehiculesReserves = _context.Locations
+        //    .Where(l => l.DateDepart.Year == now.Year && l.DateDepart.Month == now.Month && l.Status == "Réservé")
+        //    .Count();
+        //vehiculesRestant = _context.Vehicules.Count() - NvehiculesReserves;
 
         reservationsAnnulee = _context.Locations
             .Where(l => l.Date.Year == now.Year && l.Date.Month == now.Month && l.Status == "Annulé")
             .Count();
+
+        revenu = _context.Paiements.Where(p => p.Date.Month == now.Month).Sum(p => p.Montant);
     }
 
     public IActionResult OnGetPaymentsData()

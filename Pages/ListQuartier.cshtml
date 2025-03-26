@@ -1,0 +1,37 @@
+﻿@page
+@model RPtest.Pages.ListQuartierModel
+@{
+    Layout = "Dashboard";
+    ViewData["Title"] = "Quartiers";
+}
+
+<h2>Liste des quartiers</h2>
+
+<p>
+    <a asp-page="AddQuartier" class="btn btn-success"> + Ajouter un quartier</a>
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Ville</th>
+            <th>Nom</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var quartier in Model.Quartiers)
+        {
+            <tr>
+                <td>@quartier.Ville.Nom</td>
+                <td>@quartier.Nom</td>
+                <td>
+                    <a asp-page="EditQuartier" asp-route-id="@quartier.Id" class="btn btn-primary">Modifier</a>
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@quartier.Id" style="display:inline;">
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

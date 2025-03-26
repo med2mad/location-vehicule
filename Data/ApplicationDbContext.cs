@@ -13,4 +13,6 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<RPtest.Models.Conducteur> Conducteurs { get; set; } = default!;
     public DbSet<RPtest.Models.Location> Locations { get; set; } = default!;
     public DbSet<RPtest.Models.Paiement> Paiements { get; set; } = default!;
+    public DbSet<RPtest.Models.Ville> Villes { get; set; } = default!;
+    public DbSet<RPtest.Models.Quartier> Quartiers { get; set; } = default!;
 }

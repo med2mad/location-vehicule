@@ -86,8 +86,8 @@ https://github.com/Ecwid/payment-gateway-template/blob/master/index.html
 																</div>
 
 																<div class="mb-3">
-																	<label asp-for="Vehicule.Prix" class="form-label">Montant à payer (MAD)</label>
-																	<input asp-for="Vehicule.Prix" max="@Model.Vehicule.Prix" name="Paiement.Montant" class="form-control">
+																	<label asp-for="Paiement.Montant" class="form-label">Montant à payer (MAD)</label>
+																	<input asp-for="Paiement.Montant" type="number" max="@Math.Ceiling(@Model.Paiement.Montant)" min="0" class="form-control">
 																</div>
 
 																<button type="submit" class="btn btn-primary w-100 h-100">Payer maintenant</button>

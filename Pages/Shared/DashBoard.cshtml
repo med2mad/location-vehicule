@@ -92,7 +92,7 @@
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="text-center mb-4">
-            <img src="~/logo.png" class="rounded-circle logo" alt="Logo">
+            <a href="index"><img src="~/logo.png" class="rounded-circle logo" alt="Logo"></a>
             <h5 class="text-white mt-2">Administration</h5>
         </div>
         <ul class="nav flex-column">
@@ -103,7 +103,7 @@
             </li>
             <li class="nav-item">
                 <a href="/Locations" class="nav-link @(ViewData["Title"]?.ToString() == "Réservations"?"active":"")">
-                    <i class="fas fa-calendar-check"></i> Réservations
+                    <i class="fa-solid fa-calendar-days"></i> Réservations
                 </a>
             </li>
             <li class="nav-item">
@@ -116,6 +116,22 @@
                     <i class="fas fa-plus-circle"></i> Ajout de Véhicules
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link" style="padding-bottom:0;">
+                    <i class="fa fa-cog"></i> Paramètres
+                </a>
+            </li>
+            <li class="nav-item" style="margin-left:60px;">
+                <a href="/ListeVilles" style="padding:0;" class="nav-link @(ViewData["Title"]?.ToString() == "Villes"?"active":"")">
+                    Villes
+                </a>
+            </li>
+            <li class="nav-item" style="margin-left:60px;">
+                <a href="/ListQuartier" style="padding:0;" class="nav-link @(ViewData["Title"]?.ToString() == "Quartiers"?"active":"")">
+                    Quartiers
+                </a>
+            </li>
+
             <li class="nav-item mt-4">
                 <a href="/Index" class="nav-link text-danger">
                     <i class="fas fa-sign-out-alt"></i> Déconnexion

@@ -1,0 +1,17 @@
+﻿@page
+@model RPtest.Pages.AddVilleModel
+@{
+    Layout = "Dashboard";
+    ViewData["Title"] = "Ajouter une Ville";
+}
+<h2>Ajouter une Ville</h2>
+
+<form method="post">
+    <div class="mb-3">
+        <label class="form-label">Nom de la ville</label>
+        <input asp-for="Ville.Nom" class="form-control" />
+        <span asp-validation-for="Ville.Nom" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-success">Ajouter</button>
+    <a asp-page="ListeVilles" class="btn btn-secondary">Annuler</a>
+</form>
