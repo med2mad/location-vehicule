@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RPtest.Data;
 
@@ -11,9 +12,11 @@ using RPtest.Data;
 namespace RPtest.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250328101954_m6")]
+    partial class m6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,6 +227,34 @@ namespace RPtest.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("RPtest.Models.ChangementVidange", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Montant")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("VehiculeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VehiculeId");
+
+                    b.ToTable("ChangementsVidanges");
+                });
+
             modelBuilder.Entity("RPtest.Models.Conducteur", b =>
                 {
                     b.Property<int>("Id")
@@ -264,12 +295,12 @@ namespace RPtest.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Designation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<decimal>("Montant")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Titre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("VehiculeId")
                         .HasColumnType("int");
@@ -481,34 +512,6 @@ namespace RPtest.Migrations
                     b.ToTable("Vehicules");
                 });
 
-            modelBuilder.Entity("RPtest.Models.Vidange", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Montant")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int?>("VehiculeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("VehiculeId");
-
-                    b.ToTable("Vidanges");
-                });
-
             modelBuilder.Entity("RPtest.Models.Ville", b =>
                 {
                     b.Property<int>("Id")
@@ -605,6 +608,15 @@ namespace RPtest.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("RPtest.Models.ChangementVidange", b =>
+                {
+                    b.HasOne("RPtest.Models.Vehicule", "Vehicule")
+                        .WithMany("ChangementsVidanges")
+                        .HasForeignKey("VehiculeId");
+
+                    b.Navigation("Vehicule");
+                });
+
             modelBuilder.Entity("RPtest.Models.Depense", b =>
                 {
                     b.HasOne("RPtest.Models.Vehicule", "Vehicule")
@@ -656,15 +668,6 @@ namespace RPtest.Migrations
                     b.Navigation("Model");
                 });
 
-            modelBuilder.Entity("RPtest.Models.Vidange", b =>
-                {
-                    b.HasOne("RPtest.Models.Vehicule", "Vehicule")
-                        .WithMany("Vidanges")
-                        .HasForeignKey("VehiculeId");
-
-                    b.Navigation("Vehicule");
-                });
-
             modelBuilder.Entity("RPtest.Models.VisiteTechnique", b =>
                 {
                     b.HasOne("RPtest.Models.Vehicule", "Vehicule")
@@ -691,11 +694,11 @@ namespace RPtest.Migrations
 
             modelBuilder.Entity("RPtest.Models.Vehicule", b =>
                 {
+                    b.Navigation("ChangementsVidanges");
+
                     b.Navigation("Depenses");
 
                     b.Navigation("Locations");
-
-                    b.Navigation("Vidanges");
 
                     b.Navigation("VisitesTechniques");
                 });

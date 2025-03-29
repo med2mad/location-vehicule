@@ -47,7 +47,7 @@ public class AddCarModel(ApplicationDbContext _context) : PageModel
         {
             await imageFile.CopyToAsync(fileStream);
         }
-        _context.Vehicules.Add(new Vehicule { ModelId = id, Prix = Vehicule.Prix, Climatisation = (this.Climatisation == "Avec"), Couleur = Vehicule.Couleur, Immatriculation = Vehicule.Immatriculation, Date = DateTime.UtcNow, Vidange = DateTime.UtcNow, Photo = fileName });
+        _context.Vehicules.Add(new Vehicule { ModelId = id, Prix = Vehicule.Prix, Climatisation = (this.Climatisation == "Avec"), Couleur = Vehicule.Couleur, Immatriculation = Vehicule.Immatriculation, Date = DateTime.UtcNow, Kilometrage = 0, Photo = fileName });
 
         _context.SaveChanges();
 

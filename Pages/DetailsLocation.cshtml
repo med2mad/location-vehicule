@@ -1,0 +1,75 @@
+﻿@page "{id:int}"
+@model DetailsLocationModel
+@{
+    Layout = "Dashboard";
+    ViewData["Title"] = "Détails du Location";
+}
+
+@section Head {
+    <style>
+        .card {
+          margin:20px;
+        }
+
+        .card-title{
+            margin-bottom:20px;
+            border-bottom: solid 1px #d2d2d2;
+            font-size:1.6rem;
+        }
+    </style>
+}
+
+
+<h2>Détails de la Location : #@Model.Location.Id.ToString("D6")</h2>
+
+<div>
+    <div>
+        <div class="row justify-content-center">
+            <div class="col-md-5 card">
+                <h5 class="card-title">Client</h5>
+                <dl class="row" style="margin-left:10px;">
+                    <dt class="col-sm-3">Nom</dt>  <dd class="col-sm-9">@Model.Location.NomClient</dd>
+                    <dt class="col-sm-3">Téléphone</dt>  <dd class="col-sm-9">@Model.Location.Tel</dd>
+                    <dt class="col-sm-3">Email</dt>  <dd class="col-sm-9">@Model.Location.Paiement.FirstOrDefault().Email</dd>
+                </dl>
+            </div>
+            <div class="col-md-5 card">
+                <h5 class="card-title">Réservation</h5>
+                <dl class="row" style="margin-left:10px;">
+                    <dt class="col-sm-4">Date</dt>  <dd class="col-sm-8">@Model.Location.Date.ToString("dd/MM/yyyy")</dd>
+                    <dt class="col-sm-4">Statut</dt>  <dd class="col-sm-8">@Model.Location.Statut</dd>
+                    <dt class="col-sm-4">Lieu de Départ</dt>  <dd class="col-sm-8">@Model.Location.LieuDepart</dd>
+                    <dt class="col-sm-4">Lieu de Retour</dt>  <dd class="col-sm-8">@Model.Location.LieuRetour</dd>
+                    <dt class="col-sm-4">Date de Départ</dt>  <dd class="col-sm-8">@Model.Location.DateDepart.ToString("dd/MM/yyyy")</dd>
+                    <dt class="col-sm-4">Date de Retour</dt>  <dd class="col-sm-8">@Model.Location.DateRetour.ToString("dd/MM/yyyy")</dd>
+                </dl>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-5 card">
+                <h5 class="card-title">Paiement</h5>
+                <dl class="row" style="margin-left:10px;">
+                    <dt class="col-sm-4">Montant</dt>  <dd class="col-sm-8">@Model.Location.Paiement.FirstOrDefault().Montant DH</dd>
+                    <dt class="col-sm-4">Date</dt>  <dd class="col-sm-8">@Model.Location.Paiement.FirstOrDefault().Date.ToString("dd/MM/yyyy")</dd>
+                    <dt class="col-sm-4">Rib</dt>  <dd class="col-sm-8">@Model.Location.Paiement.FirstOrDefault().Rib</dd>
+                    <dt class="col-sm-9">date d'expiration de la carte bancaire</dt>  <dd class="col-sm-3">@Model.Location.Paiement.FirstOrDefault().Expiration</dd>
+                </dl>
+            </div>
+            <div class="col-md-5 card">
+                <h5 class="card-title">Véhicule</h5>
+                <dl class="row">
+                    <dt class="col-sm-4">Immatriculation</dt>  <dd class="col-sm-8">@Model.Location.Vehicule.Immatriculation</dd>
+                    <dt class="col-sm-4">Type de véhicule</dt>  <dd class="col-sm-8">@Model.Location.Vehicule.Model.Type</dd>
+                    <dt class="col-sm-4">Modèle</dt>  <dd class="col-sm-8">@Model.Location.Vehicule.Model.Marque @Model.Location.Vehicule.Model.Nom</dd>
+                    <dt class="col-sm-4">Kilométrage</dt>  <dd class="col-sm-8">@Model.Location.Vehicule.Kilometrage</dd>
+                    <dt class="col-sm-4">Climatisation</dt> <dd class="col-sm-8">@(Model.Location.Vehicule.Climatisation == true ? "Avec" : "Sans")</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-page="EditLocations" asp-route-id="@Model.Location.Id" class="btn btn-warning">Modifier</a>
+    <a asp-page="ListLocations" class="btn btn-secondary">Retour à la liste</a>
+</div>

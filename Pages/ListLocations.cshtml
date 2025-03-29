@@ -16,8 +16,8 @@
         }
         .button{
             font-size: 0.8rem;
-            width: 70px;
-            padding: 8px 5px;
+            width: 50px;
+            margin:1px;
         }
     </style>
 }
@@ -38,21 +38,21 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var location in Model.Locations)
+            @foreach (var l in Model.Locations)
             {
                 <tr>
-                    <td>#@location.Id.ToString("D6")</td>
-                    <td>@location.Date.ToString("dd/MM/yyyy")</td>
-                    <td>@location.NomClient</td>
-                    <td>@location.Tel</td>
+                    <td>#@l.Id.ToString("D6")</td>
+                    <td>@l.Date.ToString("dd/MM/yyyy")</td>
+                    <td>@l.NomClient</td>
+                    <td>@l.Tel</td>
                     <td style="text-align:center;">
-                        <img src="images/@location.Vehicule.Photo" alt="@location.Vehicule.Model.Nom" class="photo" /><br />
-                        @location.Vehicule.Model.Marque @location.Vehicule.Model.Nom
+                        <img src="images/@l.Vehicule.Photo" alt="@l.Vehicule.Model.Nom" class="photo" /><br />
+                        @l.Vehicule.Model.Marque @l.Vehicule.Model.Nom
                     </td>
-                    <td>@location.LieuDepart</td>
-                    <td>@location.LieuRetour</td>
+                    <td>@l.LieuDepart</td>
+                    <td>@l.LieuRetour</td>
                     <td>
-                        @switch (location.Status)
+                        @switch (l.Statut)
                         {
                             case "Complet":
                                 <span class="badge bg-success">Complet</span>
@@ -65,9 +65,10 @@
                                 break;
                         }
                     </td>
-                    <td style="text-align:center;  width:80px;">
-                        <a asp-page="EditLocations" asp-route-id="@location.Id" class="btn btn-primary button" style="margin-bottom:3px;">Modifier</a>
-                        <a asp-page="Delete" asp-route-id="@location.Id" class="btn btn-danger button">Supprimer</a>
+                    <td style="text-align:center; width:80px;">
+                        <a asp-page="DetailsLocation" asp-route-id="@l.Id" class="btn btn-primary button"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                    <a asp-page="EditLocations" asp-route-id="@l.Id" class="btn btn-warning button"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                        <a asp-page="Delete" asp-route-id="@l.Id" class="btn btn-danger button"><i class="fa fa-times" aria-hidden="true"></i></a>
                     </td>
                 </tr>
             }

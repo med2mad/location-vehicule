@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RPtest.Data;
 
@@ -11,9 +12,11 @@ using RPtest.Data;
 namespace RPtest.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250327021338_m3")]
+    partial class m3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -249,38 +252,6 @@ namespace RPtest.Migrations
                     b.ToTable("Conducteurs");
                 });
 
-            modelBuilder.Entity("RPtest.Models.Depense", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Designation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Montant")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int?>("VehiculeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("VehiculeId");
-
-                    b.ToTable("Depenses");
-                });
-
             modelBuilder.Entity("RPtest.Models.Location", b =>
                 {
                     b.Property<int>("Id")
@@ -313,7 +284,7 @@ namespace RPtest.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Statut")
+                    b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -445,30 +416,31 @@ namespace RPtest.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Carburant")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("Climatisation")
                         .HasColumnType("bit");
 
                     b.Property<string>("Couleur")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Immatriculation")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Kilometrage")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("KilometrageEntreVidanges")
+                    b.Property<int>("Kilometrage")
                         .HasColumnType("int");
 
                     b.Property<int?>("ModelId")
                         .HasColumnType("int");
 
                     b.Property<string>("Photo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Prix")
@@ -479,34 +451,6 @@ namespace RPtest.Migrations
                     b.HasIndex("ModelId");
 
                     b.ToTable("Vehicules");
-                });
-
-            modelBuilder.Entity("RPtest.Models.Vidange", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Montant")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int?>("VehiculeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("VehiculeId");
-
-                    b.ToTable("Vidanges");
                 });
 
             modelBuilder.Entity("RPtest.Models.Ville", b =>
@@ -524,34 +468,6 @@ namespace RPtest.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Villes");
-                });
-
-            modelBuilder.Entity("RPtest.Models.VisiteTechnique", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Montant")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int?>("VehiculeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("VehiculeId");
-
-                    b.ToTable("VisitesTechniques");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -605,15 +521,6 @@ namespace RPtest.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("RPtest.Models.Depense", b =>
-                {
-                    b.HasOne("RPtest.Models.Vehicule", "Vehicule")
-                        .WithMany("Depenses")
-                        .HasForeignKey("VehiculeId");
-
-                    b.Navigation("Vehicule");
-                });
-
             modelBuilder.Entity("RPtest.Models.Location", b =>
                 {
                     b.HasOne("RPtest.Models.Conducteur", "Conducteur")
@@ -656,24 +563,6 @@ namespace RPtest.Migrations
                     b.Navigation("Model");
                 });
 
-            modelBuilder.Entity("RPtest.Models.Vidange", b =>
-                {
-                    b.HasOne("RPtest.Models.Vehicule", "Vehicule")
-                        .WithMany("Vidanges")
-                        .HasForeignKey("VehiculeId");
-
-                    b.Navigation("Vehicule");
-                });
-
-            modelBuilder.Entity("RPtest.Models.VisiteTechnique", b =>
-                {
-                    b.HasOne("RPtest.Models.Vehicule", "Vehicule")
-                        .WithMany("VisitesTechniques")
-                        .HasForeignKey("VehiculeId");
-
-                    b.Navigation("Vehicule");
-                });
-
             modelBuilder.Entity("RPtest.Models.Conducteur", b =>
                 {
                     b.Navigation("Location");
@@ -691,13 +580,7 @@ namespace RPtest.Migrations
 
             modelBuilder.Entity("RPtest.Models.Vehicule", b =>
                 {
-                    b.Navigation("Depenses");
-
                     b.Navigation("Locations");
-
-                    b.Navigation("Vidanges");
-
-                    b.Navigation("VisitesTechniques");
                 });
 
             modelBuilder.Entity("RPtest.Models.Ville", b =>

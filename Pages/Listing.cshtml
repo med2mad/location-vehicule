@@ -39,98 +39,88 @@
 
 
             <div class="row align-items-center justify-content-center">
-            <div class="col-lg-10">
-                <form method="get" class="trip-form mb-2" style="padding:0 10px 5px 10px;">
+                <div class="col-lg-10">
+                    <form method="get" class="trip-form mb-2" style="padding:0 10px 5px 10px;">
 
-                    <div class="row align-items-end justify-content-center">
-                        <div class="mb-3 mb-md-0 col-md-3">
-                            <label for="type" id="typelab">Type : </label>
-                            <select asp-for="Model.Type" id="type" class="custom-select form-control">
-                                <option value="" selected></option>
-                                <option value="Voiture">Voiture</option>
-                                <option value="Luxe">Luxe</option>
-                                <option value="Sports Car">Sports Car</option>
-                                <option value="Camion">Camion</option>
-                                <option value="Camionette">Camionette</option>
-                                <option value="Mini Bus">Mini Bus</option>
-                            </select>
-                        </div>
-                        <div class="mb-3 mb-md-0 col-md-3">
-                            <label for="marque">Marque : </label>
-                            <select asp-for="Model.Marque" id="marques" class="custom-select form-control">
-                                <option value="" selected></option>
-                                @foreach (var marque in Model.Marques)
-                                {
-                                    <option value="@marque">@marque</option>
-                                }
-                            </select>
-                        </div>
-                        <div class="mb-3 mb-md-0 col-md-3">
-                            <label for="model" id="modellab" class="form-label">Modèle :</label>
-                            <select asp-for="Model.Nom" id="modeles" class="custom-select form-control">
-                                <option value="" selected></option>
-                                @foreach (var nom_model in Model.Marques_Models)
-                                {
-                                    <option value="@nom_model.Nom">@nom_model.Marque : @nom_model.Nom</option>
-                                }
-                            </select>
-                        </div>
-                        <div class="mb-3 mb-md-0 col-md-3">
-                            <label for="climatisation" id="climatisationlab">Climatisation :</label>
-                            <select asp-for="Climatisation" id="climatisation" class="custom-select form-control">
-                                <option value="" selected></option>
-                                <option value="Avec">Avec</option>
-                                <option value="Sans">Sans</option>
-                            </select>
-                        </div>
-                        <div class="mb-3 mb-md-0 col-md-3">
-                            <label for="couleur" id="couleurlab">Couleur : </label>
-                            <select asp-for="Vehicule.Couleur" id="couleur" class="custom-select form-control">
-                                <option value="" selected></option>
-                                <option value="Blanc">Blanc</option>
-                                <option value="Noir">Noir</option>
-                                <option value="Rouge">Rouge</option>
-                                <option value="Bleu">Bleu</option>
-                                <option value="Vert">Vert</option>
-                                <option value="Gris">Gris</option>
-                            </select>
-                        </div>
-                        <div class="mb-3 mb-md-0 col-md-3">
-                            <label style="position:relative; top:10px;">Prix Minimum</label>
-                            <div style="position:relative; top:10px; display:flex; gap:10px; justify-content:center;">
-                                <div>
-                                    <label for="prixmin" id="prixminlab" class="form-label">@Model.PrixMin</label>
-                                </div>
-                                <div>
-                                    <input asp-for="PrixMin" type="range" class="form-range" min="@Model.min" max="@Model.max" step="1" oninput="updateMin(this.value)" id="prixmin">
+                        <div class="row align-items-end justify-content-center">
+                            <div class="mb-3 mb-md-0 col-md-3">
+                                <label for="type" id="typelab">Type : </label>
+                                <select asp-for="Model.Type" id="type" class="custom-select form-control">
+                                    <option value="" selected></option>
+                                    <option value="Voiture">Voiture</option>
+                                    <option value="Luxe">Luxe</option>
+                                    <option value="Sports Car">Sports Car</option>
+                                    <option value="Camion">Camion</option>
+                                    <option value="Camionette">Camionette</option>
+                                    <option value="Mini Bus">Mini Bus</option>
+                                </select>
+                            </div>
+                            <div class="mb-3 mb-md-0 col-md-3">
+                                <label for="marques">Marque : </label>
+                                <select asp-for="Model.Marque" id="marques" class="custom-select form-control">
+                                    <option value="" selected></option>
+                                    @foreach (var marque in Model.Marques)
+                                    {
+                                        <option value="@marque">@marque</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="mb-3 mb-md-0 col-md-3">
+                                <label for="modeles" id="modellab" class="form-label">Modèle :</label>
+                                <select asp-for="Model.Nom" id="modeles" class="custom-select form-control"></select>
+                            </div>
+                            <div class="mb-3 mb-md-0 col-md-3">
+                                <label for="climatisation" id="climatisationlab">Climatisation :</label>
+                                <select asp-for="Climatisation" id="climatisation" class="custom-select form-control">
+                                    <option value="" selected></option>
+                                    <option value="Avec">Avec</option>
+                                    <option value="Sans">Sans</option>
+                                </select>
+                            </div>
+                            <div class="mb-3 mb-md-0 col-md-3">
+                                <label for="couleur" id="couleurlab">Couleur : </label>
+                                <select asp-for="Vehicule.Couleur" id="couleur" class="custom-select form-control">
+                                    <option value="" selected></option>
+                                    <option value="Blanc">Blanc</option>
+                                    <option value="Noir">Noir</option>
+                                    <option value="Rouge">Rouge</option>
+                                    <option value="Bleu">Bleu</option>
+                                    <option value="Vert">Vert</option>
+                                    <option value="Gris">Gris</option>
+                                </select>
+                            </div>
+                            <div class="mb-3 mb-md-0 col-md-3">
+                                <label style="position:relative; top:10px;" id="prix1">Prix Minimum</label>
+                                <div style="position:relative; top:10px; display:flex; gap:10px; justify-content:center;">
+                                    <div>
+                                        <label for="prixmin" id="prixminlab" class="form-label">@Model.PrixMin</label>
+                                    </div>
+                                    <div>
+                                        <input asp-for="PrixMin" type="range" class="form-range" min="@Model.min" max="@Model.max" step="1" oninput="updateMin(this.value)" id="prixmin">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="mb-3 mb-md-0 col-md-3">
-                            <label style="position:relative; top:10px;">Prix Maximum</label>
-                            <div style="position:relative; top:10px; display:flex; gap:10px; justify-content:center;">
-                                <div>
-                                    <label for="prixmax" id="prixmaxlab" class="form-label">@Model.PrixMax</label>
-                                </div>
-                                <div>
-                                    <input asp-for="PrixMax" type="range" class="form-range" min="@Model.min" max="@Model.max" step="1" oninput="updateMax(this.value)" id="prixmax">
-                                </div>
-                            </div>                                
-                        </div>
-@*                      <div class="mb-3 mb-md-0 col-md-3">
-                            <label for="immatriculation" id="immatriculationlab" class="form-label">Immatriculationlab</label>
-                            <input name="immatriculation" id="immatriculation" class="form-control" required>
-                        </div> *@
+                            <div class="mb-3 mb-md-0 col-md-3">
+                                <label style="position:relative; top:10px;" id="prix2">Prix Maximum</label>
+                                <div style="position:relative; top:10px; display:flex; gap:10px; justify-content:center;">
+                                    <div>
+                                        <label for="prixmax" id="prixmaxlab" class="form-label">@Model.PrixMax</label>
+                                    </div>
+                                    <div>
+                                        <input asp-for="PrixMax" type="range" class="form-range" min="@Model.min" max="@Model.max" step="1" oninput="updateMax(this.value)" id="prixmax">
+                                    </div>
+                                </div>                                
+                            </div>
 
-                        <div class="mb-3 mb-md-0 col-md-3">
-                            <input type="submit" value="Chercher" class="btn btn-primary w-100" style="height:50px !important;"/>
+                            <div class="mb-3 mb-md-0 col-md-3">
+                                <input type="submit" value="Chercher" class="btn btn-primary w-100" style="height:50px !important;"/>
+                            </div>
                         </div>
-                    </div>
 
-                </form>
+                    </form>
 
+                </div>
             </div>
-        </div>
 
 
 
@@ -232,6 +222,8 @@
                 if (selectedModel)
                     marquesSelect.value = selectedModel;
             });
+
+            marquesSelect.dispatchEvent(new Event("change"));
         });
 
         function updateMin(value) {

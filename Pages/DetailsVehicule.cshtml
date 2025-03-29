@@ -1,0 +1,81 @@
+﻿@page "{id:int}"
+@model DetailsVehiculeModel
+@{
+    Layout = "Dashboard";
+    ViewData["Title"] = "Détails du Véhicule";
+}
+
+<div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <dl class="row">
+                <dt class="col-sm-4">
+                    Type de véhicule
+                </dt>
+                <dd class="col-sm-8">
+                    @Model.Vehicule.Model.Type
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Vehicule.Immatriculation)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Vehicule.Immatriculation)
+                </dd>
+                <dt class="col-sm-4">
+                    Modèle
+                </dt>
+                <dd class="col-sm-8">
+                    @Model.Vehicule.Model.Marque @Model.Vehicule.Model.Nom
+                </dd>
+                <dt class="col-sm-4">
+                    Places
+                </dt>
+                <dd class="col-sm-8">
+                    @Model.Vehicule.Model.Passagers
+                </dd>
+                <dt class="col-sm-4">
+                    Bagage
+                </dt>
+                <dd class="col-sm-8">
+                    @Model.Vehicule.Model.Bagage
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Vehicule.Climatisation)
+                </dt>
+                <dd class="col-sm-8">
+                    @(Model.Vehicule.Climatisation == true ? "Avec" : "Sans")
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Vehicule.Date)
+                </dt>
+                <dd class="col-sm-8">
+                    @Model.Vehicule.Date.ToString("dd/MM/yyyy")
+                </dd>
+                <dt class="col-sm-4">
+                    kilométrage actuel
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Vehicule.Kilometrage)
+                </dd>
+                <dt class="col-sm-4">
+                    kilométrage Vidange
+                </dt>
+                <dd class="col-sm-8">
+                    @(Model.Vehicule.KilometrageEntreVidanges?.ToString() ?? "non saisie")
+                </dd>
+                <dt class="col-sm-4">
+                    Total Dépenses
+                </dt>
+                <dd class="col-sm-8">
+                    @Model.Vehicule.Depenses.Sum(d=>d.Montant) DH
+                </dd>
+            </dl>
+        </div>
+        <div class="col-md-6"> <img src="~/images/@Model.Vehicule.Photo" alt="@Model.Vehicule.Photo" /> </div>
+    </div>
+</div>
+<div>
+    <a asp-page="EditVehicule" asp-route-id="@Model.Vehicule.Id" class="btn btn-warning">Modifier</a>
+    <a asp-page="CarsList" class="btn btn-secondary">Retour à la liste</a>
+</div>

@@ -1,0 +1,56 @@
+﻿@page
+@model RPtest.Pages.AddVidangeModel
+@{
+    Layout = "Dashboard";
+    ViewData["Title"] = Model.IsNew ? "Ajouter une Vidange" : "Modifier une Vidange";
+}
+
+<h1>@ViewData["Title"]</h1>
+<h4>Véhicule: @Model.VehiculeMarque @Model.VehiculeModel</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <input type="hidden" asp-for="Vidange.Id" />
+            <input type="hidden" asp-for="Vidange.VehiculeId" />
+            <input type="hidden" asp-for="IsNew" />
+
+            <div class="form-group">
+                <label asp-for="Vidange.Montant" class="control-label"></label>
+                <input asp-for="Vidange.Montant" type="number" class="form-control" />
+                <span asp-validation-for="Vidange.Montant" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Vidange.Date" class="control-label"></label>
+                <input asp-for="Vidange.Date" class="form-control" type="date" />
+                <span asp-validation-for="Vidange.Date" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Vidange.Description" class="control-label"></label>
+                <textarea asp-for="Vidange.Description" class="form-control"></textarea>
+                <span asp-validation-for="Vidange.Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                @if (Model.IsNew)
+                {
+                    <button type="submit" class="btn btn-primary">Ajouter</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                }
+                <a asp-page="ListVidange" asp-route-vehiculeId="@Model.VehiculeId" class="btn btn-secondary">Annuler</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

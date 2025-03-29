@@ -2,32 +2,204 @@
 @model RPtest.Pages.CarsList
 @{
 	Layout = "Dashboard";
-    ViewData["Title"] = "List de Véhicules";
+    ViewData["Title"] = "List de Véhicules : " + Model.cnt;
 }
+
+@section Head {
+    <style>
+        td, th {
+            vertical-align: middle;
+            text-align:center;
+        }
+        .photo {
+            width: 150px;
+        }
+        .search-bar {
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 15px; 
+        }
+        .search-bar select, .search-bar input {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 0.8rem !important;
+        }
+        .searchcontainer{
+            border: solid 1px #b8c4d1;
+            border-radius:20px;
+            background-color: #f2f2f2;
+        }
+        .main-content{
+            padding-top:10px;
+        }
+        .button {
+            font-size: 0.8rem;
+            width: 50px;
+            margin: 1px;
+        }
+        .submit{
+            padding:10px;
+            width:50px;
+            margin-top:1px;
+        }
+        label {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+        .v{
+            font-size: 0.8rem;
+            width: 90px;
+            margin: 1px;
+            padding:5px;
+        }
+    </style>
+}
+
+<div class="row align-items-center mb-3" style="justify-content: center">
+
+    <div class="col-lg-10 searchcontainer">
+        <form method="get" class="trip-form mb-2 mt-2 search-bar">
+
+            <div class="row" style="align-items:center; justify-content:space-around !important;">
+                <div class="mb-3 mb-md-0 col-md-2" style="padding-right:0 !important;">
+                    <label for="type" id="typelab">Type</label>
+                    <select asp-for="Model.Type" id="type" class="custom-select form-control">
+                        <option value="" selected></option>
+                        <option value="Voiture">Voiture</option>
+                        <option value="Luxe">Luxe</option>
+                        <option value="Sports Car">Sports Car</option>
+                        <option value="Camion">Camion</option>
+                        <option value="Camionette">Camionette</option>
+                        <option value="Mini Bus">Mini Bus</option>
+                    </select>
+                </div>
+                <div class="mb-3 mb-md-0 col-md-2" style="padding-right:0 !important;">
+                    <label for="marques">Marque</label>
+                    <select asp-for="Model.Marque" id="marques" class="custom-select form-control">
+                        <option value="" selected></option>
+                        @foreach (var marque in Model.Marques)
+                        {
+                            <option value="@marque">@marque</option>
+                        }
+                    </select>
+                </div>
+                <div class="mb-3 mb-md-0 col-md-3" style="padding-right:0 !important;">
+                    <label for="modeles" id="modellab">Modèle</label>
+                    <select asp-for="Model.Nom" id="modeles" class="custom-select form-control"></select>
+                </div>
+                
+                <div class="mb-3 mb-md-0 col-md-2" style="padding-right:0 !important;">
+                    <label asp-for="Vehicule.Immatriculation">Immatriculation</label>
+                    <input asp-for="Vehicule.Immatriculation" class="form-control">
+                </div>
+
+                <div class="mb-3 mb-md-0 col-md-1" style="padding-right:0 !important;">
+                    <label for="type" id="typelab">Loué</label>
+                    <select asp-for="Model.Type" id="type" class="custom-select form-control">
+                        <option value="" selected></option>
+                        <option value="Oui">Oui</option>
+                        <option value="Non">Non</option>
+                    </select>
+                </div>
+
+                <div class="mb-3 mb-md-0 col-md-2" style="text-align:center;padding:0 !important;">
+                    <button type="submit" class="btn btn-primary submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    <a asp-page-handler="CarsList" class="btn btn-secondary submit"><i class="fa fa-times" aria-hidden="true"></i></a>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</div>
 
 <table class ="table table-bordered table-striped">
     <thead>
         <tr>
             <th>Photo</th>
-            <th>Model</th>
+            <th>Modèle</th>
             <th>Immatriculation</th>
             <th>Prix</th>
             <th>Climatisation</th>
-            <th>Vidange</th>
+            <th>Disponibilité</th>
+            <th>Dépenses</th>
+            <th style="width:60px;"></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var v in Model.Vehicules)
         {
+            var LId = v.Locations.FirstOrDefault(l => l.Statut == "En cours")?.Id;
+
             <tr>
-                <td><img src="/images/@v.Photo" width="150"></td>
+                <td>
+                    <a asp-page="DetailsVehicule" asp-route-id="@v.Id">
+                        <img src="/images/@v.Photo" class="photo" alt="@v.Photo" style="width:200px;">
+                    </a>
+                </td>
                 <td>@v.Model.Marque @v.Model.Nom</td>
                 <td>@v.Immatriculation</td>
                 <td>@v.Prix</td>
-                <td>@v.Climatisation</td>
-                <td>@v.Date.ToString("dd-MM-yyyy")</td>
+                <td>@(v.Climatisation==true?"Avec":"Sans")</td>
+                <td class="@(LId>=0 ? "table-info" : "")" style="text-align:center;">
+                    @if (LId>=0)
+                    {
+                        <strong>En Location</strong>
+                        <div><a asp-page="DetailsLocation" asp-route-id="@LId" class="btn btn-primary button"><i class="fa fa-eye" aria-hidden="true"></i></a></div>
+                    }
+                </td>
+                <td>
+                    <a asp-page="ListVisiteTechnique" asp-route-vehiculeId="@v.Id" class="btn btn-secondary v">Visites Techniques</a><br />
+                    <a asp-page="ListVidange" asp-route-vehiculeId="@v.Id" class="btn btn-secondary v">Vidanges</a><br />
+                    <a asp-page="ListDepense" asp-route-vehiculeId="@v.Id" class="btn btn-secondary v">Autres Dépenses</a>
+                </td>
+                <td style="width:60px;">
+                    <a asp-page="DetailsVehicule" asp-route-id="@v.Id" class="btn btn-primary button"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                    <a asp-page="EditVehicule" asp-route-id="@v.Id" class="btn btn-warning button"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@v.Id" style="display:inline;">
+                        <button type="submit" class="btn btn-danger button"><i class="fa fa-times" aria-hidden="true"></i></button>
+                    </form>
+                </td>
             </tr>
         }
     </tbody>
 </table>
 
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            let marquesSelect = document.getElementById("marques");
+            let modelesSelect = document.getElementById("modeles");
+            let modelesParMarque = JSON.parse('@Html.Raw(Model.ModelsJ)');
+
+            marquesSelect.addEventListener("change", function () {
+                let selectedMarque = marquesSelect.value;
+                modelesSelect.innerHTML = "";
+                let newOption = document.createElement("option");
+                newOption.value = ""; newOption.text = "";
+                modelesSelect.appendChild(newOption);
+
+                for (let key in modelesParMarque) {
+                    if (modelesParMarque[key].Marque == selectedMarque || !selectedMarque) {
+                        let newOption = document.createElement("option");
+                        newOption.value = modelesParMarque[key].Nom;
+                        newOption.text = modelesParMarque[key].Marque + " : " + modelesParMarque[key].Nom;
+                        modelesSelect.appendChild(newOption);
+                    }
+                }
+            });
+
+            modelesSelect.addEventListener("change", function () {
+                let selectedModel = modelesSelect.options[modelesSelect.selectedIndex].text;
+                selectedModel = selectedModel.split(" : ")[0];
+                if (selectedModel)
+                    marquesSelect.value = selectedModel;
+            });
+
+            marquesSelect.dispatchEvent(new Event("change"));
+        });
+    </script>
+}

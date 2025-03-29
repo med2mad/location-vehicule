@@ -1,0 +1,58 @@
+﻿@page
+@model RPtest.Pages.ListVidangeModel
+@{
+	Layout = "Dashboard";
+	ViewData["Title"] = "Vidanges";
+    decimal Total = 0;
+}
+
+@section Head {
+    <style>
+        .button {
+            font-size: 0.8rem;
+            width: 50px;
+            margin: 1px;
+        }
+        td {
+            vertical-align:middle;
+        }
+    </style>
+}
+<h1>Immatriculation: @Model.VehiculeImmatriculation</h1>
+<h4>Modèle : @Model.VehiculeMarque @Model.VehiculeModel</h4>
+
+
+<p>
+    <a asp-page="AddVidange" asp-route-vehiculeId="@Model.VehiculeId" class="btn btn-primary"> + Ajouter une Vidange</a>
+    <a asp-page="CarsList" class="btn btn-secondary">Retour à la liste des véhicules</a>
+</p>
+
+<table class="table table-striped table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th>Montant (DH)</th>
+            <th>Date</th>
+            <th>Description</th>
+            <th style="width:60px;"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var v in Model.Vidanges)
+        {
+            Total += v.Montant;
+            <tr>
+                <td>@Html.DisplayFor(modelItem => v.Montant)</td>
+                <td>@v.Date.ToString("dd/MM/yyyy")</td>
+                <td>@Html.DisplayFor(modelItem => v.Description)</td>
+                <td style="width:60px;">
+                    <a asp-page="AddVidange" asp-route-id="@v.Id" asp-route-vehiculeId="@Model.VehiculeId" class="btn btn-sm btn-warning button"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a asp-page="./Delete" asp-route-id="@v.Id" asp-route-vehiculeId="@Model.VehiculeId" class="btn btn-sm btn-danger button"><i class="fa fa-times" aria-hidden="true"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>
+    Total : @Total DH
+</h3>

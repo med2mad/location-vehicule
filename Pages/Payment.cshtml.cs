@@ -32,8 +32,8 @@ public class PaymentModel(ApplicationDbContext context) : PageModel
 
         Location.VehiculeId = VId;
         Location.Date = now;
-        Location.LieuDepart = villeDepart + " " + quartierDepart;
-        Location.LieuRetour = villeRetour + " " + quartierRetour;
+        Location.LieuDepart = villeDepart + ", " + quartierDepart;
+        Location.LieuRetour = villeRetour + ", " + quartierRetour;
         context.Locations.Add(Location);
         context.SaveChanges();
         var LId = Location.Id;

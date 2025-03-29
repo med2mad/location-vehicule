@@ -14,7 +14,7 @@ public class Location
     public DateTime DateDepart { get; set; }
     public DateTime DateRetour { get; set; }
     public string Tarif { get; set; } = "Jour"; //Jour;Heure;Kilomètre
-    public string Status { get; set; } = "Réservé"; //Réservé;Complet;Annulé
+    public string Statut { get; set; } = "Réservé"; //Réservé;Complet;Annulé
 
     [ForeignKey("Vehicule")]
     public int? VehiculeId { get; set; }

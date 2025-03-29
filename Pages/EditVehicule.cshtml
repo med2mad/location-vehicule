@@ -1,0 +1,117 @@
+﻿@page "{id?}"
+
+@model EditVehiculeModel
+@{
+    Layout = "Dashboard";
+    ViewData["Title"] = (Model.IsNew ? "Ajouter" : "Modifier") + " un Véhicule";
+}
+
+<form method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Vehicule.Id" />
+    <input type="hidden" asp-for="Vehicule.Carburant" />
+    <input type="hidden" asp-for="Vehicule.Date" />
+    <input type="hidden" asp-for="Photo" />
+
+    <div class="form-group">
+        <label asp-for="Model.Marque" for="marques" class="form-label">Marque</label>
+        <select asp-for="Model.Marque" id="marques" class="custom-select form-control" required>
+            <option value="" selected></option>
+            @foreach (var marque in Model.Marques)
+            {
+                <option value="@marque">@marque</option>
+            }
+        </select>
+    </div>
+    
+    <div class="form-group">
+        <label for="modeles" id="modellab">Modèle :</label>
+        <select asp-for="Model.Nom" id="modeles" class="custom-select form-control" required>
+            <option value="" selected></option>
+            @foreach (var nom_model in Model.Marques_Models)
+            {
+                <option value="@nom_model.Nom">@nom_model.Marque : @nom_model.Nom</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Vehicule.Immatriculation" class="form-label"></label>
+        <input asp-for="Vehicule.Immatriculation" class="form-control">
+    </div>
+    
+    <div class="form-group">
+        <label asp-for="Vehicule.Kilometrage" class="form-label"></label>
+        <input asp-for="Vehicule.Kilometrage" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Vehicule.Prix" class="form-label"></label>
+        <input asp-for="Vehicule.Prix" type="number" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Climatisation"></label>
+        <select asp-for ="Climatisation" class="form-control">
+            <option value="" selected></option>
+            <option value="Avec">Avec</option>
+            <option value="Sans">Sans</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="couleur" id="couleurlab">Couleur : </label>
+        <select asp-for="Vehicule.Couleur" id="couleur" class="form-control">
+            <option value="" selected></option>
+            <option value="Blanc">Blanc</option>
+            <option value="Noir">Noir</option>
+            <option value="Rouge">Rouge</option>
+            <option value="Bleu">Bleu</option>
+            <option value="Vert">Vert</option>
+            <option value="Gris">Gris</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="photo" class="form-label">Photo</label>
+        <input type="file" name="imageFile" accept="image/*" id="photo" style="height:35px; padding:5px;" class="form-control">
+    </div>
+
+    <button type="submit" class="btn btn-success">Enregistrer</button>
+    <a asp-page="CarsList" class="btn btn-secondary">Annuler</a>
+</form>
+
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            let marquesSelect = document.getElementById("marques");
+            let modelesSelect = document.getElementById("modeles");
+            let modelesParMarque = JSON.parse('@Html.Raw(Model.ModelsJ)');
+
+            marquesSelect.addEventListener("change", function () {
+                let selectedMarque = marquesSelect.value;
+                modelesSelect.innerHTML = "";
+                let newOption = document.createElement("option");
+                newOption.value = ""; newOption.text = "";
+                modelesSelect.appendChild(newOption);
+
+                for (let key in modelesParMarque) {
+                    if (modelesParMarque[key].Marque == selectedMarque || !selectedMarque) {
+                        let newOption = document.createElement("option");
+                        newOption.value = modelesParMarque[key].Nom;
+                        newOption.text = modelesParMarque[key].Marque + " : " + modelesParMarque[key].Nom;
+                        modelesSelect.appendChild(newOption);
+                    }
+                }
+            });
+
+            modelesSelect.addEventListener("change", function () {
+                let selectedModel = modelesSelect.options[modelesSelect.selectedIndex].text;
+                selectedModel = selectedModel.split(" : ")[0];
+                if (selectedModel)
+                    marquesSelect.value = selectedModel;
+            });
+        });
+    </script>
+}

@@ -1,0 +1,60 @@
+﻿@page
+@model RPtest.Pages.ListDepenseModel
+@{
+    Layout = "Dashboard";
+    ViewData["Title"] = "Dépenses du Véhicule";
+    decimal Total = 0;
+}
+
+@section Head {
+    <style>
+        .button {
+            font-size: 0.8rem;
+            width: 50px;
+            margin: 1px;
+        }
+        td{
+            vertical-align:middle;
+        }
+    </style>
+}
+<h1>Immatriculation: @Model.VehiculeImmatriculation</h1>
+<h4>Modèle : @Model.VehiculeMarque @Model.VehiculeModel</h4>
+
+
+<p>
+    <a asp-page="AddDepense" asp-route-vehiculeId="@Model.VehiculeId" class="btn btn-primary"> + Ajouter une dépense</a>
+    <a asp-page="CarsList" class="btn btn-secondary">Retour à la liste des véhicules</a>
+</p>
+
+<table class="table table-striped table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th>Désignation</th>
+            <th>Montant</th>
+            <th>Date</th>
+            <th>Description</th>
+            <th style="width:60px;"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var d in Model.Depenses)
+        {
+            Total += d.Montant;
+            <tr>
+                <td>@Html.DisplayFor(modelItem => d.Designation)</td>
+                <td>@Html.DisplayFor(modelItem => d.Montant)</td>
+                <td>@d.Date.ToString("dd/MM/yyyy")</td>
+                <td>@Html.DisplayFor(modelItem => d.Description)</td>
+                <td style="width:60px;">
+                    <a asp-page="AddDepense" asp-route-id="@d.Id" asp-route-vehiculeId="@Model.VehiculeId" class="btn btn-sm btn-warning button"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a asp-page="./Delete" asp-route-id="@d.Id" asp-route-vehiculeId="@Model.VehiculeId" class="btn btn-sm btn-danger button"><i class="fa fa-times" aria-hidden="true"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>
+    Total : @Total DH
+</h3>

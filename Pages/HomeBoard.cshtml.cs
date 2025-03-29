@@ -18,7 +18,7 @@ public class HomeBoardModel(ApplicationDbContext _context) : PageModel
         DateTime now = DateTime.Now;
 
         nombresReservations = _context.Locations
-            .Where(l => l.Date.Year == now.Year && l.Date.Month == now.Month && l.Status != "Annulé")
+            .Where(l => l.Date.Year == now.Year && l.Date.Month == now.Month && l.Statut != "Annulé")
             .Count();
 
         //int NvehiculesReserves = _context.Locations
@@ -27,7 +27,7 @@ public class HomeBoardModel(ApplicationDbContext _context) : PageModel
         //vehiculesRestant = _context.Vehicules.Count() - NvehiculesReserves;
 
         reservationsAnnulee = _context.Locations
-            .Where(l => l.Date.Year == now.Year && l.Date.Month == now.Month && l.Status == "Annulé")
+            .Where(l => l.Date.Year == now.Year && l.Date.Month == now.Month && l.Statut == "Annulé")
             .Count();
 
         revenu = _context.Paiements.Where(p => p.Date.Month == now.Month).Sum(p => p.Montant);
