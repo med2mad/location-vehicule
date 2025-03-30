@@ -8,7 +8,6 @@ public class Model
     [Required] public string Nom { get; set; }
     [Required] public string Marque { get; set; }
     public string Type { get; set; } //Voiture;Luxe;Camion;Camionnette;Camping;Moto;Mini Bus;
-    public string Description { get; set; } = string.Empty;
     public int Passagers { get; set; } = 0;
     public decimal Bagage { get; set; } = 0;
 

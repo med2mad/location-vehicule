@@ -57,12 +57,12 @@
             </div>
             <div class="col-md-5 card">
                 <h5 class="card-title">Véhicule</h5>
-                <dl class="row">
-                    <dt class="col-sm-4">Immatriculation</dt>  <dd class="col-sm-8">@Model.Location.Vehicule.Immatriculation</dd>
-                    <dt class="col-sm-4">Type de véhicule</dt>  <dd class="col-sm-8">@Model.Location.Vehicule.Model.Type</dd>
-                    <dt class="col-sm-4">Modèle</dt>  <dd class="col-sm-8">@Model.Location.Vehicule.Model.Marque @Model.Location.Vehicule.Model.Nom</dd>
-                    <dt class="col-sm-4">Kilométrage</dt>  <dd class="col-sm-8">@Model.Location.Vehicule.Kilometrage</dd>
-                    <dt class="col-sm-4">Climatisation</dt> <dd class="col-sm-8">@(Model.Location.Vehicule.Climatisation == true ? "Avec" : "Sans")</dd>
+                <dl class="row" style="margin-left:10px;">
+                    <dt class="col-sm-5">Immatriculation</dt>  <dd class="col-sm-7">@Model.Location.Vehicule.Immatriculation</dd>
+                    <dt class="col-sm-5">Type de véhicule</dt>  <dd class="col-sm-7">@Model.Location.Vehicule.Model.Type</dd>
+                    <dt class="col-sm-5">Modèle</dt>  <dd class="col-sm-7">@Model.Location.Vehicule.Model.Marque @Model.Location.Vehicule.Model.Nom</dd>
+                    <dt class="col-sm-5">Dernier Kilométrage</dt>  <dd class="col-sm-7">@Model.Location.Vehicule.KilometrageActuel</dd>
+                    <dt class="col-sm-5">Climatisation</dt> <dd class="col-sm-7">@(Model.Location.Vehicule.Climatisation == true ? "Avec" : "Sans")</dd>
                 </dl>
             </div>
         </div>

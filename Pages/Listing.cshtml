@@ -35,9 +35,6 @@
                 </div>
             </div>
 
-
-
-
             <div class="row align-items-center justify-content-center">
                 <div class="col-lg-10">
                     <form method="get" class="trip-form mb-2" style="padding:0 10px 5px 10px;">
@@ -47,12 +44,10 @@
                                 <label for="type" id="typelab">Type : </label>
                                 <select asp-for="Model.Type" id="type" class="custom-select form-control">
                                     <option value="" selected></option>
-                                    <option value="Voiture">Voiture</option>
-                                    <option value="Luxe">Luxe</option>
-                                    <option value="Sports Car">Sports Car</option>
-                                    <option value="Camion">Camion</option>
-                                    <option value="Camionette">Camionette</option>
-                                    <option value="Mini Bus">Mini Bus</option>
+                                    @foreach (var type in Model.Types)
+                                    {
+                                        <option value="@type.Nom">@type.Nom</option>
+                                    }
                                 </select>
                             </div>
                             <div class="mb-3 mb-md-0 col-md-3">
@@ -81,12 +76,10 @@
                                 <label for="couleur" id="couleurlab">Couleur : </label>
                                 <select asp-for="Vehicule.Couleur" id="couleur" class="custom-select form-control">
                                     <option value="" selected></option>
-                                    <option value="Blanc">Blanc</option>
-                                    <option value="Noir">Noir</option>
-                                    <option value="Rouge">Rouge</option>
-                                    <option value="Bleu">Bleu</option>
-                                    <option value="Vert">Vert</option>
-                                    <option value="Gris">Gris</option>
+                                    @foreach (var couleur in Model.Couleurs)
+                                    {
+                                        <option value="@couleur.Nom">@couleur.Nom</option>
+                                    }
                                 </select>
                             </div>
                             <div class="mb-3 mb-md-0 col-md-3">

@@ -16,6 +16,7 @@ public class EditVehiculeModel(ApplicationDbContext _context) : PageModel
     public List<string> Marques { get; set; } = new();
     public List<Model> Marques_Models { get; set; } = new();
     public string ModelsJ { get; set; } = "[]";
+    public List<Couleur> Couleurs { get; set; }
 
     public bool IsNew => Vehicule == null || Vehicule.Id == 0;
 
@@ -24,6 +25,7 @@ public class EditVehiculeModel(ApplicationDbContext _context) : PageModel
         Marques = _context.Models.Select(m => m.Marque).Distinct().ToList();
         Marques_Models = _context.Models.Select(m => new Model { Marque = m.Marque, Nom = m.Nom }).OrderBy(m => m.Marque).ToList();
         ModelsJ = JsonSerializer.Serialize(Marques_Models);
+        Couleurs = _context.Couleurs.ToList();
 
         if (id == null)
         {

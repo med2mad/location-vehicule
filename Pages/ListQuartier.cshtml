@@ -7,14 +7,14 @@
 
 
     <p>
-        <a asp-page="AddQuartier" class="btn btn-success"> + Ajouter un quartier</a>
+        <a asp-page="AddQuartier" class="btn btn-primary"> + Ajouter un quartier</a>
     </p>
 
-    <table class="table table-bordered table-striped">
-        <thead class="table-dark">
+    <table class="table">
+        <thead>
             <tr>
-                <th>Ville</th>
-                <th>Nom</th>
+                <th>Villes</th>
+                <th>Quartiers</th>
                 <th></th>
             </tr>
         </thead>
@@ -25,7 +25,7 @@
                     <td>@quartier.Ville.Nom</td>
                     <td>@quartier.Nom</td>
                     <td>
-                        <a asp-page="EditQuartier" asp-route-id="@quartier.Id" class="btn btn-primary">Modifier</a>
+                        <a asp-page="EditQuartier" asp-route-id="@quartier.Id" class="btn btn-warning">Modifier</a>
                         <form method="post" asp-page-handler="Delete" asp-route-id="@quartier.Id" style="display:inline;">
                             <button type="submit" class="btn btn-danger">Supprimer</button>
                         </form>

@@ -1,0 +1,164 @@
+﻿@page
+@model RPtest.Pages.AddModeleModel
+@{
+    Layout = "Dashboard";
+    ViewData["Title"] = Model.Modele.Id == 0 ? "Ajouter un modèle" : "Modifier le modèle";
+}
+
+@section Head {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        input, select {
+            margin-bottom: 15px;
+            border: solid gray 1px !important;
+        }
+
+        .plusbutton {
+            width: 38px;
+            height: 38px;
+            padding: 0;
+            margin-left: 5px;
+        }
+
+
+    </style>
+}
+
+<form method="post">
+    <input type="hidden" asp-for="Modele.Id" />
+
+	<label asp-for="Modele.Marque" class="control-label"></label>
+    <div class="form-group d-flex">
+        <div class="col-5">
+        <select asp-for="Modele.Marque" class="custom-select form-control" required>
+            <option value="" selected></option>
+            @foreach (var marque in Model.Marques)
+            {
+                <option value="@marque">@marque</option>
+            }
+        </select>
+        </div>
+            <div class="input-group-append">
+            <button type="button" class="btn btn-primary rounded-circle plusbutton" data-toggle="modal" data-target="#ajoutMarqueModal">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Modele.Nom" class="control-label">Modèle</label>
+        <input asp-for="Modele.Nom" class="form-control" required/>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Modele.Passagers" class="control-label">Places</label>
+        <input asp-for="Modele.Passagers" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Modele.Bagage" class="control-label"></label>
+        <input asp-for="Modele.Bagage" type="number" class="form-control" />
+    </div>
+
+	<div class="form-group">
+		<label asp-for="Modele.Type" class="control-label"></label>
+        <select asp-for="Modele.Type" class="custom-select form-control">
+            <option value="" selected></option>
+            @foreach (var type in Model.Types)
+            {
+                <option value="@type.Nom">@type.Nom</option>
+            }
+        </select>
+	</div>
+
+    <div class="form-group">
+        <input type="submit" value="Enregistrer" class="btn btn-success" />
+        <a asp-page="ListModele" style="margin-bottom:15px;" class="btn btn-secondary">Annuler</a>
+    </div>
+</form>
+
+<!-- Modal pour ajouter une nouvelle marque -->
+<div class="modal fade" id="ajoutMarqueModal" tabindex="-1" role="dialog" aria-labelledby="ajoutMarqueModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ajoutMarqueModalLabel">Ajouter une nouvelle marque</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="nouvelleMarque">Nom de la marque</label>
+                    <input type="text" class="form-control" id="nouvelleMarque">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-success" onclick="ajouterMarque()" data-dismiss="modal">Ajouter</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+
+    <script>
+        function ajouterMarque() {
+            const nouvelleMarque = $('#nouvelleMarque').val().trim();
+
+            if (nouvelleMarque === '') {
+                alert('Veuillez entrer un nom de marque');
+                return;
+            }
+
+            // Vérifier si la marque existe déjà
+            const select = $('#Modele_Marque');
+            if ($('#Modele_Marque option').filter(function () {
+                return $(this).text().toLowerCase() === nouvelleMarque.toLowerCase();
+            }).length > 0) {
+                alert('Cette marque existe déjà');
+                return;
+            }
+
+            // Ajouter la nouvelle option au select
+            select.append($('<option>', {
+                value: nouvelleMarque,
+                text: nouvelleMarque
+            }));
+
+            // Sélectionner la nouvelle option
+            select.val(nouvelleMarque);
+
+            // Fermer le modal
+            $('#ajoutMarqueModal').modal('hide');
+
+            // Réinitialiser le champ et focus
+            $('#nouvelleMarque').val('').focus();
+        }
+
+        // Gestionnaire d'événement pour la touche Entrée dans le modal
+        $('#nouvelleMarque').keypress(function (e) {
+            if (e.which === 13) { // 13 = touche Entrée
+                ajouterMarque();
+                return false; // Empêcher le comportement par défaut
+            }
+        });
+
+        // Focus automatique sur le champ quand le modal s'ouvre
+        $('#ajoutMarqueModal').on('shown.bs.modal', function () {
+            $('#nouvelleMarque').focus();
+        });
+    </script>
+
+    
+
+    <!-- À la fin du body -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+}

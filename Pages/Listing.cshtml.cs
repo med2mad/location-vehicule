@@ -15,6 +15,8 @@ public class ListingModel(ApplicationDbContext _context) : PageModel
     public List<string> Marques { get; set; } = new();
     public List<Model> Marques_Models { get; set; } = new();
     public string ModelsJ { get; set; } = "[]";
+    public List<Couleur> Couleurs { get; set; }
+    public List<TypeVehicule> Types { get; set; }
     public int? min { get; set; } = null;
     public int? max { get; set; } = null;
 
@@ -29,6 +31,8 @@ public class ListingModel(ApplicationDbContext _context) : PageModel
         Marques = _context.Models.Select(m => m.Marque).Distinct().ToList();
         Marques_Models = _context.Models.Select(m => new Model { Marque = m.Marque, Nom = m.Nom }).OrderBy(m => m.Marque).ToList();
         ModelsJ = JsonSerializer.Serialize(Marques_Models);
+        Couleurs = _context.Couleurs.ToList();
+        Types = _context.Types.ToList();
         var x = _context.Vehicules.Select(v => v.Prix).AsQueryable();
         min = (int)Math.Floor(x.Min()); if (PrixMin == null) PrixMin = min;
         max = (int)Math.Ceiling(x.Max()); if (PrixMax == null) PrixMax = max;

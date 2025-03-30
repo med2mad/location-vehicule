@@ -1,0 +1,52 @@
+﻿@page
+@model RPtest.Pages.ListCouleurModel
+@{
+    Layout = "Dashboard";
+    ViewData["Title"] = "List de Couleurs";
+}
+
+<p>
+    <a asp-page="AddCouleur" class="btn btn-primary"> + Ajouter une nouvelle couleur</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Couleurs</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Couleurs)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Nom)</td>
+                <td>
+                    <a asp-page="AddCouleur" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Modifier</a>
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@item.Id" style="display:inline;">
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        function confirmDelete(id) {
+            if (confirm("Êtes-vous sûr de vouloir supprimer ce couleur ?")) {
+                fetch(`/Types/Index?handler=Delete&id=${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    }
+                });
+            }
+        }
+    </script>
+}

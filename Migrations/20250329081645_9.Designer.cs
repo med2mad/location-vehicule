@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RPtest.Data;
 
@@ -11,9 +12,11 @@ using RPtest.Data;
 namespace RPtest.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250329081645_9")]
+    partial class _9
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -249,23 +252,6 @@ namespace RPtest.Migrations
                     b.ToTable("Conducteurs");
                 });
 
-            modelBuilder.Entity("RPtest.Models.Couleur", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Nom")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Couleurs");
-                });
-
             modelBuilder.Entity("RPtest.Models.Depense", b =>
                 {
                     b.Property<int>("Id")
@@ -366,6 +352,10 @@ namespace RPtest.Migrations
                     b.Property<decimal>("Bagage")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Marque")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -448,23 +438,6 @@ namespace RPtest.Migrations
                     b.ToTable("Quartiers");
                 });
 
-            modelBuilder.Entity("RPtest.Models.TypeVehicule", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Nom")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Types");
-                });
-
             modelBuilder.Entity("RPtest.Models.Vehicule", b =>
                 {
                     b.Property<int>("Id")
@@ -485,14 +458,10 @@ namespace RPtest.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Immatriculation")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("KilometrageActuel")
+                    b.Property<int?>("Kilometrage")
                         .HasColumnType("int");
 
                     b.Property<int?>("KilometrageEntreVidanges")

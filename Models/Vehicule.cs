@@ -13,8 +13,9 @@ public class Vehicule
     public bool? Climatisation { get; set; } = null;
     public string? Photo { get; set; } = string.Empty;
     public decimal Prix { get; set; }
+    public string Description { get; set; } = string.Empty;
     public DateTime Date { get; set; } = DateTime.UtcNow;
-    public int? Kilometrage { get; set; }
+    public int? KilometrageActuel { get; set; }
     public int? KilometrageEntreVidanges { get; set; }
 
     [ForeignKey("Model")]

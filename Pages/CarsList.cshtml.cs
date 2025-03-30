@@ -10,9 +10,12 @@ public class CarsList(ApplicationDbContext _context) : PageModel
 {
     public List<Vehicule> Vehicules { get; set; } = new List<Vehicule>();
     public int cnt;
+    public List<Vidange> lastVidanges { get; set; } = new List<Vidange>();
+    public List<VisiteTechnique> lastVisiteTechnique { get; set; } = new List<VisiteTechnique>();
 
     [BindProperty(SupportsGet = true)] public Vehicule Vehicule { get; set; }
     [BindProperty(SupportsGet = true)] public Model Model { get; set; }
+    [BindProperty(SupportsGet = true)] public string Loue { get; set; }
 
     public List<string> Marques { get; set; } = new();
     public List<Model> Marques_Models { get; set; } = new();
@@ -41,9 +44,23 @@ public class CarsList(ApplicationDbContext _context) : PageModel
         {
             query = query.Where(v => v.Immatriculation.Contains(Vehicule.Immatriculation));
         }
-
+        if (!string.IsNullOrEmpty(Loue))
+        {
+            if (Loue == "Oui")
+            {
+                query = query.Where(v => v.Locations.Any(l => l.VehiculeId == v.Id && l.Statut == "En cours"));
+            }
+            else
+            {
+                query = query.Where(v => !_context.Locations.Any(l => l.VehiculeId == v.Id && l.Statut == "En cours"));
+            }
+        }
         Vehicules = query.OrderByDescending(l => l.Id).ToList();
+
         cnt = Vehicules.Count;
+
+        lastVidanges = _context.Vidanges.OrderByDescending(x => x.Id).ToList();
+        lastVisiteTechnique = _context.VisitesTechniques.OrderByDescending(x => x.Id).ToList();
 
         return Page();
     }

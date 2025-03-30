@@ -1,0 +1,61 @@
+﻿@page
+
+@model RPtest.Pages.ListModeleModel
+@{
+    Layout = "Dashboard";
+    ViewData["Title"] = "Modèles";
+}
+
+<p>
+    <a asp-page="/AddModele" class="btn btn-primary"> + Ajouter un nouveau Modèle</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Marque</th>
+            <th>Model</th>
+            <th>Places</th>
+            <th>Bagage</th>
+            <th>Type</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Models)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Marque)</td>
+                <td>@Html.DisplayFor(modelItem => item.Nom)</td>
+                <td>@Html.DisplayFor(modelItem => item.Passagers)</td>
+                <td>@Html.DisplayFor(modelItem => item.Bagage)</td>
+                <td>@Html.DisplayFor(modelItem => item.Type)</td>
+                <td>
+                    <a asp-page="AddModele" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Modifier</a>
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@item.Id" style="display:inline;">
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        function confirmDelete(id) {
+            if (confirm("Êtes-vous sûr de vouloir supprimer ce modèle ?")) {
+                fetch(`/Modeles/Index?handler=Delete&id=${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    }
+                });
+            }
+        }
+    </script>
+}

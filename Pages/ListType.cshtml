@@ -1,0 +1,52 @@
+﻿@page
+@model RPtest.Pages.ListTypeModel
+@{
+    Layout = "Dashboard";
+    ViewData["Title"] = "Types de véhicule";
+}
+
+<p>
+    <a asp-page="AddType" class="btn btn-primary"> + Ajouter un nouveau type</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Types</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Types)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Nom)</td>
+                <td>
+                    <a asp-page="AddType" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Modifier</a>
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@item.Id" style="display:inline;">
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        function confirmDelete(id) {
+            if (confirm("Êtes-vous sûr de vouloir supprimer ce type ?")) {
+                fetch(`/Types/Index?handler=Delete&id=${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    }
+                });
+            }
+        }
+    </script>
+}
