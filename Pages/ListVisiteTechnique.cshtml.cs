@@ -8,7 +8,7 @@ namespace RPtest.Pages;
 
 public class ListVisiteTechniqueModel(ApplicationDbContext _context) : PageModel
 {
-    public IList<VisiteTechnique> VisitesTechniques { get; set; }
+    public List<VisiteTechnique> VisitesTechniques { get; set; } = new List<VisiteTechnique>();
     public int VehiculeId { get; set; }
     public string VehiculeMarque { get; set; }
     public string VehiculeModel { get; set; }

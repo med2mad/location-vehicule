@@ -21,20 +21,19 @@
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true">
 
      <!-- Your custom JS -->
-
     @RenderSection("Head", required: false)
 </head>
 <body>
 
     <div class="site-wrap" id="home-section">
 
-        <div class="site-mobile-menu site-navbar-target">
+        <div class="site-mobile-menu site-navbar-target" style="background-color:black !important;">
             <div class="site-mobile-menu-header">
                 <div class="site-mobile-menu-close mt-3">
-                    <span class="icon-close2 js-menu-toggle"></span>
+                    <span class="icon-close2 js-menu-toggle" style="color:white;"></span>
                 </div>
             </div>
-            <div class="site-mobile-menu-body"></div>
+            <div class="site-mobile-menu-body" style="overflow:auto;"></div>
         </div>
 
         <header class="site-navbar site-navbar-target mb-0" role="banner">
@@ -49,7 +48,7 @@
                     </div>
 
                     <div class="col-9  text-right">
-                        <span class="d-inline-block d-lg-none"><a href="#" class=" site-menu-toggle js-menu-toggle py-5 "><span class="icon-menu h3 text-black"></span></a></span>
+                        <span class="d-inline-block d-lg-none"><a href="#" class=" site-menu-toggle js-menu-toggle py-5 "><span class="icon-menu h3 text-white" style="background-color:black;"></span></a></span>
                         
                         <nav class="site-navigation text-right ml-auto d-none d-lg-block" role="navigation">
                             <ul class="site-menu main-menu js-clone-nav ml-auto" >

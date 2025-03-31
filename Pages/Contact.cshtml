@@ -3,7 +3,18 @@
 @{
     ViewData["Title"] = "Contacts";
 }
-
+@section Head {
+    <style>
+        @@media (max-width: 767px) {
+            header {
+                padding-top: 10px !important;
+            }
+            .normal-logo {
+                width: 100px !important;
+            }
+        }
+    </style>
+}
     <div class="hero inner-page" style="background-image: url('images/header3.png');">
 
         <div class="container">
@@ -23,11 +34,6 @@
 
     <div class="site-section bg-light" id="contact-section">
         <div class="container">
-            <div class="row justify-content-center text-center">
-                <div class="col-7 text-center mb-5">
-                    <h2>Contactez Nous</h2>
-                </div>
-            </div>
             <div class="row">
                 <div class="col-lg-8 mb-5">
                     <form method="post">

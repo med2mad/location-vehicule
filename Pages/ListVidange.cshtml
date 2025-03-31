@@ -46,7 +46,9 @@
                 <td>@Html.DisplayFor(modelItem => v.Description)</td>
                 <td style="width:60px;">
                     <a asp-page="AddVidange" asp-route-id="@v.Id" asp-route-vehiculeId="@Model.VehiculeId" class="btn btn-sm btn-warning button"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                    <a asp-page="./Delete" asp-route-id="@v.Id" asp-route-vehiculeId="@Model.VehiculeId" class="btn btn-sm btn-danger button"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@v.Id">
+                        <button type="submit" class="btn btn-danger button"><i class="fa fa-times" aria-hidden="true"></i></button>
+                    </form>
                 </td>
             </tr>
         }

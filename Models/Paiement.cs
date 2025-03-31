@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RPtest.Models;
@@ -17,5 +18,6 @@ public class Paiement
 
     [ForeignKey("Location")]
     public int? LocationId { get; set; }
+    [DeleteBehavior(DeleteBehavior.SetNull)]
     public Location? Location { get; set; }
 }

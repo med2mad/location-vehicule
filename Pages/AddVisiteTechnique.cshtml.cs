@@ -95,4 +95,18 @@ public class AddVisiteTechniqueModel(ApplicationDbContext _context) : PageModel
     {
         return _context.VisitesTechniques.Any(e => e.Id == id);
     }
+
+    public async Task<IActionResult> OnPostDeleteAsync(int id)
+    {
+        var visite = await _context.VisitesTechniques.FindAsync(id);
+        if (visite == null)
+        {
+            return NotFound();
+        }
+
+        _context.VisitesTechniques.Remove(visite);
+        await _context.SaveChangesAsync();
+
+        return RedirectToPage("ListVisiteTechnique");
+    }
 }

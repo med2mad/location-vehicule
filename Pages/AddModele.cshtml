@@ -30,20 +30,19 @@
 	<label asp-for="Modele.Marque" class="control-label"></label>
     <div class="form-group d-flex">
         <div class="col-5">
-        <select asp-for="Modele.Marque" class="custom-select form-control" required>
-            <option value="" selected></option>
-            @foreach (var marque in Model.Marques)
-            {
-                <option value="@marque">@marque</option>
-            }
-        </select>
+            <select asp-for="Modele.Marque" class="custom-select form-control" required>
+                <option value="" selected></option>
+                @foreach (var marque in Model.Marques)
+                {
+                    <option value="@marque">@marque</option>
+                }
+            </select>
         </div>
-            <div class="input-group-append">
+        <div class="input-group-append">
             <button type="button" class="btn btn-primary rounded-circle plusbutton" data-toggle="modal" data-target="#ajoutMarqueModal">
-                    <i class="fas fa-plus"></i>
-                </button>
-            </div>
-
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
     </div>
 
     <div class="form-group">
@@ -94,9 +93,9 @@
                     <input type="text" class="form-control" id="nouvelleMarque">
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer" style="border:none !important;">
+                <button type="button" class="btn btn-primary" onclick="ajouterMarque()" data-dismiss="modal">Ajouter</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                <button type="button" class="btn btn-success" onclick="ajouterMarque()" data-dismiss="modal">Ajouter</button>
             </div>
         </div>
     </div>

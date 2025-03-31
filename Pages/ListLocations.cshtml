@@ -46,8 +46,8 @@
                     <td>@l.NomClient</td>
                     <td>@l.Tel</td>
                     <td style="text-align:center;">
-                        <img src="images/@l.Vehicule.Photo" alt="@l.Vehicule.Model.Nom" class="photo" /><br />
-                        @l.Vehicule.Model.Marque @l.Vehicule.Model.Nom
+                        <img src="images/@l?.Vehicule?.Photo" alt="@l?.Vehicule?.Model.Nom" class="photo" /><br />
+                        @l.Vehicule?.Model.Marque @l.Vehicule?.Model.Nom
                     </td>
                     <td>@l.LieuDepart</td>
                     <td>@l.LieuRetour</td>
@@ -67,11 +67,10 @@
                     </td>
                     <td style="text-align:center; width:80px;">
                         <a asp-page="DetailsLocation" asp-route-id="@l.Id" class="btn btn-primary button"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                        <a asp-page="EditLocations" asp-route-id="@l.Id" class="btn btn-warning button"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-@*                     <form method="post" asp-page-handler="Delete" asp-route-id="@l.Id" style="display:inline;">
-                        <button type="submit" class="btn btn-danger button"><i class="fa fa-times" aria-hidden="true"></i></button>
-                    </form> *@
-                        <a asp-page="Delete" asp-page-handler="Delete" asp-route-id="@l.Id" class="btn btn-danger button"><i class="fa fa-times" aria-hidden="true"></i></a>
+                        <a asp-page="EditLocations" asp-route-id="@l.Id" asp-route-vehiculeId="@l.VehiculeId" class="btn btn-warning button"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@l.Id" style="display:inline;">
+                            <button type="submit" class="btn btn-danger button"><i class="fa fa-times" aria-hidden="true"></i></button>
+                        </form>
                     </td>
                 </tr>
             }

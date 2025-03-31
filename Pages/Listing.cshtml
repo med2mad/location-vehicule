@@ -22,10 +22,22 @@
         .form-range{
             padding:0 !important;
         }
+
+        @@media (max-width: 767px) {
+            h1 strong {
+              color:white;
+            }
+            header{
+                padding-top: 10px !important;
+            }
+            .normal-logo{
+                width:100px !important;
+            }
+        }
     </style>
 }
+
 <div class="hero inner-page" style="background-image: url('images/header3.png'); height:310px !important;">
-    
 
     <div class="container">
         <div class="row align-items-end ">
@@ -83,7 +95,7 @@
                                 </select>
                             </div>
                             <div class="mb-3 mb-md-0 col-md-3">
-                                <label style="position:relative; top:10px;" id="prix1">Prix Minimum</label>
+                                <label style="position:relative; top:10px;" id="prix1">Prix Minimum :</label>
                                 <div style="position:relative; top:10px; display:flex; gap:10px; justify-content:center;">
                                     <div>
                                         <label for="prixmin" id="prixminlab" class="form-label">@Model.PrixMin</label>
@@ -94,7 +106,7 @@
                                 </div>
                             </div>
                             <div class="mb-3 mb-md-0 col-md-3">
-                                <label style="position:relative; top:10px;" id="prix2">Prix Maximum</label>
+                                <label style="position:relative; top:10px;" id="prix2">Prix Maximum :</label>
                                 <div style="position:relative; top:10px; display:flex; gap:10px; justify-content:center;">
                                     <div>
                                         <label for="prixmax" id="prixmaxlab" class="form-label">@Model.PrixMax</label>

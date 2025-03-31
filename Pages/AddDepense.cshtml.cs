@@ -95,4 +95,5 @@ public class AddDepenseModel(ApplicationDbContext _context) : PageModel
     {
         return _context.Depenses.Any(e => e.Id == id);
     }
+
 }

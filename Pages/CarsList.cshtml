@@ -66,12 +66,10 @@
                     <label for="type" id="typelab">Type</label>
                     <select asp-for="Model.Type" id="type" class="custom-select form-control">
                         <option value="" selected></option>
-                        <option value="Voiture">Voiture</option>
-                        <option value="Luxe">Luxe</option>
-                        <option value="Sports Car">Sports Car</option>
-                        <option value="Camion">Camion</option>
-                        <option value="Camionette">Camionette</option>
-                        <option value="Mini Bus">Mini Bus</option>
+                        @foreach (var type in Model.Types)
+                        {
+                            <option value="@type.Nom">@type.Nom</option>
+                        }
                     </select>
                 </div>
                 <div class="mb-3 mb-md-0 col-md-2" style="padding-right:0 !important;">
@@ -132,8 +130,9 @@
             var LId = v.Locations.FirstOrDefault(l => l.Statut == "En cours")?.Id;
 
             var LastVid = Model.lastVidanges.FirstOrDefault(vdg => vdg.VehiculeId == v.Id)?.Date ?? v.Date;
-            var restKilometrage = v.KilometrageActuel % v.KilometrageEntreVidanges;
-            bool VdgNotification = restKilometrage <= 0 || LastVid < DateTime.Now.AddYears(-1);
+            int? restKilometrage =0 ;
+            if (v.KilometrageActuel>0 && v.KilometrageEntreVidanges > 0) { restKilometrage = v.KilometrageActuel % v.KilometrageEntreVidanges; }
+            bool VdgNotification = restKilometrage == 0 || LastVid < DateTime.Now.AddYears(-1);
 
             DateTime? LastVisite = Model.lastVisiteTechnique.FirstOrDefault(vst => vst.VehiculeId == v.Id)?.Date;
             bool VSTNotification = LastVisite != null ? LastVisite?.AddMonths(6) < DateTime.Now : v.Date.AddYears(1) < DateTime.Now;

@@ -12,7 +12,7 @@ public class ListModeleModel(ApplicationDbContext _context) : PageModel
 
     public async Task OnGetAsync()
     {
-        Models = await _context.Models.ToListAsync();
+        Models = await _context.Models.OrderBy(m => m.Marque).ToListAsync();
     }
 
     public async Task<IActionResult> OnPostDeleteAsync(int id)

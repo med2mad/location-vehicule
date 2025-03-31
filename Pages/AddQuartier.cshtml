@@ -2,19 +2,105 @@
 @model RPtest.Pages.AddQuartierModel
 @{
 	Layout = "Dashboard";
-	ViewData["Title"] = "Ajouter un Quatier";
+	ViewData["Title"] = "Ajouter un Quartier";
+}
+
+@section Head {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .plusbutton {
+            width: 38px;
+            height: 38px;
+            padding: 0;
+            margin-left: 5px;
+        }
+
+    </style>
 }
 
 <form method="post">
-    <div class="mb-3">
-        <label class="form-label">Ville</label>
-        <select asp-for="Quartier.VilleId" asp-items="@(new SelectList(Model.Villes, "Id", "Nom"))" class="form-control"></select>
+    <label asp-for="Quartier.Ville" class="form-label">Ville</label>
+    <div class="mb-3 form-group d-flex">
+        <div class="col-5">
+            @{
+                var items = Model.Villes;
+                var selectList = items.Select(item => new SelectListItem
+                {
+                    Value = item,
+                    Text = item
+                }).ToList();
+            }
+            <select asp-for="Quartier.Ville" id="villeSelect" asp-items="selectList" class="form-control" required></select>
+        </div>
+        <div class="input-group-append">
+            <button type="button" class="btn btn-primary rounded-circle plusbutton" data-toggle="modal" data-target="#villeModal">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
     </div>
+
     <div class="mb-3">
         <label class="form-label">Quartier</label>
         <input asp-for="Quartier.Nom" class="form-control" />
         <span asp-validation-for="Quartier.Nom" class="text-danger"></span>
     </div>
+
     <button type="submit" class="btn btn-success">Ajouter</button>
     <a asp-page="ListQuartier" class="btn btn-secondary">Annuler</a>
 </form>
+
+
+<!-- Modal pour ajouter une nouvelle ville -->
+<div class="modal fade" id="villeModal" tabindex="-1" role="dialog" aria-labelledby="villeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="villeModalLabel">Ajouter une nouvelle ville</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="nouvelleVilleInput">Nom de la nouvelle ville</label>
+                    <input type="text" class="form-control" id="nouvelleVilleInput">
+                </div>
+            </div>
+            <div class="modal-footer" style="border:none !important;">
+                <button type="button" class="btn btn-primary" id="ajouterVilleBtn" data-dismiss="modal">Ajouter</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            $('#ajouterVilleBtn').click(function () {
+                var nouvelleVille = $('#nouvelleVilleInput').val().trim();
+
+                if (nouvelleVille) {
+                    // Ajouter la nouvelle ville au select
+                    var villeSelect = $('#villeSelect');
+                    villeSelect.append($('<option>', {
+                        value: nouvelleVille,
+                        text: nouvelleVille,
+                        selected: true
+                    }));
+
+                    // Fermer le modal
+                    $('#villeModal').modal('hide');
+
+                    // Réinitialiser le champ
+                    $('#nouvelleVilleInput').val('');
+                } else {
+                    alert('Veuillez entrer un nom de ville valide');
+                }
+            });
+        });
+    </script>
+}

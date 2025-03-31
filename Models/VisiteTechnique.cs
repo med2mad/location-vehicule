@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RPtest.Models;
 
@@ -11,5 +12,6 @@ public class VisiteTechnique
 
     [ForeignKey("Vehicule")]
     public int? VehiculeId { get; set; }
+    [DeleteBehavior(DeleteBehavior.Cascade)]
     public Vehicule? Vehicule { get; set; }
 }

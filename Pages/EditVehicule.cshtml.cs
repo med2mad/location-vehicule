@@ -57,7 +57,7 @@ public class EditVehiculeModel(ApplicationDbContext _context) : PageModel
         {
             string fileName = Path.GetFileName(imageFile.FileName);
             string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
-            string filePath = Path.Combine(uploadsFolder, Guid.NewGuid().ToString() + "_" + fileName);
+            string filePath = Path.Combine(uploadsFolder, fileName);
             using (var fileStream = new FileStream(filePath, FileMode.Create))
             {
                 await imageFile.CopyToAsync(fileStream);
@@ -66,7 +66,8 @@ public class EditVehiculeModel(ApplicationDbContext _context) : PageModel
         }
         else
         {
-            Vehicule.Photo = Photo;
+            if (Vehicule.Id == 0) { Vehicule.Photo = "default.jpg"; }
+            else { Vehicule.Photo = Photo; }
         }
 
         if (Vehicule.Id == 0)

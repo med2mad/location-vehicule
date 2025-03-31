@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RPtest.Models;
@@ -14,15 +15,16 @@ public class Location
     public DateTime DateDepart { get; set; }
     public DateTime DateRetour { get; set; }
     public string Tarif { get; set; } = "Jour"; //Jour;Heure;Kilomètre
-    public string Statut { get; set; } = "Réservé"; //Réservé;Complet;Annulé
+    public string Statut { get; set; } = "En cours"; //Réservé;Complet;Annulé
 
     [ForeignKey("Vehicule")]
     public int? VehiculeId { get; set; }
+    [DeleteBehavior(DeleteBehavior.Cascade)]
     public Vehicule? Vehicule { get; set; }
 
     [ForeignKey("Conducteur")]
     public int? ConducteurId { get; set; }
     public Conducteur? Conducteur { get; set; }
 
-    public ICollection<Paiement>? Paiement { get; set; }
+    public ICollection<Paiement>? Paiements { get; set; }
 }

@@ -12,7 +12,7 @@ public class DetailsLocationModel(ApplicationDbContext _context) : PageModel
 
     public async Task<IActionResult> OnGetAsync(int id)
     {
-        Location = await _context.Locations.Include(l => l.Paiement).Include(l => l.Vehicule).ThenInclude(l => l.Model).FirstOrDefaultAsync(m => m.Id == id);
+        Location = await _context.Locations.Include(l => l.Paiements).Include(l => l.Vehicule).ThenInclude(l => l.Model).FirstOrDefaultAsync(m => m.Id == id);
 
         if (Location == null)
         {

@@ -8,8 +8,7 @@ namespace RPtest.Pages;
 
 public class EditLocationsModel(ApplicationDbContext _context) : PageModel
 {
-    [BindProperty]
-    public Location Location { get; set; }
+    [BindProperty] public Location Location { get; set; }
 
     public async Task<IActionResult> OnGetAsync(int id)
     {
@@ -33,6 +32,6 @@ public class EditLocationsModel(ApplicationDbContext _context) : PageModel
         _context.Locations.Update(Location);
         await _context.SaveChangesAsync();
 
-        return RedirectToPage("ListLocations");
+        return RedirectToPage("/ListLocations");
     }
 }

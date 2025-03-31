@@ -22,7 +22,7 @@
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.Nom)</td>
                 <td>
-                    <a asp-page="AddType" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Modifier</a>
+                    <a asp-page="AddType" asp-route-id="@item.Id" class="btn btn-warning">Modifier</a>
                     <form method="post" asp-page-handler="Delete" asp-route-id="@item.Id" style="display:inline;">
                         <button type="submit" class="btn btn-danger">Supprimer</button>
                     </form>

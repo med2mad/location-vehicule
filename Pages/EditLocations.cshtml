@@ -21,13 +21,16 @@
 
 <form method="post">
     <input type="hidden" asp-for="Location.Id" />
+    <input type="hidden" asp-for="Location.Tel" />
+    <input type="hidden" asp-for="Location.Tarif" />
+    <input type="hidden" asp-for="Location.VehiculeId" />
 
     <div class="row">
 
         <div class="col-md-6">
 			<div class="form-group">
-				<label for="date" id="datelab">Date</label>
-				<input id="date" readonly class="form-control" value="@Model.Location.Date.ToString("dd/MM/yyyy")" style="color:gray;" />
+                <label asp-for="Location.Date">Date</label>
+                <input asp-for="Location.Date" type="date" class="form-control"/>
 			</div>
 
 			<div class="form-group">

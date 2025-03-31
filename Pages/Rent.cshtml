@@ -19,7 +19,7 @@
             <div class="col-lg-5">
 
                 <div class="intro">
-                    <h1><strong>Louez</strong></h1>
+                    <h1><strong>Réservez</strong></h1>
                 </div>
 
             </div>
@@ -90,11 +90,10 @@
                             <select name="villeDepart" id="villeDepart" class="custom-select form-control" style="height:35px; padding:5px;">
                                 @foreach (var ville in Model.Villes)
                                 {
-                                    <option value="@ville.Nom">@ville.Nom</option>
+                                    <option value="@ville">@ville</option>
                                 }
                             </select>
                             <select name="quartierDepart"  id="quartierDepart" class="custom-select form-control" style="height:35px; padding:5px;">
-                                <option value="" selected></option>
                                 @foreach (var quartier in Model.Quartiers)
                                 {
                                     <option value="@quartier.Nom">@quartier.Nom</option>
@@ -109,7 +108,7 @@
                             <select name="villeRetour" id="villeRetour" class="custom-select form-control" style="height:35px; padding:5px;">
                                 @foreach (var ville in Model.Villes)
                                 {
-                                    <option value="@ville.Nom">@ville.Nom</option>
+                                    <option value="@ville">@ville</option>
                                 }
                             </select>
                             <select name="quartierRetour" id="quartierRetour" class="custom-select form-control" style="height:35px; padding:5px;">
@@ -161,7 +160,7 @@
             let villeDepartSelect = document.getElementById("villeDepart");
             let quartierDepartSelect = document.getElementById("quartierDepart");
             let Quartiers = JSON.parse('@Html.Raw(Model.QuartiersJ)');
-
+            console.log(Quartiers);
             let selectedVilleDepart = villeDepartSelect.value;
             quartierDepartSelect.innerHTML = "";
             let quartierOption = document.createElement("option");
@@ -169,7 +168,7 @@
             quartierDepartSelect.appendChild(quartierOption);
 
             for (let key in Quartiers) {
-                if (Quartiers[key].Ville.Nom == selectedVilleDepart || !selectedVilleDepart) {
+                if (Quartiers[key].Ville == selectedVilleDepart || !selectedVilleDepart) {
                     let quartierOption = document.createElement("option");
                     quartierOption.value = Quartiers[key].Nom;
                     quartierOption.text = Quartiers[key].Nom;
@@ -190,7 +189,7 @@
             quartierRetourSelect.appendChild(quartierOption);
 
             for (let key in Quartiers) {
-                if (Quartiers[key].Ville.Nom == selectedVilleRetour || !selectedVilleRetour) {
+                if (Quartiers[key].Ville == selectedVilleRetour || !selectedVilleRetour) {
                     let quartierOption = document.createElement("option");
                     quartierOption.value = Quartiers[key].Nom;
                     quartierOption.text = Quartiers[key].Nom;

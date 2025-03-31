@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RPtest.Data;
 
@@ -11,9 +12,11 @@ using RPtest.Data;
 namespace RPtest.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250331000928_13")]
+    partial class _13
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -438,11 +441,12 @@ namespace RPtest.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Ville")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("VilleId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("VilleId");
 
                     b.ToTable("Quartiers");
                 });
@@ -540,6 +544,23 @@ namespace RPtest.Migrations
                     b.ToTable("Vidanges");
                 });
 
+            modelBuilder.Entity("RPtest.Models.Ville", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Nom")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Villes");
+                });
+
             modelBuilder.Entity("RPtest.Models.VisiteTechnique", b =>
                 {
                     b.Property<int>("Id")
@@ -622,8 +643,7 @@ namespace RPtest.Migrations
                 {
                     b.HasOne("RPtest.Models.Vehicule", "Vehicule")
                         .WithMany("Depenses")
-                        .HasForeignKey("VehiculeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("VehiculeId");
 
                     b.Navigation("Vehicule");
                 });
@@ -636,8 +656,7 @@ namespace RPtest.Migrations
 
                     b.HasOne("RPtest.Models.Vehicule", "Vehicule")
                         .WithMany("Locations")
-                        .HasForeignKey("VehiculeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("VehiculeId");
 
                     b.Navigation("Conducteur");
 
@@ -654,6 +673,15 @@ namespace RPtest.Migrations
                     b.Navigation("Location");
                 });
 
+            modelBuilder.Entity("RPtest.Models.Quartier", b =>
+                {
+                    b.HasOne("RPtest.Models.Ville", "Ville")
+                        .WithMany("Quartiers")
+                        .HasForeignKey("VilleId");
+
+                    b.Navigation("Ville");
+                });
+
             modelBuilder.Entity("RPtest.Models.Vehicule", b =>
                 {
                     b.HasOne("RPtest.Models.Model", "Model")
@@ -667,8 +695,7 @@ namespace RPtest.Migrations
                 {
                     b.HasOne("RPtest.Models.Vehicule", "Vehicule")
                         .WithMany("Vidanges")
-                        .HasForeignKey("VehiculeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("VehiculeId");
 
                     b.Navigation("Vehicule");
                 });
@@ -677,8 +704,7 @@ namespace RPtest.Migrations
                 {
                     b.HasOne("RPtest.Models.Vehicule", "Vehicule")
                         .WithMany("VisitesTechniques")
-                        .HasForeignKey("VehiculeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("VehiculeId");
 
                     b.Navigation("Vehicule");
                 });
@@ -707,6 +733,11 @@ namespace RPtest.Migrations
                     b.Navigation("Vidanges");
 
                     b.Navigation("VisitesTechniques");
+                });
+
+            modelBuilder.Entity("RPtest.Models.Ville", b =>
+                {
+                    b.Navigation("Quartiers");
                 });
 #pragma warning restore 612, 618
         }

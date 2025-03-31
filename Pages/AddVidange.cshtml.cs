@@ -95,4 +95,18 @@ public class AddVidangeModel(ApplicationDbContext _context) : PageModel
     {
         return _context.Vidanges.Any(e => e.Id == id);
     }
+
+    public async Task<IActionResult> OnPostDeleteAsync(int id)
+    {
+        var vidange = await _context.Vidanges.FindAsync(id);
+        if (vidange == null)
+        {
+            return NotFound();
+        }
+
+        _context.Vidanges.Remove(vidange);
+        await _context.SaveChangesAsync();
+
+        return RedirectToPage("ListVidange");
+    }
 }

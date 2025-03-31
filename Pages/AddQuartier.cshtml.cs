@@ -11,11 +11,13 @@ public class AddQuartierModel(ApplicationDbContext _context) : PageModel
     [BindProperty]
     public Quartier Quartier { get; set; } = new();
 
-    public List<Ville> Villes { get; set; } = new();
+    public List<string> Villes { get; set; } = new();
+    public List<Quartier> Quartiers { get; set; } = new();
 
     public async Task OnGetAsync()
     {
-        Villes = await _context.Villes.ToListAsync();
+        Quartiers = await _context.Quartiers.ToListAsync();
+        Villes = await _context.Quartiers.Select(q => q.Ville).Distinct().ToListAsync();
     }
 
     public async Task<IActionResult> OnPostAsync()

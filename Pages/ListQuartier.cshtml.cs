@@ -12,7 +12,7 @@ public class ListQuartierModel(ApplicationDbContext _context) : PageModel
 
     public async Task OnGetAsync()
     {
-        Quartiers = await _context.Quartiers.Include(q => q.Ville).OrderBy(q => q.VilleId).ToListAsync();
+        Quartiers = await _context.Quartiers.OrderBy(q => q.Ville).ToListAsync();
     }
 
     public async Task<IActionResult> OnPostDeleteAsync(int id)

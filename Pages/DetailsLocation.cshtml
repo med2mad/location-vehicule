@@ -30,7 +30,7 @@
                 <dl class="row" style="margin-left:10px;">
                     <dt class="col-sm-3">Nom</dt>  <dd class="col-sm-9">@Model.Location.NomClient</dd>
                     <dt class="col-sm-3">Téléphone</dt>  <dd class="col-sm-9">@Model.Location.Tel</dd>
-                    <dt class="col-sm-3">Email</dt>  <dd class="col-sm-9">@Model.Location.Paiement.FirstOrDefault().Email</dd>
+                    <dt class="col-sm-3">Email</dt>  <dd class="col-sm-9">@Model.Location.Paiements.FirstOrDefault().Email</dd>
                 </dl>
             </div>
             <div class="col-md-5 card">
@@ -49,10 +49,10 @@
             <div class="col-md-5 card">
                 <h5 class="card-title">Paiement</h5>
                 <dl class="row" style="margin-left:10px;">
-                    <dt class="col-sm-4">Montant</dt>  <dd class="col-sm-8">@Model.Location.Paiement.FirstOrDefault().Montant DH</dd>
-                    <dt class="col-sm-4">Date</dt>  <dd class="col-sm-8">@Model.Location.Paiement.FirstOrDefault().Date.ToString("dd/MM/yyyy")</dd>
-                    <dt class="col-sm-4">Rib</dt>  <dd class="col-sm-8">@Model.Location.Paiement.FirstOrDefault().Rib</dd>
-                    <dt class="col-sm-9">date d'expiration de la carte bancaire</dt>  <dd class="col-sm-3">@Model.Location.Paiement.FirstOrDefault().Expiration</dd>
+                    <dt class="col-sm-4">Montant</dt>  <dd class="col-sm-8">@Model.Location.Paiements.FirstOrDefault().Montant DH</dd>
+                    <dt class="col-sm-4">Date</dt>  <dd class="col-sm-8">@Model.Location.Paiements.FirstOrDefault().Date.ToString("dd/MM/yyyy")</dd>
+                    <dt class="col-sm-4">Rib</dt>  <dd class="col-sm-8">@Model.Location.Paiements.FirstOrDefault().Rib</dd>
+                    <dt class="col-sm-9">date d'expiration de la carte bancaire</dt>  <dd class="col-sm-3">@Model.Location.Paiements.FirstOrDefault().Expiration</dd>
                 </dl>
             </div>
             <div class="col-md-5 card">
@@ -70,6 +70,7 @@
 </div>
 
 <div>
-    <a asp-page="EditLocations" asp-route-id="@Model.Location.Id" class="btn btn-warning">Modifier</a>
-    <a asp-page="ListLocations" class="btn btn-secondary">Retour à la liste</a>
+@*     <a asp-page="EditLocations" asp-route-id="@Model.Location.Id" class="btn btn-warning">Modifier</a> *@
+    <a asp-page="ListLocations" class="btn btn-secondary">liste de Locations</a>
+    <a asp-page="CarsList" class="btn btn-secondary">Liste de Véhicules</a>
 </div>

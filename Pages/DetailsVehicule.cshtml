@@ -56,12 +56,12 @@
                     kilométrage actuel
                 </dt>
                 <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Vehicule.KilometrageActuel)
+                    @(Model.Vehicule.KilometrageActuel?.ToString() ?? "non saisie")
                 </dd>
-                <dt class="col-sm-4">
-                    kilométrage Vidange
+                <dt class="col-sm-6">
+                    kilométrage entre Vidanges
                 </dt>
-                <dd class="col-sm-8">
+                <dd class="col-sm-6">
                     @(Model.Vehicule.KilometrageEntreVidanges?.ToString() ?? "non saisie")
                 </dd>
                 <dt class="col-sm-4">
@@ -72,7 +72,7 @@
                 </dd>
             </dl>
         </div>
-        <div class="col-md-6"> <img src="~/images/@Model.Vehicule.Photo" alt="@Model.Vehicule.Photo" /> </div>
+        <div class="col-md-6"> <img src="~/images/@Model.Vehicule.Photo" alt="@Model.Vehicule.Photo" style="max-width:500px;" /> </div>
     </div>
 </div>
 <div>

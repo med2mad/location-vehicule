@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RPtest.Data;
 
@@ -11,9 +12,11 @@ using RPtest.Data;
 namespace RPtest.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250331104429_14")]
+    partial class _14
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -622,8 +625,7 @@ namespace RPtest.Migrations
                 {
                     b.HasOne("RPtest.Models.Vehicule", "Vehicule")
                         .WithMany("Depenses")
-                        .HasForeignKey("VehiculeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("VehiculeId");
 
                     b.Navigation("Vehicule");
                 });
@@ -636,8 +638,7 @@ namespace RPtest.Migrations
 
                     b.HasOne("RPtest.Models.Vehicule", "Vehicule")
                         .WithMany("Locations")
-                        .HasForeignKey("VehiculeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("VehiculeId");
 
                     b.Navigation("Conducteur");
 
@@ -667,8 +668,7 @@ namespace RPtest.Migrations
                 {
                     b.HasOne("RPtest.Models.Vehicule", "Vehicule")
                         .WithMany("Vidanges")
-                        .HasForeignKey("VehiculeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("VehiculeId");
 
                     b.Navigation("Vehicule");
                 });
@@ -677,8 +677,7 @@ namespace RPtest.Migrations
                 {
                     b.HasOne("RPtest.Models.Vehicule", "Vehicule")
                         .WithMany("VisitesTechniques")
-                        .HasForeignKey("VehiculeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("VehiculeId");
 
                     b.Navigation("Vehicule");
                 });

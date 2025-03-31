@@ -22,7 +22,7 @@
             @foreach (var quartier in Model.Quartiers)
             {
                 <tr>
-                    <td>@quartier.Ville.Nom</td>
+                    <td>@quartier.Ville</td>
                     <td>@quartier.Nom</td>
                     <td>
                         <a asp-page="EditQuartier" asp-route-id="@quartier.Id" class="btn btn-warning">Modifier</a>

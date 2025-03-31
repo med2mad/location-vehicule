@@ -13,11 +13,11 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<RPtest.Models.Conducteur> Conducteurs { get; set; } = default!;
     public DbSet<RPtest.Models.Location> Locations { get; set; } = default!;
     public DbSet<RPtest.Models.Paiement> Paiements { get; set; } = default!;
-    public DbSet<RPtest.Models.Ville> Villes { get; set; } = default!;
     public DbSet<RPtest.Models.Quartier> Quartiers { get; set; } = default!;
     public DbSet<RPtest.Models.VisiteTechnique> VisitesTechniques { get; set; } = default!;
     public DbSet<RPtest.Models.Vidange> Vidanges { get; set; } = default!;
     public DbSet<RPtest.Models.Depense> Depenses { get; set; } = default!;
     public DbSet<RPtest.Models.TypeVehicule> Types { get; set; } = default!;
     public DbSet<RPtest.Models.Couleur> Couleurs { get; set; } = default!;
+
 }

@@ -20,12 +20,14 @@ public class CarsList(ApplicationDbContext _context) : PageModel
     public List<string> Marques { get; set; } = new();
     public List<Model> Marques_Models { get; set; } = new();
     public string ModelsJ { get; set; } = "[]";
+    public List<TypeVehicule> Types { get; set; }
 
     public IActionResult OnGet()
     {
         Marques = _context.Models.Select(m => m.Marque).Distinct().ToList();
         Marques_Models = _context.Models.Select(m => new Model { Marque = m.Marque, Nom = m.Nom }).OrderBy(m => m.Marque).ToList();
         ModelsJ = JsonSerializer.Serialize(Marques_Models);
+        Types = _context.Types.ToList();
 
         var query = _context.Vehicules.Include(v => v.Model).Include(v => v.Locations).AsQueryable();
         if (!string.IsNullOrEmpty(Model.Marque))
@@ -52,7 +54,7 @@ public class CarsList(ApplicationDbContext _context) : PageModel
             }
             else
             {
-                query = query.Where(v => !_context.Locations.Any(l => l.VehiculeId == v.Id && l.Statut == "En cours"));
+                query = query.Where(v => !v.Locations.Any(l => l.VehiculeId == v.Id && l.Statut == "En cours"));
             }
         }
         Vehicules = query.OrderByDescending(l => l.Id).ToList();
