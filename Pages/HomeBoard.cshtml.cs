@@ -30,7 +30,7 @@ public class HomeBoardModel(ApplicationDbContext _context) : PageModel
             .Where(l => l.Date.Year == now.Year && l.Date.Month == now.Month && l.Statut == "Annulé")
             .Count();
 
-        revenu = _context.Paiements.Where(p => p.Date.Month == now.Month).Sum(p => p.Montant);
+        revenu = _context.Paiements.Where(p => p.Date.Year == now.Year && p.Date.Month == now.Month).Sum(p => p.Montant);
     }
 
     public IActionResult OnGetPaymentsData()

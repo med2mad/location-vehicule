@@ -120,7 +120,7 @@
             <th>Prix</th>
             <th>Climatisation</th>
             <th>Disponibilité</th>
-            <th>Dépenses</th>
+            <th>Dépenses </th>
             <th style="width:60px;"></th>
         </tr>
     </thead>
@@ -130,8 +130,9 @@
             var LId = v.Locations.FirstOrDefault(l => l.Statut == "En cours")?.Id;
 
             var LastVid = Model.lastVidanges.FirstOrDefault(vdg => vdg.VehiculeId == v.Id)?.Date ?? v.Date;
-            int? restKilometrage =0 ;
+            int? restKilometrage = 0 ;
             if (v.KilometrageActuel>0 && v.KilometrageEntreVidanges > 0) { restKilometrage = v.KilometrageActuel % v.KilometrageEntreVidanges; }
+            else{ restKilometrage = 1; }
             bool VdgNotification = restKilometrage == 0 || LastVid < DateTime.Now.AddYears(-1);
 
             DateTime? LastVisite = Model.lastVisiteTechnique.FirstOrDefault(vst => vst.VehiculeId == v.Id)?.Date;
@@ -157,8 +158,16 @@
                     }
                 </td>
                 <td class="@(Notification ? "table-danger" : "")" style="text-align:center;">
-                    <a asp-page="ListVisiteTechnique" asp-route-vehiculeId="@v.Id" class="btn v @(VSTNotification ? "btn-danger" : "btn-secondary")">Visites Techniques</a><br />
-                    <a asp-page="ListVidange" asp-route-vehiculeId="@v.Id" class="btn v @(VdgNotification ? "btn-danger" : "btn-secondary")">Vidanges</a><br />
+                    <a asp-page="ListVisiteTechnique" asp-route-vehiculeId="@v.Id" class="btn v @(VSTNotification ? "btn-danger" : "btn-secondary")">
+                        <span class="ms-2" data-bs-toggle="tooltipVT" data-bs-html="true" title="<strong>Visites Techniques</strong><br>Pour vehicules de location : Dans 1 année la premiere foi, et 6 mois après.">
+                            <i class="fa fa-question-circle" aria-hidden="true" style="color:#007bff !important;"></i>
+                        </span>Visites Techniques
+                    </a><br />
+                    <a asp-page="ListVidange" asp-route-vehiculeId="@v.Id" class="btn v @(VdgNotification ? "btn-danger" : "btn-secondary")">
+                        <span class="ms-2" data-bs-toggle="tooltipV" data-bs-html="true" title="<strong>Vidange</strong><br>Après 1 année, ou, après le kilométrage entre 2 vidanges est dépassé.">
+                            <i class="fa fa-question-circle" aria-hidden="true" style="color:#007bff !important;"></i>
+                        </span>Vidanges
+                    </a><br />
                     <a asp-page="ListDepense" asp-route-vehiculeId="@v.Id" class="btn btn-secondary v">Autres Dépenses</a>
                 </td>
                 <td style="width:60px;">
@@ -206,6 +215,8 @@
             });
 
             marquesSelect.dispatchEvent(new Event("change"));
+
+            $('[data-bs-toggle="tooltipVT"]').tooltip();
         });
     </script>
 }

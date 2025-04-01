@@ -35,4 +35,18 @@ public class ListVidangeModel(ApplicationDbContext _context) : PageModel
 
         Page();
     }
+
+    public async Task<IActionResult> OnPostDeleteAsync(int id, int vehiculeId)
+    {
+        var vidange = await _context.Vidanges.FindAsync(id);
+        if (vidange == null)
+        {
+            return NotFound();
+        }
+
+        _context.Vidanges.Remove(vidange);
+        await _context.SaveChangesAsync();
+
+        return RedirectToPage(new { vehiculeId = vehiculeId });
+    }
 }

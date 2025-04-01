@@ -21,6 +21,7 @@
 <h1>Immatriculation: @Model.VehiculeImmatriculation</h1>
 <h4>Modèle : @Model.VehiculeMarque @Model.VehiculeModel</h4>
 
+<hr />
 
 <p>
     <a asp-page="AddVidange" asp-route-vehiculeId="@Model.VehiculeId" class="btn btn-primary"> + Ajouter une Vidange</a>
@@ -46,7 +47,7 @@
                 <td>@Html.DisplayFor(modelItem => v.Description)</td>
                 <td style="width:60px;">
                     <a asp-page="AddVidange" asp-route-id="@v.Id" asp-route-vehiculeId="@Model.VehiculeId" class="btn btn-sm btn-warning button"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                    <form method="post" asp-page-handler="Delete" asp-route-id="@v.Id">
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@v.Id" asp-route-vehiculeId="@Model.VehiculeId" style="display:inline;">
                         <button type="submit" class="btn btn-danger button"><i class="fa fa-times" aria-hidden="true"></i></button>
                     </form>
                 </td>
@@ -54,6 +55,8 @@
         }
     </tbody>
 </table>
+
+<hr />
 
 <h3>
     Total : @Total DH

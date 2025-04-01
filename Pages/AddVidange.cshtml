@@ -5,7 +5,15 @@
     ViewData["Title"] = Model.IsNew ? "Ajouter une Vidange" : "Modifier une Vidange";
 }
 
-<h1>@ViewData["Title"]</h1>
+@section Head {
+    <style>
+        input, select, textarea {
+            margin-bottom: 15px;
+            border: solid gray 1px !important;
+        }
+    </style>
+}
+
 <h4>Véhicule: @Model.VehiculeMarque @Model.VehiculeModel</h4>
 <hr />
 

@@ -14,12 +14,11 @@ public class ListDepenseModel(ApplicationDbContext _context) : PageModel
     public string VehiculeModel { get; set; }
     public string VehiculeImmatriculation { get; set; }
 
-    public async Task OnGetAsync(int vehiculeId)
+    public void OnGet(int vehiculeId)
     {
         VehiculeId = vehiculeId;
 
-        var vehicule = await _context.Vehicules.Include(v => v.Model)
-            .FirstOrDefaultAsync(v => v.Id == vehiculeId);
+        var vehicule = _context.Vehicules.Include(v => v.Model).FirstOrDefault(v => v.Id == vehiculeId);
 
         if (vehicule != null)
         {
@@ -28,13 +27,10 @@ public class ListDepenseModel(ApplicationDbContext _context) : PageModel
             VehiculeImmatriculation = vehicule.Immatriculation;
         }
 
-        Depenses = await _context.Depenses
-            .Where(d => d.VehiculeId == vehiculeId)
-            .OrderByDescending(d => d.Id)
-            .ToListAsync();
+        Depenses = _context.Depenses.Where(d => d.VehiculeId == vehiculeId).OrderByDescending(d => d.Id).ToList();
     }
 
-    public async Task<IActionResult> OnPostDeleteAsync(int id)
+    public async Task<IActionResult> OnPostDeleteAsync(int id, int vehiculeId)
     {
         var depense = await _context.Depenses.FindAsync(id);
         if (depense == null)
@@ -45,6 +41,6 @@ public class ListDepenseModel(ApplicationDbContext _context) : PageModel
         _context.Depenses.Remove(depense);
         await _context.SaveChangesAsync();
 
-        return RedirectToPage("ListDepense");
+        return RedirectToPage(new { vehiculeId = vehiculeId });
     }
 }

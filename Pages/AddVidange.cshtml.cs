@@ -107,6 +107,6 @@ public class AddVidangeModel(ApplicationDbContext _context) : PageModel
         _context.Vidanges.Remove(vidange);
         await _context.SaveChangesAsync();
 
-        return RedirectToPage("ListVidange");
+        return RedirectToPage("/ListVidange");
     }
 }

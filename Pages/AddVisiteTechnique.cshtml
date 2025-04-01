@@ -6,7 +6,15 @@
     decimal Total = 0;
 }
 
-<h1>@ViewData["Title"]</h1>
+@section Head {
+    <style>
+        input, select, textarea {
+            margin-bottom: 15px;
+            border: solid gray 1px !important;
+        }
+    </style>
+}
+
 <h4>Véhicule: @Model.VehiculeMarque @Model.VehiculeModel</h4>
 <hr />
 
@@ -44,7 +52,7 @@
                 {
                     <button type="submit" class="btn btn-primary">Enregistrer</button>
                 }
-                <a asp-page="ListVidange" asp-route-vehiculeId="@Model.VehiculeId" class="btn btn-secondary">Annuler</a>
+                <a asp-page="ListVisiteTechnique" asp-route-vehiculeId="@Model.VehiculeId" class="btn btn-secondary">Annuler</a>
             </div>
         </form>
     </div>

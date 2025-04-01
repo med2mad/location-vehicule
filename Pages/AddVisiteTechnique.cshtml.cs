@@ -107,6 +107,6 @@ public class AddVisiteTechniqueModel(ApplicationDbContext _context) : PageModel
         _context.VisitesTechniques.Remove(visite);
         await _context.SaveChangesAsync();
 
-        return RedirectToPage("ListVisiteTechnique");
+        return RedirectToPage("/ListVisiteTechnique");
     }
 }

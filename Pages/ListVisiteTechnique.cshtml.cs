@@ -33,4 +33,18 @@ public class ListVisiteTechniqueModel(ApplicationDbContext _context) : PageModel
             .OrderByDescending(d => d.Id)
             .ToListAsync();
     }
+
+    public async Task<IActionResult> OnPostDeleteAsync(int id, int vehiculeId)
+    {
+        var visiteTechnique = await _context.VisitesTechniques.FindAsync(id);
+        if (visiteTechnique == null)
+        {
+            return NotFound();
+        }
+
+        _context.VisitesTechniques.Remove(visiteTechnique);
+        await _context.SaveChangesAsync();
+
+        return RedirectToPage(new { vehiculeId = vehiculeId });
+    }
 }

@@ -4,8 +4,15 @@
     Layout = "Dashboard";
     ViewData["Title"] = Model.IsNew ? "Ajouter une dépense" : "Modifier une dépense";
 }
+@section Head {
+    <style>
+        input, select, textarea {
+            margin-bottom: 15px;
+            border: solid gray 1px !important;
+        }
+    </style>
+}
 
-<h1>@ViewData["Title"]</h1>
 <h4>Véhicule: @Model.VehiculeMarque @Model.VehiculeModel</h4>
 <hr />
 
