@@ -1,7 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>CarRental</title>
+    <title>SAMART LUX CAR</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -43,7 +47,7 @@
 
                     <div class="col-3">
                         <div class="site-logo ">
-                            <a href="index"><img class="normal-logo" src="~/logo.png" style="width: 200px;" alt="logo"></a>
+                            <a href="/index"><img class="normal-logo" src="~/logo.png" style="width: 200px;" alt="logo"></a>
                         </div>
                     </div>
 
@@ -52,15 +56,26 @@
                         
                         <nav class="site-navigation text-right ml-auto d-none d-lg-block" role="navigation">
                             <ul class="site-menu main-menu js-clone-nav ml-auto" >
-                                <li class="active"><a href="index" class="nav-link" style="color:white;">Accueil</a></li>
-                                <li><a href="listing" class="nav-link" style="color:white;">Véhicules</a></li>
-                                <li><a href="contact" class="nav-link" style="color:white;">Contacts</a></li>
-                                <li><a href="about" class="nav-link" style="color:white;">À propos de nous</a></li>
-                                <li><a href="Login" class="nav-link" style="color:white;">Login</a></li>
+                                <li><a href="/index" class="nav-link" style="color:white;">Accueil</a></li>
+                                <li><a href="/listing" class="nav-link" style="color:white;">Véhicules</a></li>
+                                <li><a href="/contact" class="nav-link" style="color:white;">Contacts</a></li>
+                                <li><a href="/about" class="nav-link" style="color:white;">À propos de nous</a></li>
+                                @if (SignInManager.IsSignedIn(User))
+                                {
+                                    <li><a href="/HomeBoard" class="nav-link" style="color:white;">Tableau de Bord</a></li>
+@*                                     <li class="nav-item">
+                                        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+                                            <button type="submit" class="nav-link btn btn-link text-dark" style="color:white !important;">Déconnexion</button>
+                                        </form>
+                                    </li> *@
+                                }
+                                else
+                                {
+                                    <li><a asp-area="Identity" asp-page="/Account/Login" class="nav-link" style="color:white;">Connexion</a></li>
+                                }
                             </ul>
                         </nav>
                     </div>
-
                 </div>
             </div>
         </header>
@@ -70,7 +85,7 @@
     </div>
 
 
-    <div class="site-section bg-primary py-5">
+    <div class="site-section bg-primary py-5 quattendezvous">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-7 mb-4 mb-md-0">

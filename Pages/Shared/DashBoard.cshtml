@@ -50,6 +50,16 @@
             width: 100%;
             max-width: 240px;
         }
+        .adminheader {
+            background: linear-gradient(to bottom, #495057, #566273);
+            color: white;
+            padding: 10px;
+            padding-left: 250px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: normal;
+        }
+
          @@media (max-width: 768px) {
             .sidebar {
                 width: 0;
@@ -61,15 +71,9 @@
             .sidebar.show {
                 width: 250px;
             }
-        }
-
-        .adminheader {
-            background: linear-gradient(to bottom, #495057, #566273);
-            color:white;
-            padding:10px;
-            text-align:center;
-            font-size:1.5rem;
-            font-weight:normal;
+            .adminheader {
+                padding-left: 0;
+            }
         }
     </style>
 
@@ -82,21 +86,26 @@
             <button class="navbar-toggler" type="button" id="sidebarToggle">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand ms-2" href="#">Tableau de Bord</a>
-            @* <div class="d-flex align-items-center">
-                <span class="text-white me-3">Admin</span>
+
+            <div class="d-flex align-items-center">
+                <span class="text-white me-3">@User.Identity?.Name</span>
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
                         <i class="fas fa-user-circle"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><a class="dropdown-item" href="#">Profil</a></li>
-                        <li><a class="dropdown-item" href="#">Paramètres</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Déconnexion</a></li>
+                        <li><a class="dropdown-item" href="#">
+
+                                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+                                    <button type="submit" class="nav-link btn btn-link text-dark">Déconnexion</button>
+                                </form>
+
+
+                        </a></li>
                     </ul>
                 </div>
-            </div> *@
+            </div>
         </div>
     </nav>
 
@@ -154,8 +163,11 @@
             </li>
 
             <li class="nav-item mt-4">
-                <a href="/Index" class="nav-link text-danger">
-                    <i class="fas fa-sign-out-alt"></i> Déconnexion
+                <a href="/ListUser" class="nav-link py-0 @(ViewData["Title"]?.ToString() == "Administrateurs"?"active":"")">
+                    <i class="fa fa-user"></i> Administrateurs
+                </a>
+                <a href="/Index" class="nav-link py-0">
+                    <i class="fas fa-sign-out-alt"></i> Sortir
                 </a>
             </li>
         </ul>
@@ -168,6 +180,7 @@
     </div>
 
     <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Toggle sidebar on mobile

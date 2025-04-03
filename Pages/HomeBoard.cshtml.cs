@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,7 @@ using RPtest.Models;
 using System.Globalization;
 
 namespace RPtest.Pages;
+[Authorize]
 public class HomeBoardModel(ApplicationDbContext _context) : PageModel
 {
     public int nombresReservations { get; set; }

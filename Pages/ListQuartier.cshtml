@@ -10,6 +10,8 @@
         <a asp-page="AddQuartier" class="btn btn-primary"> + Ajouter un quartier</a>
     </p>
 
+<hr />
+
     <table class="table">
         <thead>
             <tr>
@@ -27,7 +29,7 @@
                     <td>
                         <a asp-page="EditQuartier" asp-route-id="@quartier.Id" class="btn btn-warning">Modifier</a>
                         <form method="post" asp-page-handler="Delete" asp-route-id="@quartier.Id" style="display:inline;">
-                            <button type="submit" class="btn btn-danger">Supprimer</button>
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Supprimer ?');">Supprimer</button>
                         </form>
                     </td>
                 </tr>

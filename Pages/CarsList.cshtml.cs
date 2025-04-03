@@ -10,6 +10,7 @@ public class CarsList(ApplicationDbContext _context) : PageModel
 {
     public List<Vehicule> Vehicules { get; set; } = new List<Vehicule>();
     public int cnt;
+    public Dictionary<int, decimal> Revenus { get; set; }
     public List<Vidange> lastVidanges { get; set; } = new List<Vidange>();
     public List<VisiteTechnique> lastVisiteTechnique { get; set; } = new List<VisiteTechnique>();
 
@@ -60,6 +61,15 @@ public class CarsList(ApplicationDbContext _context) : PageModel
         Vehicules = query.OrderByDescending(l => l.Id).ToList();
 
         cnt = Vehicules.Count;
+        Revenus = _context.Vehicules
+                .Select(v => new
+                {
+                    VehiculeId = v.Id,
+                    RevenuTotal = v.Locations
+                        .SelectMany(l => l.Paiements)
+                        .Sum(p => p.Montant)
+                })
+                .ToDictionary(x => x.VehiculeId, x => x.RevenuTotal);
 
         lastVidanges = _context.Vidanges.OrderByDescending(x => x.Id).ToList();
         lastVisiteTechnique = _context.VisitesTechniques.OrderByDescending(x => x.Id).ToList();

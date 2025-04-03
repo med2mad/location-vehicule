@@ -20,6 +20,12 @@ https://github.com/Ecwid/payment-gateway-template/blob/master/index.html
 			border-radius: 0px;
 			box-shadow: none;
 		}
+		h4{
+			margin-bottom:0;
+		}
+		h5{
+			text-decoration:underline;
+		}
 	</style>
 }
 
@@ -126,6 +132,7 @@ https://github.com/Ecwid/payment-gateway-template/blob/master/index.html
 						<div class="col-md-3">
 							<div class="listing d-block  align-items-stretch" style="border-left:solid; margin-top:50px; padding-top:50px;">
 								<div class="listing-img h-100 mr-4">
+									<h5>Véhicule</h5>
 									<img src="~/images/@Model.Vehicule.Photo" alt="@Model.Vehicule.Photo" class="img-fluid">
 								</div>
 								<div class="listing-contents h-100">
@@ -148,8 +155,41 @@ https://github.com/Ecwid/payment-gateway-template/blob/master/index.html
 										</div>
 									</div>
 								</div>
+
+
+								<div>
+									<div>
+										<h5>Client</h5>
+										<div style="margin-left:10px;">
+											<span>@Model.Location.NomClient</span>
+											<span>@Model.Location.Tel</span>
+										</div>
+									</div>
+									<hr />
+									<div>
+										<h5>Réservation</h5>
+										<div style="margin-left:10px;">
+											<h4>Départ</h4>
+											<span>@Model.Location.DateDepart.ToString("dd/MM/yyyy")</span><br />
+											<span>@Model.villeDepart, @Model.quartierDepart</span>
+											<h4>Retour</h4>
+											<span>@Model.Location.DateRetour.ToString("dd/MM/yyyy")</span><br />
+											<span>@Model.villeRetour, @Model.quartierRetour</span>
+										</div>
+									</div>
+								</div>
+
+
 							</div>
+
+
+
+
+
 						</div>
+
+
+
 
 					</div>
 				</div>

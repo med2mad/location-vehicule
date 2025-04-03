@@ -12,7 +12,7 @@ public class ListLocationsModel(ApplicationDbContext _context) : PageModel
 
     public void OnGet()
     {
-        Locations = _context.Locations.Include(l => l.Vehicule).ThenInclude(v => v.Model).OrderByDescending(l => l.Id).ToList();
+        Locations = _context.Locations.Include(l => l.Vehicule).ThenInclude(v => v.Model).Include(l => l.Paiements).OrderByDescending(l => l.Id).ToList();
     }
 
     public async Task<IActionResult> OnPostDeleteAsync(int id)

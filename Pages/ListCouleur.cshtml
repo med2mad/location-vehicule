@@ -9,6 +9,8 @@
     <a asp-page="AddCouleur" class="btn btn-primary"> + Ajouter une nouvelle couleur</a>
 </p>
 
+<hr />
+
 <table class="table">
     <thead>
         <tr>
@@ -24,16 +26,16 @@
                 <td>
                     <a asp-page="AddCouleur" asp-route-id="@item.Id" class="btn btn-warning">Modifier</a>
                     <form method="post" asp-page-handler="Delete" asp-route-id="@item.Id" style="display:inline;">
-                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Supprimer ?');">Supprimer</button>
                     </form>
                 </td>
             </tr>
         }
     </tbody>
 </table>
-
+@* 
 @section Scripts {
-    @* <script>
+    <script>
         function confirmDelete(id) {
             if (confirm("Êtes-vous sûr de vouloir supprimer ce couleur ?")) {
                 fetch(`/Types/Index?handler=Delete&id=${id}`, {
@@ -48,5 +50,5 @@
                 });
             }
         }
-    </script> *@
-}
+    </script>
+} *@

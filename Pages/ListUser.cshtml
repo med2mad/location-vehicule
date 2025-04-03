@@ -1,0 +1,41 @@
+﻿@page
+@model RPtest.Pages.ListUserModel
+@{
+    Layout = "Dashboard";
+    ViewData["Title"] = "Administrateurs";
+}
+
+<a asp-area="Identity" asp-page="/Account/Register" class="btn btn-primary">
+    <i class="fa fa-user-plus" aria-hidden="true"></i> Ajouter un administrateur
+</a>
+
+<hr />
+
+@if (!string.IsNullOrEmpty(Model.StatusMessage))
+{
+    <div class="alert alert-danger">@Model.StatusMessage</div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nom Utilisateur</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>
+@*                     <a asp-page="./Details" asp-route-id="@user.Id">Details</a>
+                    <a asp-page="./Edit" asp-route-id="@user.Id">Edit</a> *@
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@user.Id" onsubmit="return confirm('Supprimer ?');">
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -9,6 +9,8 @@
     <a asp-page="AddType" class="btn btn-primary"> + Ajouter un nouveau type</a>
 </p>
 
+<hr />
+
 <table class="table">
     <thead>
         <tr>
@@ -24,29 +26,10 @@
                 <td>
                     <a asp-page="AddType" asp-route-id="@item.Id" class="btn btn-warning">Modifier</a>
                     <form method="post" asp-page-handler="Delete" asp-route-id="@item.Id" style="display:inline;">
-                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Supprimer ?');">Supprimer</button>
                     </form>
                 </td>
             </tr>
         }
     </tbody>
 </table>
-
-@section Scripts {
-    <script>
-        function confirmDelete(id) {
-            if (confirm("Êtes-vous sûr de vouloir supprimer ce type ?")) {
-                fetch(`/Types/Index?handler=Delete&id=${id}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
-                    }
-                }).then(response => {
-                    if (response.ok) {
-                        location.reload();
-                    }
-                });
-            }
-        }
-    </script>
-}

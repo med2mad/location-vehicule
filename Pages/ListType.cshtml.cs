@@ -5,7 +5,6 @@ using RPtest.Data;
 using RPtest.Models;
 
 namespace RPtest.Pages;
-
 public class ListTypeModel(ApplicationDbContext _context) : PageModel
 {
     public IList<TypeVehicule> Types { get; set; }
@@ -26,6 +25,6 @@ public class ListTypeModel(ApplicationDbContext _context) : PageModel
         _context.Types.Remove(type);
         await _context.SaveChangesAsync();
 
-        return RedirectToPage("ListType");
+        return RedirectToPage("/ListType");
     }
 }
