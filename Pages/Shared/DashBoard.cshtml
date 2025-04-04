@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
+
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -81,12 +84,12 @@
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style="padding-bottom:10px;">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" id="sidebarToggle">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
+            <a class="navbar-brand ms-2" href="#">Administration</a>
             <div class="d-flex align-items-center">
                 <span class="text-white me-3">@User.Identity?.Name</span>
                 <div class="dropdown">
@@ -94,14 +97,11 @@
                         <i class="fas fa-user-circle"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#">Profil</a></li>
+                        <li><a asp-page="EditUser" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)" class="dropdown-item">Profil</a></li>
                         <li><a class="dropdown-item" href="#">
-
-                                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
-                                    <button type="submit" class="nav-link btn btn-link text-dark">Déconnexion</button>
-                                </form>
-
-
+                            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+                                <button type="submit" class="nav-link btn btn-link text-dark">Déconnexion</button>
+                            </form>
                         </a></li>
                     </ul>
                 </div>
@@ -111,9 +111,8 @@
 
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
-        <div class="text-center mb-4">
+        <div class="text-center mb-2">
             <a asp-page="Index"><img src="~/logo.png" class="rounded-circle logo" alt="Logo"></a>
-            <h5 class="text-white mt-2">Administration</h5>
         </div>
         <ul class="nav flex-column">
             <li class="nav-item">
@@ -129,6 +128,11 @@
             <li class="nav-item">
                 <a href="/CarsList" class="nav-link @(ViewData["Title"]?.ToString().Contains("List de Véhicules")==true?"active":"")">
                     <i class="fas fa-car"></i> Liste de Véhicules
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-page="Revenus" class="nav-link @(ViewData["Title"]?.ToString() == "Revenu par Véhicule"?"active":"")">
+                    <i class="fa-solid fa-money-bill-1"></i> Revenu par Véhicule
                 </a>
             </li>
             <li class="nav-item">
@@ -162,8 +166,8 @@
                 </a>
             </li>
 
-            <li class="nav-item mt-4">
-                <a href="/ListUser" class="nav-link py-0 @(ViewData["Title"]?.ToString() == "Administrateurs"?"active":"")">
+            <li class="nav-item mt-4" style="border-top:solid gray 1px;">
+                <a href="/ListUser" class="nav-link @(ViewData["Title"]?.ToString() == "Administrateurs"?"active":"")">
                     <i class="fa fa-user"></i> Administrateurs
                 </a>
                 <a href="/Index" class="nav-link py-0">

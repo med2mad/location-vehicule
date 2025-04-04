@@ -5,6 +5,20 @@
     ViewData["Title"] = Model.Type.Id == 0 ? "Ajouter un type" : "Modifier le type";
 }
 
+@section Head {
+    <style>
+        input {
+            border: solid gray 1px !important;
+        }
+        .plusbutton {
+            width: 38px;
+            height: 38px;
+            padding: 0;
+            margin-left: 5px;
+        }
+    </style>
+}
+
 <form method="post">
     <input type="hidden" asp-for="Type.Id" />
 

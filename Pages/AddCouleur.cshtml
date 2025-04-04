@@ -5,6 +5,14 @@
     ViewData["Title"] = Model.Couleur.Id == 0 ? "Ajouter une Couleur" : "Modifier la Couleur";
 }
 
+@section Head {
+    <style>
+        input {
+            border: solid gray 1px !important;
+        }
+    </style>
+}
+
 <form method="post">
     <input type="hidden" asp-for="Couleur.Id" />
 

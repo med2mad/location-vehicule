@@ -4,6 +4,13 @@
     Layout = "Dashboard";
     ViewData["Title"] = "List de Couleurs";
 }
+@section Head {
+    <style>
+        td {
+            vertical-align: middle;
+        }
+    </style>
+}
 
 <p>
     <a asp-page="AddCouleur" class="btn btn-primary"> + Ajouter une nouvelle couleur</a>

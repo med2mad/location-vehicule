@@ -4,8 +4,15 @@
     Layout = "Dashboard";
     ViewData["Title"] = "Administrateurs";
 }
+@section Head {
+    <style>
+        td {
+            vertical-align:middle;
+        }
+    </style>
+}
 
-<a asp-area="Identity" asp-page="/Account/Register" class="btn btn-primary">
+<a asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@Url.Page("/ListUser", new { area = "" })" class="btn btn-primary">
     <i class="fa fa-user-plus" aria-hidden="true"></i> Ajouter un administrateur
 </a>
 
@@ -13,7 +20,7 @@
 
 @if (!string.IsNullOrEmpty(Model.StatusMessage))
 {
-    <div class="alert alert-danger">@Model.StatusMessage</div>
+    <div class="alert alert-info">@Model.StatusMessage</div>
 }
 
 <table class="table">
@@ -29,10 +36,11 @@
             <tr>
                 <td>@user.UserName</td>
                 <td>
-@*                     <a asp-page="./Details" asp-route-id="@user.Id">Details</a>
+@*                  <a asp-page="./Details" asp-route-id="@user.Id">Details</a>
                     <a asp-page="./Edit" asp-route-id="@user.Id">Edit</a> *@
-                    <form method="post" asp-page-handler="Delete" asp-route-id="@user.Id" onsubmit="return confirm('Supprimer ?');">
-                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    <a asp-page="EditUser" asp-route-id="@user.Id" class="btn btn-warning">Modifier</a>
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@user.Id" style="display:inline;">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Supprimer ?');">Supprimer</button>
                     </form>
                 </td>
             </tr>

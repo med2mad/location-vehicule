@@ -134,7 +134,7 @@ namespace RPtest.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Nom ou mot de passe incorrect");
                     return Page();
                 }
             }

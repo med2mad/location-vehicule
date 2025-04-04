@@ -5,14 +5,14 @@
     ViewData["Title"] = "Nouveau Administrateur";
 }
 
-<h1 style="text-align:center;">Nouveau Administrateur</h1>
 <div class="row justify-content-center">
     <div class="col-md-4">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <hr />
+            
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-floating mb-3">
-                <input asp-for="Input.Username" class="form-control" aria-required="true" autocomplete="username" placeholder="Nom utilisateur" required />
+                <input asp-for="Input.Username" class="form-control" aria-required="true" autocomplete="off" placeholder="Nom utilisateur" required />
                 <label asp-for="Input.Username" class="form-label">Nom utilisateur</label>
                 <span asp-validation-for="Input.Username" class="text-danger"></span>
             </div>
@@ -29,7 +29,7 @@
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
-                <input asp-for="Input.ConfirmPassword" class="form-control" aria-required="true" placeholder="Mot de pass" required/>
+                <input asp-for="Input.ConfirmPassword" class="form-control" aria-required="true" placeholder="Confirmation" required/>
                 <label asp-for="Input.ConfirmPassword">Confirmer mot de pass</label>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>

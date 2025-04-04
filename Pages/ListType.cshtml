@@ -4,6 +4,13 @@
     Layout = "Dashboard";
     ViewData["Title"] = "Types de véhicule";
 }
+@section Head {
+    <style>
+        td {
+            vertical-align: middle;
+        }
+    </style>
+}
 
 <p>
     <a asp-page="AddType" class="btn btn-primary"> + Ajouter un nouveau type</a>

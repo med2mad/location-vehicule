@@ -16,6 +16,9 @@
         footer, .quattendezvous {
             display:none;
         }
+        input{
+            border: solid gray 1px !important;
+        }
     </style>
 }
 
@@ -27,6 +30,7 @@
         <h3 class="text-center">Connexion</h3>
 
             <form id="account" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                 <div class="mb-3 form-floating">
                     <input asp-for="Input.Username" class="form-control" aria-required="true" placeholder="Nom utilisateur" required />
@@ -40,11 +44,12 @@
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div> *@
 
-                <div class="mb-3">
+            <div class="mb-3 form-floating">
                     <input asp-for="Input.Password" class="form-control" aria-required="true" placeholder="Mot de pass" required />
-                <label asp-for="Input.Username" class="form-label">Mot de pass</label>
+                    <label asp-for="Input.Password" class="form-label">Mot de pass</label>
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
+
                 <div class="checkbox mb-3" style="padding-left:40px;">
                     <label asp-for="Input.RememberMe" class="form-label">
                         <input class="form-check-input" asp-for="Input.RememberMe" />

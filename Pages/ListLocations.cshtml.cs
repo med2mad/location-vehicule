@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RPtest.Data;
@@ -6,6 +7,7 @@ using RPtest.Models;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace RPtest.Pages;
+[Authorize]
 public class ListLocationsModel(ApplicationDbContext _context) : PageModel
 {
     public List<Location> Locations { get; set; } = new List<Location>();

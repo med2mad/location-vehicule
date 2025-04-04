@@ -1,0 +1,123 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
+
+namespace RPtest.Pages;
+[Authorize] // Restrict to admins only
+public class EditUserModel(UserManager<IdentityUser> _userManager, SignInManager<IdentityUser> _signInManager) : PageModel
+{
+    [BindProperty]
+    public InputModel Input { get; set; }
+
+    public class InputModel
+    {
+        [Required]
+        [Display(Name = "Username")]
+        public string UserName { get; set; }
+
+        //[EmailAddress]
+        //[Display(Name = "Email")]
+        //public string Email { get; set; }
+
+        //[Display(Name = "Phone number")]
+        //public string PhoneNumber { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "New Password (leave empty to keep current)")]
+        public string? NewPassword { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm New Password")]
+        [Compare("NewPassword", ErrorMessage = "Mot de pass et confirmation ne sont pas identiques.")]
+        public string? ConfirmPassword { get; set; }
+
+    }
+
+    public async Task<IActionResult> OnGetAsync(string id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        var user = await _userManager.FindByIdAsync(id);
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        Input = new InputModel
+        {
+            UserName = user.UserName,
+            //Email = user.Email,
+            //PhoneNumber = user.PhoneNumber
+        };
+
+        return Page();
+    }
+
+    public async Task<IActionResult> OnPostAsync(string id)
+    {
+        if (!ModelState.IsValid)
+        {
+            return Page();
+        }
+
+        var user = await _userManager.FindByIdAsync(id);
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        bool exist = _userManager.Users.Any(u => (u.UserName == Input.UserName && u.Id != id));
+        if (exist)
+        {
+            ModelState.AddModelError(string.Empty, "Nom utilisateur déjà existant");
+            return Page();
+        }
+
+        bool isCurrentUser = user.UserName == User.Identity.Name;
+
+        // 1. First update regular user properties
+        user.UserName = Input.UserName;
+        //user.Email = Input.Email;
+        //user.PhoneNumber = Input.PhoneNumber;
+
+        // 2. Then handle password reset if new password was provided
+        if (!string.IsNullOrEmpty(Input.NewPassword))
+        {
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var resetResult = await _userManager.ResetPasswordAsync(user, token, Input.NewPassword);
+
+            if (!resetResult.Succeeded)
+            {
+                foreach (var error in resetResult.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+                return Page();
+            }
+        }
+
+        // 3. Finally save the user updates
+        var updateResult = await _userManager.UpdateAsync(user);
+        if (!updateResult.Succeeded)
+        {
+            foreach (var error in updateResult.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+            return Page();
+        }
+
+        if (isCurrentUser)
+        {
+            await _signInManager.RefreshSignInAsync(user);
+        }
+
+        return RedirectToPage("ListUser");
+    }
+}

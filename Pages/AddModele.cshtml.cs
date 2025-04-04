@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -5,6 +6,7 @@ using RPtest.Data;
 using RPtest.Models;
 
 namespace RPtest.Pages;
+[Authorize]
 public class AddModeleModel(ApplicationDbContext _context) : PageModel
 {
     [BindProperty]

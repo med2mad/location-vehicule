@@ -115,6 +115,13 @@ namespace RPtest.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+            bool exist = _userManager.Users.Any(u => u.UserName == Input.Username);
+            if (exist)
+            {
+                ModelState.AddModelError(string.Empty, "Nom utilisateur déjà existant");
+                return Page();
+            }
+
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
@@ -148,7 +155,7 @@ namespace RPtest.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        //await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     }
                 }
