@@ -2,7 +2,7 @@
 @model RPtest.Pages.ListDepenseModel
 @{
     Layout = "Dashboard";
-    ViewData["Title"] = "Dépenses du Véhicule";
+    ViewData["Title"] = "Dépenses du Véhicule : " + @Model.VehiculeImmatriculation;
     decimal Total = 0;
 }
 
@@ -16,12 +16,85 @@
         td{
             vertical-align:middle;
         }
+        .search-bar {
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        .search-bar select, .search-bar input {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 0.8rem !important;
+            height:35px;
+        }
+        .searchcontainer {
+            border: solid 1px #b8c4d1;
+            border-radius: 20px;
+            background-color: #f2f2f2;
+        }
+        .search-bar .submit {
+            padding: 10px;
+            width: 50px;
+            margin-top: 1px;
+        }
+        .search-bar label{
+            font-size: 0.9rem; 
+        }
     </style>
 }
-<h1>Immatriculation: @Model.VehiculeImmatriculation</h1>
-<h4>Modèle : @Model.VehiculeMarque @Model.VehiculeModel</h4>
 
-<hr />
+<div class="row align-items-center mb-3" style="justify-content: center">
+
+    <div class="col-lg-10 searchcontainer">
+
+        <form method="get" class="trip-form mb-2 mt-2 search-bar">
+            <input type="hidden" asp-for="VehiculeId" />
+
+            <div class="row" style="align-items:center; justify-content:space-around !important;">
+
+                <div class="mb-md-0 col-md-1 d-md-block d-flex align-items-center text-center">
+                    <label><strong><nobr>Période :</nobr></strong></label>
+                </div>
+
+                <div class="mb-md-0 col-md-2 d-md-block d-flex align-items-center">
+                    <nobr>
+                    <label asp-for="StartDate">de</label>
+                    <input asp-for="StartDate" type="date">
+                    </nobr>
+                </div>
+
+                <div class="mb-md-0 col-md-2 d-md-block d-flex align-items-center">
+                    <nobr>
+                        <label asp-for="EndDate">à</label>
+                        <input asp-for="EndDate" type="date">
+                    </nobr>
+                </div>
+
+                <div class="mb-md-0 col-md-1 d-md-block d-flex align-items-center text-center">
+                    |
+                </div>
+
+                <div class="mb-md-0 col-md-4 d-md-block d-flex align-items-center">
+                    <nobr>
+                        <label asp-for="Sort"><strong><nobr style="font-size: 0.9rem !important;">Trier par :</nobr></strong></label>
+                        <select asp-for="Sort" class="custom-select" style="width:70%">
+                            <option value="" selected></option>
+                            <option value="Date">Date</option>
+                            <option value="Montant">Montant</option>
+                        </select>
+                    </nobr>
+                </div>
+
+                <div class="mb-3 mb-md-0 col-md-2" style="text-align:center;padding:0 !important;">
+                    <button type="submit" class="btn btn-primary submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    <a asp-page="ListDepense" asp-route-vehiculeId="@Model.VehiculeId" class="btn btn-secondary submit"><i class="fa fa-times" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
 
 <p>
     <a asp-page="AddDepense" asp-route-vehiculeId="@Model.VehiculeId" class="btn btn-primary"> + Ajouter une dépense</a>

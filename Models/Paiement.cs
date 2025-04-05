@@ -18,6 +18,6 @@ public class Paiement
 
     [ForeignKey("Location")]
     public int? LocationId { get; set; }
-    [DeleteBehavior(DeleteBehavior.SetNull)]
+    [DeleteBehavior(DeleteBehavior.Cascade)]
     public Location? Location { get; set; }
 }

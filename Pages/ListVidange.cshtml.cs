@@ -15,12 +15,36 @@ public class ListVidangeModel(ApplicationDbContext _context) : PageModel
     public string VehiculeModel { get; set; }
     public string VehiculeImmatriculation { get; set; }
 
+    [BindProperty(SupportsGet = true)] public string Sort { get; set; }
+    [BindProperty(SupportsGet = true)] public DateTime? StartDate { get; set; }
+    [BindProperty(SupportsGet = true)] public DateTime? EndDate { get; set; }
+
     public async Task OnGetAsync(int vehiculeId)
     {
         VehiculeId = vehiculeId;
 
-        var vehicule = await _context.Vehicules.Include(v => v.Model)
-            .FirstOrDefaultAsync(v => v.Id == vehiculeId);
+        var today = DateTime.Today;
+        DateTime sd = new DateTime(today.Year, 1, 1);
+        DateTime ed = new DateTime(today.Year, today.Month, DateTime.DaysInMonth(today.Year, today.Month));
+        ed = ed.Date.AddDays(1).AddTicks(-1);// Add a day to include the entire end date (time = 00:00:00)
+        if (StartDate.HasValue)
+        {
+            sd = StartDate.Value;
+        }
+        else
+        {
+            StartDate = sd;
+        }
+        if (EndDate.HasValue)
+        {
+            ed = EndDate.Value.AddDays(1).AddTicks(-1); // Add a day to include the entire end date (time = 00:00:00)
+        }
+        else
+        {
+            EndDate = ed;
+        }
+
+        var vehicule = await _context.Vehicules.Include(v => v.Model).FirstOrDefaultAsync(v => v.Id == vehiculeId);
 
         if (vehicule != null)
         {
@@ -29,12 +53,25 @@ public class ListVidangeModel(ApplicationDbContext _context) : PageModel
             VehiculeImmatriculation = vehicule.Immatriculation;
         }
 
-        Vidanges = await _context.Vidanges
-            .Where(d => d.VehiculeId == vehiculeId)
-            .OrderByDescending(d => d.Id)
-            .ToListAsync();
+        var query = _context.Vidanges.Where(d => d.VehiculeId == vehiculeId && d.Date >= sd && d.Date < ed);
 
-        Page();
+        if (!string.IsNullOrEmpty(Sort))
+        {
+            if (Sort == "Date")
+            {
+                query = query.OrderByDescending(d => d.Date);
+            }
+            else if (Sort == "Montant")
+            {
+                query = query.OrderByDescending(d => d.Montant);
+            }
+        }
+        else
+        {
+            query = query.OrderByDescending(d => d.Id);
+        }
+
+        Vidanges = await query.ToListAsync();
     }
 
     public async Task<IActionResult> OnPostDeleteAsync(int id, int vehiculeId)

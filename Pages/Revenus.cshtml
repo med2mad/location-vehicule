@@ -23,6 +23,7 @@
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 0.8rem !important;
+            height:35px;
         }
         .searchcontainer {
             border: solid 1px #b8c4d1;
@@ -47,27 +48,43 @@
 
         <form method="get" class="trip-form mb-2 mt-2 search-bar">
             <div class="row" style="align-items:center; justify-content:space-around !important;">
-                <div class="mb-md-0 col-md-1 d-md-block d-flex align-items-center">
-                    <label asp-for="Location.DateDepart" class="form-label mr-3"><nobr>Période : </nobr></label>
+
+                <div class="mb-md-0 col-md-1 d-md-block d-flex align-items-center text-center">
+                    <label><strong><nobr>Période :</nobr></strong></label>
                 </div>
 
-                <div class="mb-md-0 col-md-1 d-md-block d-flex align-items-center">
-                    <label asp-for="Location.DateDepart" class="form-label mr-3"><nobr>de</nobr></label>
-                </div>
                 <div class="mb-md-0 col-md-2 d-md-block d-flex align-items-center">
-                    <input asp-for="Location.DateDepart" name="Location.DateDepart" type="date" style="height:35px; padding:5px;" class="form-control" required>
+                    <nobr>
+                    <label asp-for="StartDate">de</label>
+                    <input asp-for="StartDate" type="date">
+                    </nobr>
                 </div>
 
-                <div class="mb-md-0 col-md-1 d-md-block d-flex align-items-center">
-                    <label asp-for="Location.DateDepart" class="form-label mr-3"><nobr>à</nobr></label>
-                </div>
                 <div class="mb-md-0 col-md-2 d-md-block d-flex align-items-center">
-                    <input asp-for="Location.DateRetour" name="Location.dateRetour" type="date" style="height:35px; padding:5px;" class="form-control" required>
+                    <nobr>
+                        <label asp-for="EndDate">à</label>
+                        <input asp-for="EndDate" type="date">
+                    </nobr>
+                </div>
+
+                <div class="mb-md-0 col-md-1 d-md-block d-flex align-items-center text-center">
+                    |
+                </div>
+
+                <div class="mb-md-0 col-md-4 d-md-block d-flex align-items-center">
+                    <nobr>
+                        <label asp-for="Sort"><strong><nobr style="font-size: 0.9rem !important;">Trier par :</nobr></strong></label>
+                        <select asp-for="Sort" class="custom-select" style="width:70%">
+                            <option value="" selected></option>
+                            <option value="Revenu">Revenu</option>
+                            <option value="locations">Nombre de locations</option>
+                        </select>
+                    </nobr>
                 </div>
 
                 <div class="mb-3 mb-md-0 col-md-2" style="text-align:center;padding:0 !important;">
                     <button type="submit" class="btn btn-primary submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-                    <a asp-page-handler="CarsList" class="btn btn-secondary submit"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <a asp-page-handler="zzzzzzzzz" class="btn btn-secondary submit"><i class="fa fa-times" aria-hidden="true"></i></a>
                 </div>
             </div>
         </form>
@@ -83,7 +100,7 @@
             <th>Immatriculation</th>
             <th><nobr>Prix <span style="font-size:0.6rem;">(DH)</span></nobr></th>
             <th>Nombre de Locations</th>
-            <th><nobr>Revenus Total <span style="font-size:0.6rem;">(DH)</span></nobr></th>
+            <th><nobr>Revenu Total <span style="font-size:0.6rem;">(DH)</span></nobr></th>
         </tr>
     </thead>
     <tbody>

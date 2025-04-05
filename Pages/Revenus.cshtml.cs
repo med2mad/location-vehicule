@@ -10,15 +10,18 @@ namespace RPtest.Pages;
 public class RevenusModel(ApplicationDbContext _context) : PageModel
 {
     public IList<VehiculeRevenu> VehiculesAvecRevenu { get; set; }
-    public Location Location { get; set; } //just for dd/MM/yyyy format
+
+    [BindProperty(SupportsGet = true)] public string Sort { get; set; }
+    [BindProperty(SupportsGet = true)] public DateTime? StartDate { get; set; }
+    [BindProperty(SupportsGet = true)] public DateTime? EndDate { get; set; }
 
     public class VehiculeRevenu
     {
-        public int Id { get; set; }
         public int VehiculeId { get; set; }
         public string Model { get; set; }
         public string Immatriculation { get; set; }
         public decimal Prix { get; set; }
+        public DateTime Date { get; set; }
         public string Photo { get; set; }
         public decimal RevenuTotal { get; set; }
         public int NombreLocations { get; set; }
@@ -26,24 +29,63 @@ public class RevenusModel(ApplicationDbContext _context) : PageModel
 
     public async Task OnGetAsync()
     {
-        VehiculesAvecRevenu = await _context.Vehicules
-            .Select(v => new VehiculeRevenu
+        var today = DateTime.Today;
+        DateTime sd = new DateTime(today.Year, 1, 1);
+        DateTime ed = new DateTime(today.Year, today.Month, DateTime.DaysInMonth(today.Year, today.Month));
+        ed = ed.Date.AddDays(1).AddTicks(-1);// Add a day to include the entire end date (time = 00:00:00)
+
+        if (StartDate.HasValue)
+        {
+            sd = StartDate.Value;
+        }
+        else
+        {
+            StartDate = sd;
+        }
+        if (EndDate.HasValue)
+        {
+            ed = EndDate.Value.AddDays(1).AddTicks(-1); // Add a day to include the entire end date (time = 00:00:00)
+        }
+        else
+        {
+            EndDate = ed;
+        }
+
+        var query = _context.Vehicules
+           .Select(v => new VehiculeRevenu
+           {
+               VehiculeId = v.Id,
+               Immatriculation = v.Immatriculation,
+               Photo = v.Photo,
+               Prix = v.Prix,
+               Date = v.Locations.FirstOrDefault().Date,
+               Model = v.Model.Marque + ", " + v.Model.Nom,
+               NombreLocations = _context.Locations.Count(l => l.VehiculeId == v.Id && l.Date >= sd && l.Date < ed),
+               RevenuTotal = _context.Locations
+                   .Where(l => l.VehiculeId == v.Id && l.Date >= sd && l.Date < ed)
+                   .Join(_context.Paiements,
+                       location => location.Id,
+                       paiement => paiement.LocationId,
+                       (location, paiement) => paiement.Montant)
+                   .Sum()
+           });
+
+        if (!string.IsNullOrEmpty(Sort))
+        {
+            if (Sort == "Revenu")
             {
-                Id = v.Id,
-                Immatriculation = v.Immatriculation,
-                VehiculeId = v.Id,
-                Photo = v.Photo,
-                Prix = v.Prix,
-                Model = v.Model.Marque + ", " + v.Model.Nom,
-                NombreLocations = _context.Locations.Where(l => l.VehiculeId == v.Id).Count(),
-                RevenuTotal = _context.Locations
-                    .Where(l => l.VehiculeId == v.Id)
-                    .Join(_context.Paiements,
-                        location => location.Id,
-                        paiement => paiement.LocationId,
-                        (location, paiement) => paiement.Montant)
-                    .Sum()
-            }).OrderByDescending(l => l.VehiculeId)
-            .ToListAsync();
+                query = query.OrderByDescending(r => r.RevenuTotal);
+            }
+            else if (Sort == "Locations")
+            {
+                query = query.OrderByDescending(r => r.NombreLocations);
+            }
+        }
+        else
+        {
+            query = query.OrderByDescending(r => r.VehiculeId);
+        }
+
+        VehiculesAvecRevenu = await query.ToListAsync();
     }
 }
