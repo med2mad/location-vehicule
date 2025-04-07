@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 
 namespace RPtest.Areas.Identity.Pages.Account
 {
+
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
@@ -76,6 +77,8 @@ namespace RPtest.Areas.Identity.Pages.Account
             [Display(Name = "Username")]
             public string Username { get; set; }
 
+            [Required]
+            public string Role { get; set; }
 
             ///// <summary>
             /////     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -91,7 +94,7 @@ namespace RPtest.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
-            [StringLength(20, ErrorMessage = "Mot de Pass (et confirmation) doit avoir entre {2} et {1} characters", MinimumLength = 4)]
+            [StringLength(20, ErrorMessage = "Mot de Pass (et confirmation) doit avoir entre {2} et {1} characters", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
@@ -155,6 +158,7 @@ namespace RPtest.Areas.Identity.Pages.Account
                     }
                     else
                     {
+                        await _userManager.AddToRoleAsync(user, Input.Role);
                         //await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     }

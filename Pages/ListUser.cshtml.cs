@@ -9,16 +9,34 @@ using System.Threading.Tasks;
 
 namespace RPtest.Pages;
 
-[Authorize] // Restrict to logged-in users
+public class UserWithRoleViewModel
+{
+    public string Id { get; set; }
+    public string UserName { get; set; }
+    public string Role { get; set; }
+}
+
+[Authorize(Roles = "Super Administrateur")] // Restrict to super admins only
 public class ListUserModel(UserManager<IdentityUser> _userManager) : PageModel
 {
-    public IList<IdentityUser> Users { get; set; }
     [TempData]
     public string StatusMessage { get; set; }
 
+    public List<UserWithRoleViewModel> UsersWithRoles { get; set; } = new();
+
     public async Task OnGetAsync()
     {
-        Users = _userManager.Users.ToList();
+        var Users = _userManager.Users.ToList();
+        foreach (var user in Users)
+        {
+            var roles = await _userManager.GetRolesAsync(user);
+            UsersWithRoles.Add(new UserWithRoleViewModel
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                Role = roles.FirstOrDefault() ?? ""
+            });
+        }
     }
 
     public async Task<IActionResult> OnPostDeleteAsync(string id)

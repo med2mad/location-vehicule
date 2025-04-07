@@ -27,14 +27,16 @@
     <thead>
         <tr>
             <th>Nom Utilisateur</th>
+            <th>Role</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var user in Model.Users)
+        @foreach (var user in Model.UsersWithRoles)
         {
             <tr>
                 <td>@user.UserName</td>
+                <td>@user.Role</td>
                 <td>
 @*                  <a asp-page="./Details" asp-route-id="@user.Id">Details</a>
                     <a asp-page="./Edit" asp-route-id="@user.Id">Edit</a> *@

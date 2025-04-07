@@ -111,8 +111,8 @@
 
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
-        <div class="text-center mb-2">
-            <a asp-page="Index"><img src="~/logo.png" class="rounded-circle logo" alt="Logo"></a>
+        <div class="text-center">
+            <a asp-page="/Index"><img src="~/logo.png" class="rounded-circle logo" alt="Logo"></a>
         </div>
         <ul class="nav flex-column">
             <li class="nav-item">
@@ -156,21 +156,24 @@
                 </a>
             </li>
             <li class="nav-item" style="margin-left:60px;">
-                <a href="/ListType" style="padding:0; font-size:0.95rem;" class="nav-link @(ViewData["Title"]?.ToString() == "Types de Véhicule"?"active":"")">
+                <a href="/ListType" style="padding:0; font-size:0.95rem;" class="nav-link @(ViewData["Title"]?.ToString() == "Types de véhicule"?"active":"")">
                     - Types de véhicules
                 </a>
             </li>
             <li class="nav-item" style="margin-left:60px;">
-                <a href="/ListCouleur" style="padding:0; font-size:0.95rem;" class="nav-link @(ViewData["Title"]?.ToString() == "Liste de Couleurs"?"active":"")">
+                <a href="/ListCouleur" style="padding:0; font-size:0.95rem;" class="nav-link @(ViewData["Title"]?.ToString() == "Liste de couleurs"?"active":"")">
                     - Couleurs de véhicules
                 </a>
             </li>
 
             <li class="nav-item mt-4" style="border-top:solid gray 1px;">
-                <a href="/ListUser" class="nav-link @(ViewData["Title"]?.ToString() == "Administrateurs"?"active":"")">
-                    <i class="fa fa-user"></i> Administrateurs
-                </a>
-                <a href="/Index" class="nav-link py-0">
+                @if (User.IsInRole("Super Administrateur"))
+                {
+                    <a href="/ListUser" class="nav-link @(ViewData["Title"]?.ToString() == "Administrateurs"?"active":"")">
+                        <i class="fa fa-user"></i> Administrateurs
+                    </a>
+                }
+                <a href="/Index" class="nav-link">
                     <i class="fas fa-sign-out-alt"></i> Sortir
                 </a>
             </li>

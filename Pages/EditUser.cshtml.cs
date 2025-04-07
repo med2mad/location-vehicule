@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace RPtest.Pages;
-[Authorize] // Restrict to admins only
+
 public class EditUserModel(UserManager<IdentityUser> _userManager, SignInManager<IdentityUser> _signInManager) : PageModel
 {
     [BindProperty]
@@ -17,6 +17,9 @@ public class EditUserModel(UserManager<IdentityUser> _userManager, SignInManager
         [Required]
         [Display(Name = "Username")]
         public string UserName { get; set; }
+
+        [Required]
+        public string Role { get; set; }
 
         //[EmailAddress]
         //[Display(Name = "Email")]
@@ -52,6 +55,7 @@ public class EditUserModel(UserManager<IdentityUser> _userManager, SignInManager
         Input = new InputModel
         {
             UserName = user.UserName,
+            Role = (await _userManager.GetRolesAsync(user)).FirstOrDefault(),
             //Email = user.Email,
             //PhoneNumber = user.PhoneNumber
         };
@@ -102,6 +106,12 @@ public class EditUserModel(UserManager<IdentityUser> _userManager, SignInManager
             }
         }
 
+        //change role
+        var roles = await _userManager.GetRolesAsync(user);
+        await _userManager.RemoveFromRolesAsync(user, roles);
+        if (!await _userManager.IsInRoleAsync(user, Input.Role))
+            await _userManager.AddToRoleAsync(user, Input.Role);
+
         // 3. Finally save the user updates
         var updateResult = await _userManager.UpdateAsync(user);
         if (!updateResult.Succeeded)
@@ -112,6 +122,7 @@ public class EditUserModel(UserManager<IdentityUser> _userManager, SignInManager
             }
             return Page();
         }
+
 
         if (isCurrentUser)
         {

@@ -39,6 +39,21 @@ else
     app.UseHsts();
 }
 
+// Role creation
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    string[] roles = new[] { "Client", "Administrateur", "Super Administrateur" };
+
+    foreach (var role in roles)
+    {
+        if (!await roleManager.RoleExistsAsync(role))
+        {
+            await roleManager.CreateAsync(new IdentityRole(role));
+        }
+    }
+}
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
