@@ -20,10 +20,18 @@ public class PaymentModel(ApplicationDbContext context) : PageModel
     [BindProperty(SupportsGet = true)] public string villeRetour { get; set; }
     [BindProperty(SupportsGet = true)] public string quartierRetour { get; set; } = string.Empty;
 
-    public void OnGet()
+    public IActionResult OnGet()
     {
+        if(Location.DateRetour < Location.DateDepart)
+        {
+            TempData["dateError"] = "<";
+            return RedirectToPage("/Rent", new { VehiculeId= VehiculeId, NomClient=Location.NomClient, Tel=Location.Tel });
+        }
+
         Vehicule = context.Vehicules.Include(v => v.Model).FirstOrDefault(v => v.Id == VehiculeId);
-        Paiement.Montant = Vehicule.Prix;
+        Paiement.Montant = Vehicule.Prix * (Location.DateRetour.AddDays(1) - Location.DateDepart).Days;
+
+        return Page();
     }
 
     public IActionResult OnPost(int VId)

@@ -11,10 +11,11 @@ public class RevenusModel(ApplicationDbContext _context) : PageModel
 {
     public IList<VehiculeRevenu> VehiculesAvecRevenu { get; set; }
 
-    [BindProperty(SupportsGet = true)] public string Sort { get; set; }
     [BindProperty(SupportsGet = true)] public DateTime? StartDate { get; set; }
     [BindProperty(SupportsGet = true)] public DateTime? EndDate { get; set; }
-
+    [BindProperty(SupportsGet = true)] public string Immatriculation { get; set; }
+    [BindProperty(SupportsGet = true)] public string Sort { get; set; }
+    
     public class VehiculeRevenu
     {
         public int VehiculeId { get; set; }
@@ -32,7 +33,7 @@ public class RevenusModel(ApplicationDbContext _context) : PageModel
         var today = DateTime.Today;
         DateTime sd = new DateTime(today.Year, 1, 1);
         DateTime ed = new DateTime(today.Year, today.Month, DateTime.DaysInMonth(today.Year, today.Month));
-        ed = ed.Date.AddDays(1).AddTicks(-1);// Add a day to include the entire end date (time = 00:00:00)
+        ed = ed.Date.AddDays(1).AddTicks(-1); //Add a day to include the entire end date (time = 00:00:00)
 
         if (StartDate.HasValue)
         {
@@ -40,15 +41,15 @@ public class RevenusModel(ApplicationDbContext _context) : PageModel
         }
         else
         {
-            StartDate = sd;
+            sd = DateTime.MinValue;
         }
         if (EndDate.HasValue)
         {
-            ed = EndDate.Value.AddDays(1).AddTicks(-1); // Add a day to include the entire end date (time = 00:00:00)
+            ed = EndDate.Value.AddDays(1).AddTicks(-1); //Add a day to include the entire end date (time = 00:00:00)
         }
         else
         {
-            EndDate = ed;
+            ed = DateTime.MaxValue;
         }
 
         var query = _context.Vehicules
@@ -69,6 +70,11 @@ public class RevenusModel(ApplicationDbContext _context) : PageModel
                        (location, paiement) => paiement.Montant)
                    .Sum()
            });
+        
+        if (!string.IsNullOrEmpty(Immatriculation))
+        {
+            query = query.Where(v => v.Immatriculation.Contains(Immatriculation));
+        }
 
         if (!string.IsNullOrEmpty(Sort))
         {

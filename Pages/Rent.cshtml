@@ -13,7 +13,8 @@
 
 @if (Model.Vehicule != null)
 {
-    <div class="hero inner-page" style="background-image: url('images/header3.png');">
+
+<div class="hero inner-page" style="background-image: url('images/header3.png');">
     <div class="container">
         <div class="row align-items-end ">
             <div class="col-lg-5">
@@ -27,7 +28,13 @@
     </div>
 </div>
 
+
 <div class="site-section">
+    @if (TempData["dateError"] != null)
+    {
+        <div class="alert alert-danger">La date de retour doit être supérieure ou égale à la date de départ</div>
+    }
+
     <div class="container">
         <div class="row">
             <div class="col-lg-6 mb-5 mb-lg-0 order-lg-2">
@@ -131,7 +138,7 @@
                     </div> *@
 
                     <div class="mb-3 mb-md-0">
-                        <input type="submit" value="Louez" class="btn btn-primary btn-block py-3">
+                        <input type="submit" value="Suivant" class="btn btn-primary btn-block py-3">
                     </div>
                 </form>
             </div>

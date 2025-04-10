@@ -24,7 +24,6 @@ public class ListingModel(ApplicationDbContext _context) : PageModel
     [BindProperty(SupportsGet = true)] public Model Model { get; set; }
     [BindProperty(SupportsGet = true)] public int? PrixMin { get; set; } = null;
     [BindProperty(SupportsGet = true)] public int? PrixMax { get; set; } = null;
-    [BindProperty(SupportsGet = true)] public string Climatisation { get; set; }
 
     public IActionResult OnGet()
     {
@@ -46,9 +45,9 @@ public class ListingModel(ApplicationDbContext _context) : PageModel
         {
             query = query.Where(v => v.Model.Nom == Model.Nom);
         }
-        if (!string.IsNullOrEmpty(Climatisation))
+        if (!string.IsNullOrEmpty(Vehicule.Climatisation))
         {
-            query = query.Where(v => v.Climatisation == (Climatisation == "Avec"));
+            query = query.Where(v => v.Climatisation == Vehicule.Climatisation);
         }
         if (!string.IsNullOrEmpty(Model.Type))
         {

@@ -2,11 +2,13 @@
 @model RPtest.Pages.CarsList
 @{
 	Layout = "Dashboard";
-    ViewData["Title"] = "List de Véhicules : " + Model.cnt;
+    ViewData["Title"] = "Liste de Véhicules : " + Model.cnt;
 }
-
 @section Head {
     <style>
+        .main-content {
+            padding-top: 10px;
+        }
         td, th {
             vertical-align: middle;
             text-align:center;
@@ -29,9 +31,6 @@
             border: solid 1px #b8c4d1;
             border-radius:20px;
             background-color: #f2f2f2;
-        }
-        .main-content{
-            padding-top:10px;
         }
         .button {
             font-size: 0.8rem;
@@ -114,11 +113,12 @@
 <table class ="table table-bordered table-striped">
     <thead>
         <tr>
-            <th>Photo</th>
+            <th>Véhicule</th>
             <th>Modèle</th>
-            <th>Immatriculation</th>
-            <th><nobr>Prix <span style="font-size:0.6rem;">(DH)</span></nobr></th>
+            <th><nobr>Prix <span style="font-size:0.6rem;">(DH/Jour)</span></nobr></th>
             <th>Climatisation</th>
+            <th>Boîte de vitesses</th>
+            <th>Carburant</th>
 @*             <th><nobr>Revenus <span style="font-size:0.6rem;">(DH)</span></nobr></th> *@
             <th>Disponibilité</th>
             <th>Dépenses</th>
@@ -144,13 +144,15 @@
             <tr>
                 <td>
                     <a asp-page="DetailsVehicule" asp-route-id="@v.Id">
-                        <img src="/images/@v.Photo" class="photo" alt="@v.Photo" style="width:200px;">
+                        <img src="/images/@v.Photo" class="photo" alt="@v.Photo" style="width:200px;"><br />
+                        @v.Immatriculation
                     </a>
                 </td>
                 <td>@v.Model.Marque @v.Model.Nom</td>
-                <td>@v.Immatriculation</td>
                 <td>@v.Prix</td>
-                <td>@(v.Climatisation==true?"Avec":"Sans")</td>
+                <td>@v.Climatisation</td>
+                <td>@v.Boite</td>
+                <td>@v.Carburant</td>
 @*                 <td>
                     @{
                         var revenu = Model.Revenus.ContainsKey(v.Id)

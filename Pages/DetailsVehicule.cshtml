@@ -17,10 +17,16 @@
                     @Model.Vehicule.Model.Type
                 </dd>
                 <dt class="col-sm-4">
-                    @Html.DisplayNameFor(model => model.Vehicule.Immatriculation)
+                    Immatriculation
                 </dt>
                 <dd class="col-sm-8">
                     @Html.DisplayFor(model => model.Vehicule.Immatriculation)
+                </dd>
+                <dt class="col-sm-4">
+                    Prix
+                </dt>
+                <dd class="col-sm-8">
+                    @Model.Vehicule.Prix DH
                 </dd>
                 <dt class="col-sm-4">
                     Modèle
@@ -38,13 +44,25 @@
                     Bagage
                 </dt>
                 <dd class="col-sm-8">
-                    @Model.Vehicule.Model.Bagage
+                    @Model.Vehicule.Model.Bagage Kg
                 </dd>
                 <dt class="col-sm-4">
-                    @Html.DisplayNameFor(model => model.Vehicule.Climatisation)
+                    Climatisation
                 </dt>
                 <dd class="col-sm-8">
-                    @(Model.Vehicule.Climatisation == true ? "Avec" : "Sans")
+                    @Model.Vehicule.Climatisation
+                </dd>
+                <dt class="col-sm-4">
+                    Boîte de vitesses
+                </dt>
+                <dd class="col-sm-8">
+                    @Model.Vehicule.Boite
+                </dd>
+                <dt class="col-sm-4">
+                    Carburant
+                </dt>
+                <dd class="col-sm-8">
+                    @Model.Vehicule.Carburant
                 </dd>
                 <dt class="col-sm-4">
                     @Html.DisplayNameFor(model => model.Vehicule.Date)
@@ -59,7 +77,7 @@
                     @(Model.Vehicule.KilometrageActuel?.ToString() ?? "non saisie")
                 </dd>
                 <dt class="col-sm-6">
-                    kilométrage entre Vidanges
+                    kilométrage entre vidanges
                 </dt>
                 <dd class="col-sm-6">
                     @(Model.Vehicule.KilometrageEntreVidanges?.ToString() ?? "non saisie")
@@ -77,5 +95,5 @@
 </div>
 <div>
     <a asp-page="EditVehicule" asp-route-id="@Model.Vehicule.Id" class="btn btn-warning">Modifier</a>
-    <a asp-page="CarsList" class="btn btn-secondary">Retour à la liste</a>
+    <a asp-page="CarsList" class="btn btn-secondary">Retour</a>
 </div>

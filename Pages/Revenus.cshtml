@@ -6,6 +6,9 @@
 }
 @section Head {
     <style>
+        .main-content {
+            padding-top: 10px;
+        }
         td, th {
             vertical-align: middle;
             text-align:center;
@@ -49,32 +52,26 @@
         <form method="get" class="trip-form mb-2 mt-2 search-bar">
             <div class="row" style="align-items:center; justify-content:space-around !important;">
 
-                <div class="mb-md-0 col-md-1 d-md-block d-flex align-items-center text-center">
-                    <label><strong><nobr>Période :</nobr></strong></label>
-                </div>
-
-                <div class="mb-md-0 col-md-2 d-md-block d-flex align-items-center">
+                <div class="mb-md-0 col-md-4 d-md-block d-flex align-items-end">
+                    <div class="mb-md-0 d-md-block align-items-end">
+                        <label><nobr>Période :</nobr></label>
+                    </div>
                     <nobr>
-                    <label asp-for="StartDate">de</label>
                     <input asp-for="StartDate" type="date">
+                    <label asp-for="EndDate">à</label>
+                    <input asp-for="EndDate" type="date">
                     </nobr>
                 </div>
 
-                <div class="mb-md-0 col-md-2 d-md-block d-flex align-items-center">
-                    <nobr>
-                        <label asp-for="EndDate">à</label>
-                        <input asp-for="EndDate" type="date">
-                    </nobr>
+                <div class="mb-md-0 col-md-3 d-md-block d-flex align-items-end">
+                    <label asp-for="Immatriculation"><nobr style="font-size: 0.9rem !important;">Immatriculation : </nobr></label>
+                    <input asp-for="Immatriculation" class="form-control" style="width:100%;">
                 </div>
 
-                <div class="mb-md-0 col-md-1 d-md-block d-flex align-items-center text-center">
-                    |
-                </div>
-
-                <div class="mb-md-0 col-md-4 d-md-block d-flex align-items-center">
+                <div class="mb-md-0 col-md-3 d-md-block d-flex align-items-end">
                     <nobr>
-                        <label asp-for="Sort"><strong><nobr style="font-size: 0.9rem !important;">Trier par :</nobr></strong></label>
-                        <select asp-for="Sort" class="custom-select" style="width:70%">
+                        <label asp-for="Sort"><nobr style="font-size: 0.9rem !important;">Trier par : </nobr></label>
+                        <select asp-for="Sort" class="custom-select" style="width:100%;">
                             <option value="" selected></option>
                             <option value="Revenu">Revenu</option>
                             <option value="locations">Nombre de locations</option>
@@ -82,7 +79,7 @@
                     </nobr>
                 </div>
 
-                <div class="mb-3 mb-md-0 col-md-2" style="text-align:center;padding:0 !important;">
+                <div class="mb-3 mb-md-0 col-md-2" style="text-align:center; padding:0 !important;">
                     <button type="submit" class="btn btn-primary submit"><i class="fa fa-search" aria-hidden="true"></i></button>
                     <a asp-page-handler="zzzzzzzzz" class="btn btn-secondary submit"><i class="fa fa-times" aria-hidden="true"></i></a>
                 </div>
@@ -97,8 +94,7 @@
         <tr>
             <th>Photo</th>
             <th>Modèle</th>
-            <th>Immatriculation</th>
-            <th><nobr>Prix <span style="font-size:0.6rem;">(DH)</span></nobr></th>
+            <th><nobr>Prix <span style="font-size:0.6rem;">(DH/Jour)</span></nobr></th>
             <th>Nombre de Locations</th>
             <th><nobr>Revenu Total <span style="font-size:0.6rem;">(DH)</span></nobr></th>
         </tr>
@@ -107,9 +103,8 @@
         @foreach (var v in Model.VehiculesAvecRevenu)
         {
             <tr>
-                <td><img src="/images/@v.Photo" class="photo" alt="@v.Photo"></td>
+                <td><img src="/images/@v.Photo" class="photo" alt="@v.Photo"><br />@v.Immatriculation</td>
                 <td>@v.Model</td>
-                <td>@v.Immatriculation</td>
                 <td>@v.Prix</td>
                 <td>@v.NombreLocations</td>
                 <td>@v.RevenuTotal</td>

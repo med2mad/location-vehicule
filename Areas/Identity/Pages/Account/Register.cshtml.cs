@@ -73,8 +73,7 @@ namespace RPtest.Areas.Identity.Pages.Account
         {
 
             [Required]
-            [StringLength(20, ErrorMessage = "Nom utilisateur doit avoir entre {2} et {1} characters", MinimumLength = 4)]
-            [Display(Name = "Username")]
+            [StringLength(20, ErrorMessage = "Nom utilisateur doit avoir entre {2} et {1} characters", MinimumLength = 6)]
             public string Username { get; set; }
 
             [Required]
@@ -96,7 +95,6 @@ namespace RPtest.Areas.Identity.Pages.Account
             [Required]
             [StringLength(20, ErrorMessage = "Mot de Pass (et confirmation) doit avoir entre {2} et {1} characters", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
             public string Password { get; set; }
 
             /// <summary>
@@ -104,7 +102,6 @@ namespace RPtest.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "Mot de pass et confirmation ne sont pas identiques")]
             public string ConfirmPassword { get; set; }
         }

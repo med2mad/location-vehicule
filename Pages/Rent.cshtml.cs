@@ -16,7 +16,7 @@ public class RentModel(ApplicationDbContext _context) : PageModel
     public List<Quartier> Quartiers { get; set; }
     public string QuartiersJ { get; set; } = "[]";
 
-    public void OnGet(int VehiculeId)
+    public void OnGet(int VehiculeId, string? NomClient, string? Tel)
     {
         if (Location.DateDepart.ToString("yyyy-MM-dd") == "0001-01-01") { Location.DateDepart = DateTime.Now; }
         if (Location.DateRetour.ToString("yyyy-MM-dd") == "0001-01-01") { Location.DateRetour = DateTime.Now; }
@@ -24,5 +24,8 @@ public class RentModel(ApplicationDbContext _context) : PageModel
         Villes = _context.Quartiers.Select(q => q.Ville).Distinct().ToList();
         Quartiers = _context.Quartiers.Select(q => new Quartier { Nom = q.Nom, Ville = q.Ville }).OrderBy(q => q.Ville).ToList();
         QuartiersJ = JsonSerializer.Serialize(Quartiers);
+
+        Location.NomClient = NomClient;
+        Location.Tel = Tel;
     }
 }

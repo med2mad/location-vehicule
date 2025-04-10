@@ -23,7 +23,6 @@
 
 <form method="post" enctype="multipart/form-data">
     <input type="hidden" asp-for="Vehicule.Id" />
-    <input type="hidden" asp-for="Vehicule.Carburant" />
     <input type="hidden" asp-for="Photo" />
 
     <div class="row">
@@ -56,18 +55,11 @@
                 </select>
             </div>
 
-            <div class="form-group">
-                <label asp-for="Vehicule.Immatriculation" class="form-label"></label>
-                <input asp-for="Vehicule.Immatriculation" class="form-control">
-            </div>
+			<div class="form-group">
+				<label asp-for="Vehicule.Prix" class="form-label"></label>
+				<input asp-for="Vehicule.Prix" type="number" class="form-control">
+			</div>
 
-            <div class="form-group">
-                <label asp-for="Vehicule.Prix" class="form-label"></label>
-                <input asp-for="Vehicule.Prix" type="number" class="form-control">
-            </div>
-        </div>
-
-        <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="Vehicule.KilometrageActuel" class="form-label">Kilométrage actuel</label>
                 <input asp-for="Vehicule.KilometrageActuel" class="form-control">
@@ -77,13 +69,41 @@
                 <label asp-for="Vehicule.KilometrageEntreVidanges" class="form-label">Kilométrage entre 2 vidanges</label>
                 <input asp-for="Vehicule.KilometrageEntreVidanges" class="form-control">
             </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Vehicule.Immatriculation" class="form-label"></label>
+                <input asp-for="Vehicule.Immatriculation" class="form-control">
+            </div>
 
             <div class="form-group">
-                <label asp-for="Climatisation"></label>
-                <select asp-for="Climatisation" class="form-control">
+                <label asp-for="Vehicule.Climatisation"></label>
+                <select asp-for="Vehicule.Climatisation" class="form-control">
                     <option value="" selected></option>
                     <option value="Avec">Avec</option>
                     <option value="Sans">Sans</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Vehicule.Boite">Boîte de vitesses</label>
+                <select asp-for="Vehicule.Boite" class="form-control">
+                    <option value="" selected></option>
+                    <option value="Manuelle">Manuelle</option>
+                    <option value="Automatique">Automatique</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Vehicule.Carburant">Carburant</label>
+                <select asp-for="Vehicule.Carburant" class="form-control">
+                    <option value="" selected></option>
+                    <option value="Essence">Essence</option>
+                    <option value="Diesel">Diesel</option>
+                    <option value="Électrique">Électrique</option>
+                    <option value="Hydrogène">Hydrogène</option>
+                    <option value="Hybride">Hybride</option>
                 </select>
             </div>
 

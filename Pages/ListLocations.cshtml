@@ -8,7 +8,10 @@
 
 @section Head {
     <style>
-        td{
+        .main-content {
+            padding-top: 10px;
+        }
+        td, th{
             vertical-align:middle;
         }
         .photo{
@@ -19,8 +22,80 @@
             width: 50px;
             margin:1px;
         }
+        .client{
+            text-align:center;
+        }
+        .client hr{
+            margin:0.5rem !important;
+        }
+        .search-bar select, .search-bar input {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 0.8rem !important;
+            height: 35px;
+        }
+        .searchcontainer {
+            border: solid 1px #b8c4d1;
+            border-radius: 20px;
+            background-color: #f2f2f2;
+        }
+        .submit {
+            padding: 10px;
+            width: 50px;
+            margin-top: 1px;
+        }
+        label {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
     </style>
 }
+
+
+<div class="row align-items-center mb-3" style="justify-content: center">
+
+    <div class="col-lg-10 searchcontainer">
+
+        <form method="get" class="trip-form mb-2 mt-2 search-bar">
+            <div class="row" style="align-items:center; justify-content:space-around !important;">
+
+                <div class="mb-md-0 col-md-4 d-md-block d-flex align-items-end">
+                    <div class="mb-md-0 d-md-block align-items-end">
+                        <label><nobr>Période :</nobr></label>
+                    </div>
+                    <nobr>
+                        <input asp-for="StartDate" type="date">
+                        <label asp-for="EndDate">à</label>
+                        <input asp-for="EndDate" type="date">
+                    </nobr>
+                </div>
+
+                <div class="mb-md-0 col-md-3 d-md-block d-flex align-items-end">
+                    <label asp-for="Immatriculation"><nobr style="font-size: 0.9rem !important;">Immatriculation : </nobr></label>
+                    <input asp-for="Immatriculation" class="form-control" style="width:100%;">
+                </div>
+
+                <div class="mb-md-0 col-md-3 d-md-block d-flex align-items-end">
+                    <nobr>
+                        <label asp-for="Sort"><nobr style="font-size: 0.9rem !important;">Trier par : </nobr></label>
+                        <select asp-for="Sort" class="custom-select" style="width:100%;">
+                            <option value="" selected></option>
+                            <option value="Montant">Montant</option>
+                            <option value="Date">Date</option>
+                        </select>
+                    </nobr>
+                </div>
+
+                <div class="mb-3 mb-md-0 col-md-2" style="text-align:center; padding:0 !important;">
+                    <button type="submit" class="btn btn-primary submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    <a asp-page-handler="zzzzzzzzz" class="btn btn-secondary submit"><i class="fa fa-times" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
 
 
     <table class="table table-bordered table-striped">
@@ -28,12 +103,12 @@
             <tr style="text-align:center;">
                 <th>N°</th>
                 <th>Date</th>
-                <th style="max-width:150px;">Nom client</th>
-                <th>Téléphone</th>
+                <th>Client</th>
+                <th>Email</th>
                 <th>Véhicule</th>
-                <th><nobr>Lieu de Départ</nobr></th>
-                <th><nobr>Lieu de Retour</nobr></th>
-                <th><nobr>Revenus<span style="font-size:0.6rem;"> (DH)</span></nobr></th>
+                <th>Départ</th>
+                <th>Retour</th>
+                <th><nobr>Montant<span style="font-size:0.6rem;"> (DH)</span></nobr></th>
                 <th>Statut</th>
                 <th style="width:55px;"></th>
             </tr>
@@ -44,8 +119,8 @@
                 <tr>
                     <td>#@l.Id.ToString("D6")</td>
                     <td>@l.Date.ToString("dd/MM/yyyy")</td>
-                    <td style="max-width:150px;">@l.NomClient</td>
-                    <td>@l.Tel</td>
+                    <td class="client">@l.NomClient<hr />@l.Tel</td>
+                    <td style="font-size:0.8rem;">@l.Paiements.FirstOrDefault().Email</td>
                     <td style="text-align:center;">
                         <img src="images/@l?.Vehicule?.Photo" alt="@l?.Vehicule?.Model.Nom" class="photo" /><br />
                         @l.Vehicule?.Immatriculation

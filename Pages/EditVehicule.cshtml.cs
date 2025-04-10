@@ -12,7 +12,6 @@ public class EditVehiculeModel(ApplicationDbContext _context) : PageModel
 {
     [BindProperty] public Vehicule Vehicule { get; set; }
     [BindProperty] public Model Model { get; set; } = new();
-    [BindProperty] public string Climatisation { get; set; }
     [BindProperty] public string Photo { get; set; }
 
     public List<string> Marques { get; set; } = new();
@@ -41,19 +40,16 @@ public class EditVehiculeModel(ApplicationDbContext _context) : PageModel
                 return NotFound();
             }
             Model = Vehicule.Model;
-            Climatisation = Vehicule.Climatisation == true ? "Avec" : "Sans";
             Photo = Vehicule.Photo;
         }
 
         return Page();
     }
 
-    public async Task<IActionResult> OnPostAsync(IFormFile imageFile)
+    public async Task<IActionResult> OnPostAsync(IFormFile imageFile, string carburant)
     {
         var x = _context.Models.Select(m => new Model { Id = m.Id, Marque = m.Marque, Nom = m.Nom }).FirstOrDefault(m => m.Marque == Model.Marque && m.Nom == Model.Nom);
         Vehicule.ModelId = x.Id;
-
-        Vehicule.Climatisation = Climatisation == "Avec";
 
         if (imageFile != null)
         {

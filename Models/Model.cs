@@ -10,6 +10,7 @@ public class Model
     public string Type { get; set; } //Voiture;Luxe;Camion;Camionnette;Camping;Moto;Mini Bus;
     public int Passagers { get; set; } = 0;
     public decimal Bagage { get; set; } = 0;
+    
 
     public ICollection<Vehicule>? Vehicules { get; set; }
 }

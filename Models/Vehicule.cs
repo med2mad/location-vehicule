@@ -9,8 +9,9 @@ public class Vehicule
     public int Id { get; set; }
     public string? Immatriculation { get; set; } = string.Empty;
     public string? Couleur { get; set; } = string.Empty;
-    public string? Carburant { get; set; } = string.Empty; //Essence;Diesel 
-    public bool? Climatisation { get; set; } = null;
+    public string? Carburant { get; set; } = string.Empty; //Essence;Diesel
+    public string? Boite { get; set; } = string.Empty; //Manuelle;Automatique
+    public string? Climatisation { get; set; } = string.Empty; //Avec;Sans
     public string? Photo { get; set; } = string.Empty;
     public decimal Prix { get; set; }
     public string Description { get; set; } = string.Empty;

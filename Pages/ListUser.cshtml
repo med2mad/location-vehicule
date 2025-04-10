@@ -40,7 +40,7 @@
                 <td>
 @*                  <a asp-page="./Details" asp-route-id="@user.Id">Details</a>
                     <a asp-page="./Edit" asp-route-id="@user.Id">Edit</a> *@
-                    <a asp-page="EditUser" asp-route-id="@user.Id" class="btn btn-warning">Modifier</a>
+                    <a asp-page="EditUser" asp-route-id="@user.Id" asp-route-returnUrl="@Url.Page("/ListUser", new { area = "" })" class="btn btn-warning">Modifier</a>
                     <form method="post" asp-page-handler="Delete" asp-route-id="@user.Id" style="display:inline;">
                         <button type="submit" class="btn btn-danger" onclick="return confirm('Supprimer ?');">Supprimer</button>
                     </form>

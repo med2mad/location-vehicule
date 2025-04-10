@@ -14,12 +14,14 @@ public class EditUserModel(UserManager<IdentityUser> _userManager, SignInManager
 
     public class InputModel
     {
+        public string? Id { get; set; }
+
         [Required]
-        [Display(Name = "Username")]
+        [StringLength(20, ErrorMessage = "Nom utilisateur doit avoir entre {2} et {1} characters", MinimumLength = 6)]
         public string UserName { get; set; }
 
         [Required]
-        public string Role { get; set; }
+        public string? Role { get; set; }
 
         //[EmailAddress]
         //[Display(Name = "Email")]
@@ -29,17 +31,15 @@ public class EditUserModel(UserManager<IdentityUser> _userManager, SignInManager
         //public string PhoneNumber { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "New Password (leave empty to keep current)")]
         public string? NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm New Password")]
         [Compare("NewPassword", ErrorMessage = "Mot de pass et confirmation ne sont pas identiques.")]
         public string? ConfirmPassword { get; set; }
 
     }
 
-    public async Task<IActionResult> OnGetAsync(string id)
+    public async Task<IActionResult> OnGetAsync(string id, string returnUrl = null)
     {
         if (id == null)
         {
@@ -54,6 +54,7 @@ public class EditUserModel(UserManager<IdentityUser> _userManager, SignInManager
 
         Input = new InputModel
         {
+            Id = id,
             UserName = user.UserName,
             Role = (await _userManager.GetRolesAsync(user)).FirstOrDefault(),
             //Email = user.Email,
@@ -63,11 +64,22 @@ public class EditUserModel(UserManager<IdentityUser> _userManager, SignInManager
         return Page();
     }
 
-    public async Task<IActionResult> OnPostAsync(string id)
+    public async Task<IActionResult> OnPostAsync(string id, string returnUrl = null)
     {
+        Input.Id = id;
+
         if (!ModelState.IsValid)
         {
             return Page();
+        }
+
+        if (!string.IsNullOrEmpty(Input.NewPassword))
+        {
+            if (Input.NewPassword.Length < 6 || Input.NewPassword.Length > 20)
+            {
+                ModelState.AddModelError("Input.NewPassword", "Mot de pass doit avoir entre 6 et 20 characters");
+                return Page();
+            }
         }
 
         var user = await _userManager.FindByIdAsync(id);
@@ -106,11 +118,12 @@ public class EditUserModel(UserManager<IdentityUser> _userManager, SignInManager
             }
         }
 
-        //change role
+        //change role 
         var roles = await _userManager.GetRolesAsync(user);
         await _userManager.RemoveFromRolesAsync(user, roles);
         if (!await _userManager.IsInRoleAsync(user, Input.Role))
             await _userManager.AddToRoleAsync(user, Input.Role);
+
 
         // 3. Finally save the user updates
         var updateResult = await _userManager.UpdateAsync(user);
@@ -129,6 +142,6 @@ public class EditUserModel(UserManager<IdentityUser> _userManager, SignInManager
             await _signInManager.RefreshSignInAsync(user);
         }
 
-        return RedirectToPage("ListUser");
+        return RedirectToPage(returnUrl);
     }
 }
