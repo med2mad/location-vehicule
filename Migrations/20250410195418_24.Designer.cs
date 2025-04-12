@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RPtest.Data;
 
@@ -11,9 +12,11 @@ using RPtest.Data;
 namespace RPtest.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250410195418_24")]
+    partial class _24
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,6 +227,35 @@ namespace RPtest.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("RPtest.Models.Charge", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("Annees")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Kilometrage")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Titre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("jours")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("mois")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Charges");
+                });
+
             modelBuilder.Entity("RPtest.Models.Conducteur", b =>
                 {
                     b.Property<int>("Id")
@@ -246,7 +278,7 @@ namespace RPtest.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Conducteurs", (string)null);
+                    b.ToTable("Conducteurs");
                 });
 
             modelBuilder.Entity("RPtest.Models.Couleur", b =>
@@ -263,7 +295,7 @@ namespace RPtest.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Couleurs", (string)null);
+                    b.ToTable("Couleurs");
                 });
 
             modelBuilder.Entity("RPtest.Models.Depense", b =>
@@ -274,6 +306,9 @@ namespace RPtest.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("ChargeId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
@@ -283,19 +318,16 @@ namespace RPtest.Migrations
                     b.Property<decimal>("Montant")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("NotificationId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("VehiculeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("NotificationId");
+                    b.HasIndex("ChargeId");
 
                     b.HasIndex("VehiculeId");
 
-                    b.ToTable("Depenses", (string)null);
+                    b.ToTable("Depenses");
                 });
 
             modelBuilder.Entity("RPtest.Models.Location", b =>
@@ -353,7 +385,7 @@ namespace RPtest.Migrations
 
                     b.HasIndex("VehiculeId");
 
-                    b.ToTable("Locations", (string)null);
+                    b.ToTable("Locations");
                 });
 
             modelBuilder.Entity("RPtest.Models.Model", b =>
@@ -384,36 +416,7 @@ namespace RPtest.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Models", (string)null);
-                });
-
-            modelBuilder.Entity("RPtest.Models.Notification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("Annees")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Jours")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Mois")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Titre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Notifications", (string)null);
+                    b.ToTable("Models");
                 });
 
             modelBuilder.Entity("RPtest.Models.Paiement", b =>
@@ -453,7 +456,7 @@ namespace RPtest.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("Paiements", (string)null);
+                    b.ToTable("Paiements");
                 });
 
             modelBuilder.Entity("RPtest.Models.Quartier", b =>
@@ -474,7 +477,7 @@ namespace RPtest.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Quartiers", (string)null);
+                    b.ToTable("Quartiers");
                 });
 
             modelBuilder.Entity("RPtest.Models.TypeVehicule", b =>
@@ -491,7 +494,7 @@ namespace RPtest.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Types", (string)null);
+                    b.ToTable("Types");
                 });
 
             modelBuilder.Entity("RPtest.Models.Vehicule", b =>
@@ -543,7 +546,7 @@ namespace RPtest.Migrations
 
                     b.HasIndex("ModelId");
 
-                    b.ToTable("Vehicules", (string)null);
+                    b.ToTable("Vehicules");
                 });
 
             modelBuilder.Entity("RPtest.Models.Vidange", b =>
@@ -570,7 +573,7 @@ namespace RPtest.Migrations
 
                     b.HasIndex("VehiculeId");
 
-                    b.ToTable("Vidanges", (string)null);
+                    b.ToTable("Vidanges");
                 });
 
             modelBuilder.Entity("RPtest.Models.VisiteTechnique", b =>
@@ -597,7 +600,7 @@ namespace RPtest.Migrations
 
                     b.HasIndex("VehiculeId");
 
-                    b.ToTable("VisitesTechniques", (string)null);
+                    b.ToTable("VisitesTechniques");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -653,9 +656,9 @@ namespace RPtest.Migrations
 
             modelBuilder.Entity("RPtest.Models.Depense", b =>
                 {
-                    b.HasOne("RPtest.Models.Notification", "Notification")
+                    b.HasOne("RPtest.Models.Charge", "Charge")
                         .WithMany("Depenses")
-                        .HasForeignKey("NotificationId")
+                        .HasForeignKey("ChargeId")
                         .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("RPtest.Models.Vehicule", "Vehicule")
@@ -663,7 +666,7 @@ namespace RPtest.Migrations
                         .HasForeignKey("VehiculeId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.Navigation("Notification");
+                    b.Navigation("Charge");
 
                     b.Navigation("Vehicule");
                 });
@@ -723,6 +726,11 @@ namespace RPtest.Migrations
                     b.Navigation("Vehicule");
                 });
 
+            modelBuilder.Entity("RPtest.Models.Charge", b =>
+                {
+                    b.Navigation("Depenses");
+                });
+
             modelBuilder.Entity("RPtest.Models.Conducteur", b =>
                 {
                     b.Navigation("Location");
@@ -736,11 +744,6 @@ namespace RPtest.Migrations
             modelBuilder.Entity("RPtest.Models.Model", b =>
                 {
                     b.Navigation("Vehicules");
-                });
-
-            modelBuilder.Entity("RPtest.Models.Notification", b =>
-                {
-                    b.Navigation("Depenses");
                 });
 
             modelBuilder.Entity("RPtest.Models.Vehicule", b =>

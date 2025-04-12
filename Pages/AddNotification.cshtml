@@ -1,0 +1,63 @@
+﻿@page
+@model RPtest.Pages.AddNotificationModel
+@{
+    Layout = "Dashboard";
+    ViewData["Title"] = Model.IsEditMode ? "Modifier la Notification" : "Ajouter une Notification";
+}
+@section Head {
+    <style>
+        input, select, textarea {
+            border: solid gray 1px !important;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+    </style>
+}
+
+<form method="post">
+    <input type="hidden" asp-for="Notification.Id" />
+
+    <div class="form-group">
+        <label asp-for="Notification.Titre" class="control-label">Titre du Notification</label>
+        <input asp-for="Notification.Titre" class="form-control" required/>
+        <span asp-validation-for="Notification.Titre" class="text-danger"></span>
+    </div>
+
+    <hr/>
+    <p>Période entre 2 Notifications</p>
+
+    <div class="form-group">
+        <label asp-for="Notification.Jours" class="control-label">Jours</label>
+        <input asp-for="Notification.Jours" class="form-control" />
+        <span asp-validation-for="Notification.Jours" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Notification.Mois" class="control-label">Mois</label>
+        <input asp-for="Notification.Mois" class="form-control" />
+        <span asp-validation-for="Notification.Mois" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Notification.Annees" class="control-label">Années</label>
+        <input asp-for="Notification.Annees" class="form-control" />
+        <span asp-validation-for="Notification.Annees" class="text-danger"></span>
+    </div>
+
+    <hr />
+    <p>Description</p>
+
+    <div class="form-group">
+        <textarea asp-for="Notification.Description" class="form-control"></textarea>
+        <span asp-validation-for="Notification.Description" class="text-danger"></span>
+    </div>
+
+    <hr />
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-success">Enregistrer</button>
+        <a asp-page="ListNotification" class="btn btn-secondary">Annuler</a>
+    </div>
+
+</form>

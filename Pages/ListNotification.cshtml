@@ -1,0 +1,67 @@
+﻿@page
+@model RPtest.Pages.ListNotificationModel
+@{
+    Layout = "Dashboard";
+    ViewData["Title"] = "Notifications";
+}
+@section Head {
+    <style>
+        input, select {
+            border: solid gray 1px !important;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+    </style>
+}
+
+<p>
+    <a asp-page="AddNotification" class="btn btn-primary">+ Ajouter une Notification</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Période</th>
+            <th>Description</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Visites Techniques</td>
+            <td>0 j / 6 m / 0 a</td>
+            <td>Pour vehicules de location : Dans 1 année la premiere foi, et 6 mois après.</td>
+            <td>
+                <a class="btn btn-secondary" disabled>Modifier</a><br />
+                <a class="btn btn-secondary" disabled>Supprimer</a>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Vidanges</td>
+            <td>0 j / 0 m / 1 a</td>
+            <td>Après 1 année, ou, après le kilométrage entre 2 vidanges est dépassé.</td>
+            <td>
+                <a class="btn btn-secondary" disabled>Modifier</a><br />
+                <a class="btn btn-secondary" disabled>Supprimer</a>
+            </td>
+        </tr>
+
+        @foreach (var notification in Model.Notifications)
+        {
+            <tr>
+                <td>@notification.Titre</td>
+                <td>@notification.Jours j / @notification.Mois m / @notification.Annees a</td>
+                <td>@notification.Description</td>
+                <td>
+                    <a asp-page="AddNotification" asp-route-id="@notification.Id" class="btn btn-warning">Modifier</a>
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@notification.Id" class="d-inline">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Supprimer ?');">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

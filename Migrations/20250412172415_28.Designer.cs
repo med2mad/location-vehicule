@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RPtest.Data;
 
@@ -11,9 +12,11 @@ using RPtest.Data;
 namespace RPtest.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250412172415_28")]
+    partial class _28
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -246,7 +249,7 @@ namespace RPtest.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Conducteurs", (string)null);
+                    b.ToTable("Conducteurs");
                 });
 
             modelBuilder.Entity("RPtest.Models.Couleur", b =>
@@ -263,7 +266,7 @@ namespace RPtest.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Couleurs", (string)null);
+                    b.ToTable("Couleurs");
                 });
 
             modelBuilder.Entity("RPtest.Models.Depense", b =>
@@ -295,7 +298,7 @@ namespace RPtest.Migrations
 
                     b.HasIndex("VehiculeId");
 
-                    b.ToTable("Depenses", (string)null);
+                    b.ToTable("Depenses");
                 });
 
             modelBuilder.Entity("RPtest.Models.Location", b =>
@@ -353,7 +356,7 @@ namespace RPtest.Migrations
 
                     b.HasIndex("VehiculeId");
 
-                    b.ToTable("Locations", (string)null);
+                    b.ToTable("Locations");
                 });
 
             modelBuilder.Entity("RPtest.Models.Model", b =>
@@ -384,7 +387,7 @@ namespace RPtest.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Models", (string)null);
+                    b.ToTable("Models");
                 });
 
             modelBuilder.Entity("RPtest.Models.Notification", b =>
@@ -413,7 +416,7 @@ namespace RPtest.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Notifications", (string)null);
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("RPtest.Models.Paiement", b =>
@@ -453,7 +456,7 @@ namespace RPtest.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("Paiements", (string)null);
+                    b.ToTable("Paiements");
                 });
 
             modelBuilder.Entity("RPtest.Models.Quartier", b =>
@@ -474,7 +477,7 @@ namespace RPtest.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Quartiers", (string)null);
+                    b.ToTable("Quartiers");
                 });
 
             modelBuilder.Entity("RPtest.Models.TypeVehicule", b =>
@@ -491,7 +494,7 @@ namespace RPtest.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Types", (string)null);
+                    b.ToTable("Types");
                 });
 
             modelBuilder.Entity("RPtest.Models.Vehicule", b =>
@@ -543,7 +546,7 @@ namespace RPtest.Migrations
 
                     b.HasIndex("ModelId");
 
-                    b.ToTable("Vehicules", (string)null);
+                    b.ToTable("Vehicules");
                 });
 
             modelBuilder.Entity("RPtest.Models.Vidange", b =>
@@ -570,7 +573,7 @@ namespace RPtest.Migrations
 
                     b.HasIndex("VehiculeId");
 
-                    b.ToTable("Vidanges", (string)null);
+                    b.ToTable("Vidanges");
                 });
 
             modelBuilder.Entity("RPtest.Models.VisiteTechnique", b =>
@@ -597,7 +600,7 @@ namespace RPtest.Migrations
 
                     b.HasIndex("VehiculeId");
 
-                    b.ToTable("VisitesTechniques", (string)null);
+                    b.ToTable("VisitesTechniques");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

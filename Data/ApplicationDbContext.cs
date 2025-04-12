@@ -17,6 +17,7 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<RPtest.Models.VisiteTechnique> VisitesTechniques { get; set; } = default!;
     public DbSet<RPtest.Models.Vidange> Vidanges { get; set; } = default!;
     public DbSet<RPtest.Models.Depense> Depenses { get; set; } = default!;
+    public DbSet<RPtest.Models.Notification> Notifications { get; set; } = default!;
     public DbSet<RPtest.Models.TypeVehicule> Types { get; set; } = default!;
     public DbSet<RPtest.Models.Couleur> Couleurs { get; set; } = default!;
 

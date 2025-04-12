@@ -91,7 +91,7 @@
             <button class="navbar-toggler" type="button" id="sidebarToggle">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand ms-2" href="#">Administration</a>
+            <a class="navbar-brand ms-2" href="/HomeBoard">Administration</a>
 
             <h2>@ViewData["Title"]</h2>
 
@@ -130,17 +130,17 @@
                     <i class="fa-solid fa-calendar-days"></i> Locations
                 </a>
             </li>
-            <li class="nav-item">
+			<li class="nav-item">
+				<a asp-page="Revenus" class="nav-link @(ViewData["Title"]?.ToString() == "Revenu par Véhicule"?"active":"")">
+					<i class="fa-solid fa-money-bill-1"></i> Revenus
+				</a>
+			</li>
+			<li class="nav-item">
                 <a href="/CarsList" class="nav-link @(ViewData["Title"]?.ToString().Contains("List de Véhicules")==true?"active":"")">
-                    <i class="fas fa-car"></i> Liste de Véhicules
+                    <i class="fas fa-car"></i> Véhicules
                 </a>
             </li>
-            <li class="nav-item">
-                <a asp-page="Revenus" class="nav-link @(ViewData["Title"]?.ToString() == "Revenu par Véhicule"?"active":"")">
-                    <i class="fa-solid fa-money-bill-1"></i> Revenu par Véhicule
-                </a>
-            </li>
-            <li class="nav-item">
+             <li class="nav-item">
                 <a asp-page="EditVehicule" class="nav-link @(ViewData["Title"]?.ToString() == "Ajouter un Véhicule"?"active":"")">
                     <i class="fas fa-plus-circle"></i> Ajout de Véhicules
                 </a>
@@ -168,6 +168,11 @@
             <li class="nav-item" style="margin-left:60px;">
                 <a href="/ListCouleur" style="padding:0; font-size:0.95rem;" class="nav-link @(ViewData["Title"]?.ToString() == "Liste de couleurs"?"active":"")">
                     - Couleurs de véhicules
+                </a>
+            </li>
+            <li class="nav-item" style="margin-left:60px;">
+                <a href="/ListNotification" style="padding:0; font-size:0.95rem;" class="nav-link @(ViewData["Title"]?.ToString() == "Notifications"?"active":"")">
+                    - Ajout de Notifications
                 </a>
             </li>
 

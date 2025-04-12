@@ -11,6 +11,7 @@ public class ListDepenseModel(ApplicationDbContext _context) : PageModel
 {
     public List<Depense> Depenses { get; set; } = new();
     public int VehiculeId { get; set; }
+    public int NotificationId { get; set; }
     public string VehiculeMarque { get; set; }
     public string VehiculeModel { get; set; }
     public string VehiculeImmatriculation { get; set; }
@@ -19,9 +20,10 @@ public class ListDepenseModel(ApplicationDbContext _context) : PageModel
     [BindProperty(SupportsGet = true)] public DateTime? StartDate { get; set; }
     [BindProperty(SupportsGet = true)] public DateTime? EndDate { get; set; }
 
-    public void OnGet(int vehiculeId)
+    public void OnGet(int vehiculeId, int notificationId)
     {
         VehiculeId = vehiculeId;
+        NotificationId = notificationId;
 
         var today = DateTime.Today;
         DateTime sd = new DateTime(today.Year, 1, 1);
@@ -53,7 +55,7 @@ public class ListDepenseModel(ApplicationDbContext _context) : PageModel
             VehiculeImmatriculation = vehicule.Immatriculation;
         }
 
-        var query = _context.Depenses.Where(d => d.VehiculeId == vehiculeId && d.Date >= sd && d.Date < ed);
+        var query = _context.Depenses.Where(d => d.VehiculeId == vehiculeId && d.Date >= sd && d.Date < ed && d.NotificationId== NotificationId);
 
         if (!string.IsNullOrEmpty(Sort))
         {
@@ -74,7 +76,7 @@ public class ListDepenseModel(ApplicationDbContext _context) : PageModel
         Depenses = query.ToList();
     }
 
-    public async Task<IActionResult> OnPostDeleteAsync(int id, int vehiculeId)
+    public async Task<IActionResult> OnPostDeleteAsync(int id, int vehiculeId, int notificationId)
     {
         var depense = await _context.Depenses.FindAsync(id);
         if (depense == null)
@@ -85,6 +87,6 @@ public class ListDepenseModel(ApplicationDbContext _context) : PageModel
         _context.Depenses.Remove(depense);
         await _context.SaveChangesAsync();
 
-        return RedirectToPage(new { vehiculeId = vehiculeId });
+        return RedirectToPage(new { vehiculeId = vehiculeId, notificationId = notificationId });
     }
 }

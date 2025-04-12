@@ -1,0 +1,69 @@
+﻿@page
+@model RPtest.Pages.DepensesNotificationsModel
+@{
+    Layout = "Dashboard";
+    ViewData["Title"] = "Notifications de Dépenses";
+}
+
+<p>
+    <a asp-page="/CarsList" class="btn btn-secondary">Retour</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Temps restant</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @* <tr> *@
+        @*     <td> *@
+        @*         Visites Techniques  *@
+        @*         <span class="ms-2" data-bs-toggle="tooltipVdg" data-bs-html="true" title="Pour vehicules de location : Dans 1 année la premiere foi, et 6 mois après."> *@
+        @*             <i class="fa fa-question-circle" aria-hidden="true" style="color:#007bff !important;"></i> *@
+        @*         </span> *@
+        @*     </td> *@
+        @*     <td>0 j / 6 m / 0 a</td> *@
+        @*     <td> *@
+        @*         <a asp-page="ListVisiteTechnique" asp-route-vehiculeId="@Model.vehiculeId" class="btn btn-warning">Historique</a> *@
+        @*     </td> *@
+        @* </tr> *@
+        @* <tr> *@
+        @*     <td> *@
+        @*         Vidanges *@
+        @*         <span class="ms-2" data-bs-toggle="tooltipVdg" data-bs-html="true" title="Après 1 année, ou, après le kilométrage entre 2 vidanges est dépassé."> *@
+        @*             <i class="fa fa-question-circle" aria-hidden="true" style="color:#007bff !important;"></i> *@
+        @*         </span> *@
+        @*     </td> *@
+        @*     <td>0 j / 0 m / 1 a</td> *@
+        @*     <td> *@
+        @*         <a asp-page="ListVidange" asp-route-vehiculeId="@Model.vehiculeId" class="btn btn-warning">Historique</a> *@
+        @*     </td> *@
+        @* </tr> *@
+        @foreach (var notification in Model.Notifications)
+        {
+            <tr>
+                <td>
+                    @notification.Titre
+                    <span class="ms-2" data-bs-toggle="tooltipVdg" data-bs-html="true" title="@notification.Description">
+                        <i class="fa fa-question-circle" aria-hidden="true" style="color:#007bff !important;"></i>
+                    </span>
+                </td>
+                <td>@notification.Jours j / @notification.Mois m / @notification.Annees a</td>
+                <td>
+                    <a asp-page="ListDepense" asp-route-vehiculeId="@Model.vehiculeId" asp-route-notificationId="@notification.Id" class="btn btn-warning">Historique</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('[data-bs-toggle="tooltipVdg"]').tooltip();
+        });
+    </script>
+}
