@@ -23,25 +23,15 @@ public class ListVidangeModel(ApplicationDbContext _context) : PageModel
     {
         VehiculeId = vehiculeId;
 
-        var today = DateTime.Today;
-        DateTime sd = new DateTime(today.Year, 1, 1);
-        DateTime ed = new DateTime(today.Year, today.Month, DateTime.DaysInMonth(today.Year, today.Month));
-        ed = ed.Date.AddDays(1).AddTicks(-1);// Add a day to include the entire end date (time = 00:00:00)
+        DateTime sd = DateTime.MinValue;
+        DateTime ed = DateTime.MaxValue;
         if (StartDate.HasValue)
         {
             sd = StartDate.Value;
         }
-        else
-        {
-            StartDate = sd;
-        }
         if (EndDate.HasValue)
         {
             ed = EndDate.Value.AddDays(1).AddTicks(-1); // Add a day to include the entire end date (time = 00:00:00)
-        }
-        else
-        {
-            EndDate = ed;
         }
 
         var vehicule = await _context.Vehicules.Include(v => v.Model).FirstOrDefaultAsync(v => v.Id == vehiculeId);

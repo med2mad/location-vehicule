@@ -37,17 +37,22 @@
             font-size: 0.9rem;
             margin-bottom:0;
         }
+        .trip-form{
+            padding:0 10px 5px 10px;
+        }
 
         @@media (max-width: 767px) {
             .hero {
                 border-radius: 0;
             }
-
             header {
                 padding-top: 10px !important;
             }
             .normal-logo {
                 width: 100px !important;
+            }
+            .trip-form {
+                padding: 10px 10px 5px 10px;
             }
         }
     </style>
@@ -66,7 +71,7 @@
                     </div>
                 </div>
 
-                <form method="get" asp-page="/Listing" class="trip-form mb-2 d-md-block" style="padding:0 10px 5px 10px;">
+                <form method="get" asp-page="/Listing" class="trip-form mb-2 d-md-block" >
 
                     <div class="row align-items-end justify-content-center">
                         <div class="mb-md-0 col-md-3 d-md-block d-flex align-items-center">

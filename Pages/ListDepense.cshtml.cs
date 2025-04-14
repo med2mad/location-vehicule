@@ -10,6 +10,8 @@ namespace RPtest.Pages;
 public class ListDepenseModel(ApplicationDbContext _context) : PageModel
 {
     public List<Depense> Depenses { get; set; } = new();
+    public Notification Notification { get; set; }
+
     public int VehiculeId { get; set; }
     public int NotificationId { get; set; }
     public string VehiculeMarque { get; set; }
@@ -25,28 +27,19 @@ public class ListDepenseModel(ApplicationDbContext _context) : PageModel
         VehiculeId = vehiculeId;
         NotificationId = notificationId;
 
-        var today = DateTime.Today;
-        DateTime sd = new DateTime(today.Year, 1, 1);
-        DateTime ed = new DateTime(today.Year, today.Month, DateTime.DaysInMonth(today.Year, today.Month));
-        ed = ed.Date.AddDays(1).AddTicks(-1);// Add a day to include the entire end date (time = 00:00:00)
+        DateTime sd = DateTime.MinValue;
+        DateTime ed = DateTime.MaxValue;
         if (StartDate.HasValue)
         {
             sd = StartDate.Value;
-        }
-        else
-        {
-            StartDate = sd;
         }
         if (EndDate.HasValue)
         {
             ed = EndDate.Value.AddDays(1).AddTicks(-1); // Add a day to include the entire end date (time = 00:00:00)
         }
-        else
-        {
-            EndDate = ed;
-        }
 
         var vehicule = _context.Vehicules.Include(v => v.Model).FirstOrDefault(v => v.Id == vehiculeId);
+        Notification = _context.Notifications.FirstOrDefault(n=>n.Id== NotificationId);
 
         if (vehicule != null)
         {

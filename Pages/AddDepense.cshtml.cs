@@ -9,26 +9,27 @@ namespace RPtest.Pages;
 [Authorize]
 public class AddDepenseModel(ApplicationDbContext _context) : PageModel
 {
+
     [BindProperty]
     public Depense Depense { get; set; }
-
     [BindProperty]
     public bool IsNew { get; set; } = true;
 
-    public int VehiculeId { get; set; }
-    public string VehiculeMarque { get; set; }
-    public string VehiculeModel { get; set; }
+    public Notification Notification { get; set; }
 
-    public async Task<IActionResult> OnGetAsync(int? id, int vehiculeId)
+    public int VehiculeId { get; set; }
+    public int NotificationId { get; set; }
+
+    public Vehicule Vehicule { get; set; }
+
+    public async Task<IActionResult> OnGetAsync(int? id, int vehiculeId, int notificationId)
     {
         VehiculeId = vehiculeId;
+        NotificationId = notificationId;
 
-        var vehicule = await _context.Vehicules.Include(v => v.Model).FirstOrDefaultAsync(v => v.Id == vehiculeId);
-        if (vehicule != null)
-        {
-            VehiculeMarque = vehicule.Model.Marque;
-            VehiculeModel = vehicule.Model.Nom;
-        }
+        Vehicule = await _context.Vehicules.Include(v => v.Model).FirstOrDefaultAsync(v => v.Id == vehiculeId);
+
+        Notification = await _context.Notifications.FirstOrDefaultAsync(v => v.Id == NotificationId);
 
         if (id == null)
         {
@@ -55,12 +56,14 @@ public class AddDepenseModel(ApplicationDbContext _context) : PageModel
         return Page();
     }
 
-    public async Task<IActionResult> OnPostAsync()
+    public async Task<IActionResult> OnPostAsync(int notificationId)
     {
         if (!ModelState.IsValid)
         {
             return Page();
         }
+
+        Depense.NotificationId = notificationId;
 
         if (IsNew)
         {
@@ -89,7 +92,7 @@ public class AddDepenseModel(ApplicationDbContext _context) : PageModel
             }
         }
 
-        return RedirectToPage("/ListDepense", new { vehiculeId = Depense.VehiculeId });
+        return RedirectToPage("/ListDepense", new { vehiculeId = Depense.VehiculeId, notificationId = notificationId });
     }
 
     private bool DepenseExists(int id)

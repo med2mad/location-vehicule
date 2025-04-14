@@ -52,7 +52,7 @@
                     <form method="get" class="trip-form mb-2" style="padding:0 10px 5px 10px;">
 
                         <div class="row align-items-end justify-content-center">
-                            <div class="mb-3 mb-md-0 col-md-3">
+                            <div class="mb-0 col-md-3 g">
                                 <label for="type" id="typelab">Type : </label>
                                 <select asp-for="Model.Type" id="type" class="custom-select form-control">
                                     <option value="" selected></option>
@@ -62,7 +62,7 @@
                                     }
                                 </select>
                             </div>
-                            <div class="mb-3 mb-md-0 col-md-3">
+                            <div class="mb-0 col-md-3 g">
                                 <label for="marques">Marque : </label>
                                 <select asp-for="Model.Marque" id="marques" class="custom-select form-control">
                                     <option value="" selected></option>
@@ -72,11 +72,11 @@
                                     }
                                 </select>
                             </div>
-                            <div class="mb-3 mb-md-0 col-md-3">
+                            <div class="mb-md-0 col-md-3">
                                 <label for="modeles" id="modellab" class="form-label">Modèle :</label>
                                 <select asp-for="Model.Nom" id="modeles" class="custom-select form-control"></select>
                             </div>
-                            <div class="mb-3 mb-md-0 col-md-3">
+                            <div class="mb-0 col-md-3">
                                 <label for="climatisation" id="climatisationlab">Climatisation :</label>
                                 <select asp-for="Vehicule.Climatisation" id="climatisation" class="custom-select form-control">
                                     <option value="" selected></option>
@@ -84,7 +84,7 @@
                                     <option value="Sans">Sans</option>
                                 </select>
                             </div>
-                            <div class="mb-3 mb-md-0 col-md-3">
+                            <div class="mb-0 col-md-3">
                                 <label for="couleur" id="couleurlab">Couleur : </label>
                                 <select asp-for="Vehicule.Couleur" id="couleur" class="custom-select form-control">
                                     <option value="" selected></option>
@@ -94,7 +94,7 @@
                                     }
                                 </select>
                             </div>
-                            <div class="mb-3 mb-md-0 col-md-3">
+                            <div class="mb-0 col-md-3 g">
                                 <label style="position:relative; top:10px;" id="prix1">Prix Minimum :</label>
                                 <div style="position:relative; top:10px; display:flex; gap:10px; justify-content:center;">
                                     <div>
@@ -105,7 +105,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="mb-3 mb-md-0 col-md-3">
+                            <div class="mb-0 col-md-3 g">
                                 <label style="position:relative; top:10px;" id="prix2">Prix Maximum :</label>
                                 <div style="position:relative; top:10px; display:flex; gap:10px; justify-content:center;">
                                     <div>
@@ -117,7 +117,7 @@
                                 </div>                                
                             </div>
 
-                            <div class="mb-3 mb-md-0 col-md-3">
+                            <div class="mb-0 col-md-3">
                                 <input type="submit" value="Chercher" class="btn btn-primary w-100" style="height:50px !important;"/>
                             </div>
                         </div>

@@ -2,7 +2,7 @@
 @model RPtest.Pages.AddVidangeModel
 @{
     Layout = "Dashboard";
-    ViewData["Title"] = Model.IsNew ? "Ajouter une Vidange" : "Modifier une Vidange";
+    ViewData["Title"] = Model.IsNew ? "Ajouter une dépense (Vidange)" : "Modifier une dépense (Vidange)";
 }
 
 @section Head {
@@ -14,7 +14,7 @@
     </style>
 }
 
-<h4>Véhicule: @Model.VehiculeMarque @Model.VehiculeModel</h4>
+<h4>Véhicule: @Model.Vehicule.Immatriculation</h4>
 <hr />
 
 <div class="row">
@@ -26,13 +26,13 @@
 
             <div class="form-group">
                 <label asp-for="Vidange.Montant" class="control-label"></label>
-                <input asp-for="Vidange.Montant" class="form-control" required/>
+                <input asp-for="Vidange.Montant" type="number" class="form-control" required />
 
             </div>
 
             <div class="form-group">
                 <label asp-for="Vidange.Date" class="control-label"></label>
-                <input asp-for="Vidange.Date" class="form-control" type="date" />
+                <input asp-for="Vidange.Date" class="form-control" type="date" required />
 
             </div>
 
@@ -45,11 +45,11 @@
             <div class="form-group">
                 @if (Model.IsNew)
                 {
-                    <button type="submit" class="btn btn-primary">Ajouter</button>
+                    <button type="submit" class="btn btn-success">Ajouter</button>
                 }
                 else
                 {
-                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    <button type="submit" class="btn btn-success">Enregistrer</button>
                 }
                 <a asp-page="ListVidange" asp-route-vehiculeId="@Model.VehiculeId" class="btn btn-secondary">Annuler</a>
             </div>

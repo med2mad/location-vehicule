@@ -78,6 +78,6 @@ public class ListLocationsModel(ApplicationDbContext _context) : PageModel
         _context.Locations.Remove(location);
         await _context.SaveChangesAsync();
 
-        return RedirectToPage("ListLocations");
+        return RedirectToPage("/ListLocations");
     }
 }

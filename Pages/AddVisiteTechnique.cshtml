@@ -2,7 +2,7 @@
 @model RPtest.Pages.AddVisiteTechniqueModel
 @{
     Layout = "Dashboard";
-    ViewData["Title"] = Model.IsNew ? "Ajouter une Visite Technique" : "Modifier une Visite Technique";
+    ViewData["Title"] = Model.IsNew ? "Ajouter une dépense (Visites Techniques)" : "Modifier une dépense (Visites Techniques)";
     decimal Total = 0;
 }
 
@@ -15,7 +15,7 @@
     </style>
 }
 
-<h4>Véhicule: @Model.VehiculeMarque @Model.VehiculeModel</h4>
+<h4>Véhicule: @Model.Vehicule.Immatriculation</h4>
 <hr />
 
 <div class="row">
@@ -27,13 +27,13 @@
 
             <div class="form-group">
                 <label asp-for="VisiteTechnique.Montant" class="control-label"></label>
-                <input asp-for="VisiteTechnique.Montant" class="form-control" required/>
+                <input asp-for="VisiteTechnique.Montant" type="number" class="form-control" required />
 
             </div>
 
             <div class="form-group">
                 <label asp-for="VisiteTechnique.Date" class="control-label"></label>
-                <input asp-for="VisiteTechnique.Date" class="form-control" type="date" />
+                <input asp-for="VisiteTechnique.Date" class="form-control" type="date" required />
 
             </div>
 
@@ -46,11 +46,11 @@
             <div class="form-group">
                 @if (Model.IsNew)
                 {
-                    <button type="submit" class="btn btn-primary">Ajouter</button>
+                    <button type="submit" class="btn btn-success">Ajouter</button>
                 }
                 else
                 {
-                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    <button type="submit" class="btn btn-success">Enregistrer</button>
                 }
                 <a asp-page="ListVisiteTechnique" asp-route-vehiculeId="@Model.VehiculeId" class="btn btn-secondary">Annuler</a>
             </div>

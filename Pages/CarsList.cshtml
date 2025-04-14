@@ -1,58 +1,59 @@
 ﻿@page
 @model RPtest.Pages.CarsList
 @{
-	Layout = "Dashboard";
+    Layout = "Dashboard";
     ViewData["Title"] = "Liste de Véhicules : " + Model.cnt;
 }
 @section Head {
-    <style>
-        .main-content {
-            padding-top: 10px;
-        }
-        td, th {
-            vertical-align: middle;
-            text-align:center;
-        }
-        .photo {
-            width: 150px;
-        }
-        .search-bar {
-            align-items: center;
-            flex-wrap: wrap;
-            margin-bottom: 15px; 
-        }
-        .search-bar select, .search-bar input {
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 0.8rem !important;
-        }
-        .searchcontainer{
-            border: solid 1px #b8c4d1;
-            border-radius:20px;
-            background-color: #f2f2f2;
-        }
-        .button {
-            font-size: 0.8rem;
-            width: 50px;
-            margin: 1px;
-        }
-        .submit{
-            padding:10px;
-            width:50px;
-            margin-top:1px;
-        }
-        label {
-            font-size: 0.9rem;
-            margin-bottom: 0;
-        }
-        .v{
-            font-size: 0.8rem;
-            width: 90px;
-            margin: 1px;
-            padding:5px;
-        }
-    </style>
+<style>
+    .main-content {
+    padding-top: 10px;
+    }
+    td, th {
+    vertical-align: middle;
+    text-align:center;
+    }
+    .photo {
+    width: 150px;
+    }
+    .search-bar {
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 15px; 
+    }
+    .search-bar select, .search-bar input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.8rem !important;
+    }
+    .searchcontainer{
+    border: solid 1px #b8c4d1;
+    border-radius:20px;
+    background-color: #f2f2f2;
+    }
+    .button {
+    font-size: 0.8rem;
+    width: 50px;
+    margin: 1px;
+    }
+    .submit{
+    padding:10px;
+    width:50px;
+    margin-top:1px;
+    }
+    label {
+    font-size: 0.9rem;
+    margin-bottom: 0;
+    }
+    .v{
+    font-size: 1rem;
+    width: 90px;
+    margin: 1px;
+    padding:25px 5px;
+    font-weight:bold;
+    }
+</style>
 }
 
 <div class="row align-items-center mb-3" style="justify-content: center">
@@ -85,7 +86,7 @@
                     <label for="modeles" id="modellab">Modèle</label>
                     <select asp-for="Model.Nom" id="modeles" class="custom-select form-control"></select>
                 </div>
-                
+
                 <div class="mb-3 mb-md-0 col-md-2" style="padding-right:0 !important;">
                     <label asp-for="Vehicule.Immatriculation">Immatriculation</label>
                     <input asp-for="Vehicule.Immatriculation" class="form-control">
@@ -119,27 +120,34 @@
             <th>Climatisation</th>
             <th>Boîte de vitesses</th>
             <th>Carburant</th>
-@*             <th><nobr>Revenus <span style="font-size:0.6rem;">(DH)</span></nobr></th> *@
+            @*             <th><nobr>Revenus <span style="font-size:0.6rem;">(DH)</span></nobr></th> *@
             <th>Disponibilité</th>
-            <th>Notifications</th>
+            <th></th>
             <th style="width:60px;"></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var v in Model.Vehicules)
         {
-            var LId = v.Locations.FirstOrDefault(l => l.Statut == "En cours")?.Id;
-
             var LastVid = Model.lastVidanges.FirstOrDefault(vdg => vdg.VehiculeId == v.Id)?.Date ?? v.Date;
             int? restKilometrage = 0 ;
             if (v.KilometrageActuel>0 && v.KilometrageEntreVidanges > 0) { restKilometrage = v.KilometrageActuel % v.KilometrageEntreVidanges; }
             else{ restKilometrage = 1; }
             bool NotifVidange = restKilometrage == 0 || LastVid < DateTime.Now.AddYears(-1);
 
-            DateTime? LastVisite = Model.lastVisiteTechnique.FirstOrDefault(vst => vst.VehiculeId == v.Id)?.Date;
+            DateTime? LastVisite = Model.lastVisiteTechniques.FirstOrDefault(vst => vst.VehiculeId == v.Id)?.Date;
             bool NotifVisite = LastVisite != null ? LastVisite?.AddMonths(6) < DateTime.Now : v.Date.AddYears(1) < DateTime.Now;
 
-            bool Notification = NotifVidange || NotifVisite;
+            bool NotifDepense = false;
+            @foreach (var n in Model.Notifications)
+            {
+                DateTime? LastDepense = Model.lastDepenses.FirstOrDefault(dps => dps.VehiculeId == v.Id && dps.NotificationId == n.Id)?.Date ?? v.Date;
+                DateTime? d = LastDepense?.AddDays((double?)n.Jours ?? 0).AddMonths(n.Mois ?? 0).AddYears(n.Annees ?? 0);
+                NotifDepense = d != null ? d < DateTime.Now:false;
+                if (NotifDepense){ break; }
+            }
+
+            bool Notification = NotifDepense || NotifVidange || NotifVisite;
 
             <tr>
                 <td>
@@ -161,6 +169,8 @@
                     }
                     @revenu
                 </td> *@
+
+                @{var LId = v.Locations.FirstOrDefault(l => l.Statut == "En cours")?.Id;}
                 <td class="@(LId>=0 ? "table-info" : "")" style="text-align:center;">
                     @if (LId>=0)
                     {
@@ -168,8 +178,9 @@
                         <div><a asp-page="DetailsLocation" asp-route-id="@LId" class="btn btn-primary button"><i class="fa fa-eye" aria-hidden="true"></i></a></div>
                     }
                 </td>
-                <td class="@(Notification ? "table-danger" : "")" style="text-align:center;">
-                    <a asp-page="ListVisiteTechnique" asp-route-vehiculeId="@v.Id" class="btn v @(NotifVisite ? "btn-danger" : "btn-secondary")">
+
+                <td>
+@*                     <a asp-page="ListVisiteTechnique" asp-route-vehiculeId="@v.Id" class="btn v @(NotifVisite ? "btn-danger" : "btn-secondary")">
                         <span class="ms-2" data-bs-toggle="tooltipVT" data-bs-html="true" title="Pour vehicules de location : Dans 1 année la premiere foi, et 6 mois après.">
                             <i class="fa fa-question-circle" aria-hidden="true" style="color:#007bff !important;"></i>
                         </span>Visites Techniques
@@ -178,8 +189,9 @@
                         <span class="ms-2" data-bs-toggle="tooltipVdg" data-bs-html="true" title="Après 1 année, ou, après le kilométrage entre 2 vidanges est dépassé.">
                             <i class="fa fa-question-circle" aria-hidden="true" style="color:#007bff !important;"></i>
                         </span>Vidanges
-                    </a><br />
-                    <a asp-page="DepensesNotifications" asp-route-vehiculeId="@v.Id" class="btn btn-secondary v">Autres Notifications</a>
+                    </a><br /> *@
+                    <a asp-page="Revenus" asp-route-Immatriculation="@v.Immatriculation" class="btn v btn-success">Revenus</a>
+                    <a asp-page="DepensesNotifications" asp-route-vehiculeId="@v.Id" class="btn v @(Notification ? "btn-danger" : "btn-secondary")">Dépenses</a>
                 </td>
                 <td style="width:60px;">
                     <a asp-page="DetailsVehicule" asp-route-id="@v.Id" class="btn btn-primary button"><i class="fa fa-eye" aria-hidden="true"></i></a>

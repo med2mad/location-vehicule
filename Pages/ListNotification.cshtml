@@ -2,12 +2,16 @@
 @model RPtest.Pages.ListNotificationModel
 @{
     Layout = "Dashboard";
-    ViewData["Title"] = "Notifications";
+    ViewData["Title"] = "Types de dépenses";
 }
 @section Head {
     <style>
-        input, select {
-            border: solid gray 1px !important;
+        .b{
+            margin:1px;
+            width:100px;
+        }
+        td, th {
+            vertical-align: middle;
         }
         .form-group {
             margin-bottom: 10px;
@@ -16,14 +20,14 @@
 }
 
 <p>
-    <a asp-page="AddNotification" class="btn btn-primary">+ Ajouter une Notification</a>
+    <a asp-page="AddNotification" class="btn btn-primary">+ Ajouter un type de dépense</a>
 </p>
 
 <table class="table">
     <thead>
         <tr>
             <th>Titre</th>
-            <th>Période</th>
+            <th><nobr>Période</nobr></th>
             <th>Description</th>
             <th></th>
         </tr>
@@ -31,21 +35,21 @@
     <tbody>
         <tr>
             <td>Visites Techniques</td>
-            <td>0 j / 6 m / 0 a</td>
+            <td>0 jours<br />6 mois<br /> 0 années</td>
             <td>Pour vehicules de location : Dans 1 année la premiere foi, et 6 mois après.</td>
             <td>
-                <a class="btn btn-secondary" disabled>Modifier</a><br />
-                <a class="btn btn-secondary" disabled>Supprimer</a>
+                <a class="btn btn-secondary b" disabled>Modifier</a><br />
+                <a class="btn btn-secondary b" disabled>Supprimer</a>
             </td>
         </tr>
 
         <tr>
             <td>Vidanges</td>
-            <td>0 j / 0 m / 1 a</td>
+            <td>0 jours<br/>0 mois<br/> 1 années</td>
             <td>Après 1 année, ou, après le kilométrage entre 2 vidanges est dépassé.</td>
             <td>
-                <a class="btn btn-secondary" disabled>Modifier</a><br />
-                <a class="btn btn-secondary" disabled>Supprimer</a>
+                <a class="btn btn-secondary b" disabled>Modifier</a><br />
+                <a class="btn btn-secondary b" disabled>Supprimer</a>
             </td>
         </tr>
 
@@ -53,12 +57,12 @@
         {
             <tr>
                 <td>@notification.Titre</td>
-                <td>@notification.Jours j / @notification.Mois m / @notification.Annees a</td>
+                <td>@(notification.Jours ?? 0) jours<br /> @(notification.Mois ?? 0) mois<br /> @(notification.Annees ?? 0) années</td>
                 <td>@notification.Description</td>
                 <td>
-                    <a asp-page="AddNotification" asp-route-id="@notification.Id" class="btn btn-warning">Modifier</a>
-                    <form method="post" asp-page-handler="Delete" asp-route-id="@notification.Id" class="d-inline">
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Supprimer ?');">Supprimer</button>
+                    <a asp-page="AddNotification" asp-route-id="@notification.Id" class="btn btn-warning b">Modifier</a>
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@notification.Id">
+                        <button type="submit" class="btn btn-danger b" onclick="return confirm('Supprimer ?');">Supprimer</button>
                     </form>
                 </td>
             </tr>

@@ -14,7 +14,9 @@ public class CarsList(ApplicationDbContext _context) : PageModel
     public int cnt;
     //public Dictionary<int, decimal> Revenus { get; set; }
     public List<Vidange> lastVidanges { get; set; } = new List<Vidange>();
-    public List<VisiteTechnique> lastVisiteTechnique { get; set; } = new List<VisiteTechnique>();
+    public List<VisiteTechnique> lastVisiteTechniques { get; set; } = new List<VisiteTechnique>();
+    public List<Depense> lastDepenses { get; set; } = new List<Depense>();
+    public List<Notification> Notifications { get; set; } = new List<Notification>();
 
     [BindProperty(SupportsGet = true)] public Vehicule Vehicule { get; set; }
     [BindProperty(SupportsGet = true)] public Model Model { get; set; }
@@ -73,8 +75,10 @@ public class CarsList(ApplicationDbContext _context) : PageModel
         //        })
         //        .ToDictionary(x => x.VehiculeId, x => x.RevenuTotal);
 
-        lastVidanges = _context.Vidanges.OrderByDescending(x => x.Id).ToList();
-        lastVisiteTechnique = _context.VisitesTechniques.OrderByDescending(x => x.Id).ToList();
+        lastVidanges = _context.Vidanges.OrderByDescending(x => x.Date).ToList();
+        lastVisiteTechniques = _context.VisitesTechniques.OrderByDescending(x => x.Date).ToList();
+        lastDepenses = _context.Depenses.OrderByDescending(x => x.Date).ToList();
+        Notifications = _context.Notifications.ToList();
 
         return Page();
     }

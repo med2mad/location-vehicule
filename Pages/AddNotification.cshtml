@@ -2,7 +2,7 @@
 @model RPtest.Pages.AddNotificationModel
 @{
     Layout = "Dashboard";
-    ViewData["Title"] = Model.IsEditMode ? "Modifier la Notification" : "Ajouter une Notification";
+    ViewData["Title"] = Model.IsEditMode ? "Modifier le type du dépense" : "Ajouter un type de dépense";
 }
 @section Head {
     <style>
@@ -19,13 +19,13 @@
     <input type="hidden" asp-for="Notification.Id" />
 
     <div class="form-group">
-        <label asp-for="Notification.Titre" class="control-label">Titre du Notification</label>
+        <label asp-for="Notification.Titre" class="control-label">Titre du dépense</label>
         <input asp-for="Notification.Titre" class="form-control" required/>
         <span asp-validation-for="Notification.Titre" class="text-danger"></span>
     </div>
 
     <hr/>
-    <p>Période entre 2 Notifications</p>
+    <p>Période entre 2 dépenses</p>
 
     <div class="form-group">
         <label asp-for="Notification.Jours" class="control-label">Jours</label>

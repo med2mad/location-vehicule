@@ -2,7 +2,7 @@
 @model RPtest.Pages.ListVidangeModel
 @{
 	Layout = "Dashboard";
-    ViewData["Title"] = "Vidanges du Véhicule : " + @Model.VehiculeImmatriculation;
+    ViewData["Title"] = "Vidanges";
     decimal Total = 0;
 }
 
@@ -43,6 +43,9 @@
         }
     </style>
 }
+
+<h4>Véhicule : @Model.VehiculeImmatriculation</h4>
+<hr />
 
 <div class="row align-items-center mb-3" style="justify-content: center">
 
@@ -97,8 +100,8 @@
 </div>
 
 <p>
-    <a asp-page="AddVidange" asp-route-vehiculeId="@Model.VehiculeId" class="btn btn-primary"> + Ajouter une Vidange</a>
-    <a asp-page="CarsList" class="btn btn-secondary">Retour</a>
+    <a asp-page="AddVidange" asp-route-vehiculeId="@Model.VehiculeId" class="btn btn-primary"> + Ajouter une dépense (Vidange)</a>
+    <a asp-page="DepensesNotifications" asp-route-vehiculeId="@Model.VehiculeId" class="btn btn-secondary">Retour</a>
 </p>
 
 <table class="table table-striped table-bordered">

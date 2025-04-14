@@ -15,20 +15,15 @@ public class AddVidangeModel(ApplicationDbContext _context) : PageModel
     [BindProperty]
     public bool IsNew { get; set; } = true;
 
+    public Vehicule Vehicule { get; set; }
+
     public int VehiculeId { get; set; }
-    public string VehiculeMarque { get; set; }
-    public string VehiculeModel { get; set; }
 
     public async Task<IActionResult> OnGetAsync(int? id, int vehiculeId)
     {
         VehiculeId = vehiculeId;
 
-        var vehicule = await _context.Vehicules.Include(v => v.Model).FirstOrDefaultAsync(v => v.Id == vehiculeId);
-        if (vehicule != null)
-        {
-            VehiculeMarque = vehicule.Model.Marque;
-            VehiculeModel = vehicule.Model.Nom;
-        }
+        Vehicule = await _context.Vehicules.Include(v => v.Model).FirstOrDefaultAsync(v => v.Id == vehiculeId);
 
         if (id == null)
         {
