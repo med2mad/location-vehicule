@@ -88,9 +88,13 @@ public static class DateDifferenceHelper
                 years--;
                 months += 12;
             }
-        }
 
-        return (years, months, days);
+            return (years, months, days);
+        }
+        else
+        {
+            return (0, 0, 0);
+        }
     }
 
 }

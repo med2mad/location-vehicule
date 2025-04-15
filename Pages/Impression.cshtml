@@ -1,0 +1,168 @@
+﻿@page
+@model RPtest.Pages.ImpressionModel
+@{
+    Layout = "Dashboard";
+    ViewData["Title"] = "Impression";
+}
+
+@section Head {
+    <style>
+        .card {
+            margin: 20px;
+        }
+        .card-title {
+            padding:10px;
+            margin-bottom: 20px;
+            border-bottom: solid 1px #d2d2d2;
+            font-size: 1.6rem;
+        }
+
+        .dotted-line {
+            display: flex;
+            gap:10px;
+            flex-wrap:nowrap;
+            white-space: nowrap;
+            width: 100%;
+            overflow: hidden;
+        }
+
+    </style>
+}
+
+<div id="ddd" style="padding: 0; margin: 0;">
+<div class="card">
+    <h5 class="card-title">Client</h5>
+    <div style="margin-left:10px;">
+        <div class="dotted-line">
+            <div style="font-weight:bold;">Nom : </div>
+            <div>@Model.Location.NomClient</div>
+            <div>@for (int i = 0; i < 1000; i++){<span>.</span>}</div>
+        </div>
+        <div class="dotted-line">
+            <div style="font-weight:bold;">Téléphone : </div>
+            <div>@Model.Location.Tel</div>
+            <div>@for (int i = 0; i < 1000; i++){<span>.</span>}</div>
+        </div>
+        <div class="dotted-line">
+            <div style="font-weight:bold;">Email : </div>
+            <div>@Model.Location.Paiements.FirstOrDefault().Email</div>
+            <div>@for (int i = 0; i < 1000; i++){<span>.</span>}</div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h5 class="card-title">Réservation</h5>
+    <div style="margin-left:10px;">
+        <div class="dotted-line">
+            <div style="font-weight:bold;">Date : </div>
+            <div>@Model.Location.Date.ToString("dd/MM/yyyy")</div>
+            <div>@for (int i = 0; i < 1000; i++){<span>.</span>}</div>
+        </div>
+        <div class="dotted-line">
+            <div style="font-weight:bold;">Lieu de Départ : </div>
+            <div>@Model.Location.LieuDepart</div>
+            <div>@for (int i = 0; i < 1000; i++){<span>.</span>}</div>
+        </div>
+        <div class="dotted-line">
+            <div style="font-weight:bold;">Lieu de Retour : </div>
+            <div>@Model.Location.LieuRetour</div>
+            <div>@for (int i = 0; i < 1000; i++){<span>.</span>}</div>
+        </div>
+        <div class="dotted-line">
+            <div style="font-weight:bold;">Date de Départ : </div>
+            <div>@Model.Location.DateDepart.ToString("dd/MM/yyyy")</div>
+            <div>@for (int i = 0; i < 1000; i++){<span>.</span>}</div>
+        </div>
+        <div class="dotted-line">
+            <div style="font-weight:bold;">Date de Retour : </div>
+            <div>@Model.Location.DateRetour.ToString("dd/MM/yyyy")</div>
+            <div>@for (int i = 0; i < 1000; i++){<span>.</span>}</div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h5 class="card-title">Paiement</h5>
+    <div style="margin-left:10px;">
+        <div class="dotted-line">
+            <div style="font-weight:bold;">Montant : </div>
+            <div>@Model.Location.Paiements.FirstOrDefault().Montant DH</div>
+            <div>@for (int i = 0; i < 1000; i++){<span>.</span>}</div>
+        </div>
+        <div class="dotted-line">
+            <div style="font-weight:bold;">Rib : </div>
+            <div>@Model.Location.Paiements.FirstOrDefault().Rib</div>
+            <div>@for (int i = 0; i < 1000; i++){<span>.</span>}</div>
+        </div>
+        <div class="dotted-line">
+            <div style="font-weight:bold;">date d'expiration de la carte bancaire : </div>
+            <div>@Model.Location.Paiements.FirstOrDefault().Expiration</div>
+            <div>@for (int i = 0; i < 1000; i++){<span>.</span>}</div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h5 class="card-title">Véhicule</h5>
+    <div style="margin-left:10px;">
+        <div class="dotted-line">
+            <div style="font-weight:bold;">Immatriculation : </div>
+            <div>@Model.Location.Vehicule.Immatriculation</div>
+            <div>@for (int i = 0; i < 1000; i++){<span>.</span>}</div>
+        </div>
+        <div class="dotted-line">
+            <div style="font-weight:bold;">Type de véhicule : </div>
+            <div>@Model.Location.Vehicule.Model.Type</div>
+            <div>@for (int i = 0; i < 1000; i++){<span>.</span>}</div>
+        </div>
+        <div class="dotted-line">
+            <div style="font-weight:bold;">Modèle : </div>
+            <div>@Model.Location.Vehicule.Model.Marque @Model.Location.Vehicule.Model.Nom</div>
+            <div>@for (int i = 0; i < 1000; i++){<span>.</span>}</div>
+        </div>
+        <div class="dotted-line">
+            <div style="font-weight:bold;">Kilométrage dernier : </div>
+            <div>@Model.Location.Vehicule.KilometrageActuel</div>
+            <div>@for (int i = 0; i < 1000; i++){<span>.</span>}</div>
+        </div>
+        <div class="dotted-line">
+            <div style="font-weight:bold;">Climatisation : </div>
+            <div>@Model.Location.Vehicule.Climatisation</div>
+            <div>@for (int i = 0; i < 1000; i++){<span>.</span>}</div>
+        </div>
+        <div class="dotted-line">
+            <div style="font-weight:bold;">Boîte de vitesses : </div>
+            <div>@Model.Location.Vehicule.Boite</div>
+            <div>@for (int i = 0; i < 1000; i++){<span>.</span>}</div>
+        </div>
+    </div>
+</div>
+</div>
+
+<a onclick="dddf()" class="btn btn-primary">Telecharger</a>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        function dddf(){
+        const element = document.getElementById('ddd');
+          const opt = {
+            margin: [10, 10, 10, 10], // [top, right, bottom, left] in mm
+            filename: 'document.pdf',
+            html2canvas: {
+              scale: 2,
+              scrollY: 0, // Important for positioning
+              windowHeight: element.scrollHeight
+            },
+            jsPDF: {
+              unit: 'mm',
+              format: 'a4',
+              orientation: 'portrait'
+            }
+          };
+
+          html2pdf().set(opt).from(element).save();
+        }
+    </script>
+}

@@ -19,7 +19,6 @@
     </style>
 }
 
-
 <h2>Détails de la Location : #@Model.Location.Id.ToString("D6")</h2>
 
 <div>
@@ -50,7 +49,7 @@
                 <h5 class="card-title">Paiement</h5>
                 <dl class="row" style="margin-left:10px;">
                     <dt class="col-sm-4">Montant</dt>  <dd class="col-sm-8">@Model.Location.Paiements.FirstOrDefault().Montant DH</dd>
-                    <dt class="col-sm-4">Date</dt>  <dd class="col-sm-8">@Model.Location.Paiements.FirstOrDefault().Date.ToString("dd/MM/yyyy")</dd>
+                    @* <dt class="col-sm-4">Date</dt>  <dd class="col-sm-8">@Model.Location.Paiements.FirstOrDefault().Date.ToString("dd/MM/yyyy")</dd> *@
                     <dt class="col-sm-4">Rib</dt>  <dd class="col-sm-8">@Model.Location.Paiements.FirstOrDefault().Rib</dd>
                     <dt class="col-sm-9">date d'expiration de la carte bancaire</dt>  <dd class="col-sm-3">@Model.Location.Paiements.FirstOrDefault().Expiration</dd>
                 </dl>
@@ -63,14 +62,22 @@
                     <dt class="col-sm-5">Modèle</dt>  <dd class="col-sm-7">@Model.Location.Vehicule.Model.Marque @Model.Location.Vehicule.Model.Nom</dd>
                     <dt class="col-sm-5">Kilométrage dernier</dt>  <dd class="col-sm-7">@Model.Location.Vehicule.KilometrageActuel</dd>
                     <dt class="col-sm-5">Climatisation</dt> <dd class="col-sm-7">@Model.Location.Vehicule.Climatisation</dd>
+                    <dt class="col-sm-5">Boîte de vitesses</dt> <dd class="col-sm-7">@Model.Location.Vehicule.Boite</dd>
                 </dl>
             </div>
         </div>
     </div>
 </div>
 
-<div>
+<hr/>
+
+<div style="display:flex; gap:10px;">
+    <div style="border-right:solid 1px #c7c8c9; padding-right:10px;">
 @*     <a asp-page="EditLocations" asp-route-id="@Model.Location.Id" class="btn btn-warning">Modifier</a> *@
-    <a asp-page="ListLocations" class="btn btn-secondary">liste de Locations</a>
-    <a asp-page="CarsList" class="btn btn-secondary">Liste de Véhicules</a>
+        <a asp-page="ListLocations" class="btn btn-secondary">liste de Locations</a>
+        <a asp-page="CarsList" class="btn btn-secondary">Liste de Véhicules</a>
+    </div>
+    <div>
+        <a asp-page="Impression" asp-route-id="@Model.Location.Id" class="btn btn-danger">Facture en PDF</a>
+    </div>
 </div>

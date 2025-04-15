@@ -11,13 +11,14 @@
     }
 </style>
 }
+
 <div style="display:flex; gap:10px;align-items:center;">
     <div style="border-right:solid 1px #c7c8c9; padding-right:10px;">
-        <strong>Date véhicule :</strong> @Model.Vehicule.Date.ToString("dd/MM/yyyy") <br />
-        <strong>Immatriculation :</strong> @Model.Vehicule.Immatriculation
+        <strong>Immatriculation :</strong> @Model.Vehicule.Immatriculation<br />
+        <strong>Date véhicule :</strong> @Model.Vehicule.Date.ToString("dd/MM/yyyy") 
     </div>
     <div>
-        <a asp-page="/CarsList" class="btn btn-secondary">Retour</a>
+        <a asp-page="/CarsList" class="btn btn-secondary"><i class="fa fa-arrow-left"> </i> Retour</a>
     </div>
 </div>
 <hr/>
@@ -27,41 +28,30 @@
     <thead>
         <tr>
             <th></th>
+            <th>Dernière</th>
             <th>Temps restant</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         @{
-            var LastVid = Model.lastVidanges.FirstOrDefault(vdg => vdg.VehiculeId == Model.Vehicule.Id)?.Date ?? Model.Vehicule.Date;
+            DateTime LastVid = Model.lastVidanges.FirstOrDefault(vdg => vdg.VehiculeId == Model.Vehicule.Id)?.Date ?? Model.Vehicule.Date;
             int? restKilometrage = 0 ;
             if (Model.Vehicule.KilometrageActuel > 0 && Model.Vehicule.KilometrageEntreVidanges > 0) { restKilometrage = Model.Vehicule.KilometrageActuel % Model.Vehicule.KilometrageEntreVidanges; }
             else{ restKilometrage = 1; }
-            bool NotifVidange = restKilometrage == 0 || LastVid < DateTime.Now.AddYears(-1);
+            bool NotifVidange = restKilometrage == 0 || LastVid < DateTime.Now.AddYears(-1).AddMonths(1);
             var ffvid = DateDifferenceHelper.f(LastVid, 0, 0, 1);
-            if (NotifVidange) {
-                ffvid.Days = 0;
-                ffvid.Months = 0;
-                ffvid.Years = 0;
-            }
 
             DateTime? LastVisite = Model.lastVisiteTechniques.FirstOrDefault(vst => vst.VehiculeId == Model.Vehicule.Id)?.Date;
-            bool NotifVisite = LastVisite != null ? LastVisite?.AddMonths(6) < DateTime.Now : Model.Vehicule.Date.AddYears(1) < DateTime.Now;
+            bool NotifVisite = LastVisite != null ? LastVisite?.AddMonths(6).AddMonths(-1) < DateTime.Now : Model.Vehicule.Date.AddYears(1).AddMonths(-1) < DateTime.Now;
             var ffvis = DateDifferenceHelper.f(DateTime.Today, 0, 0, 0);
-            if (NotifVisite) {
-                ffvis.Days = 0;
-                ffvis.Months = 0;
-                ffvis.Years = 0;
+            if (LastVisite != null)
+            {
+                ffvis = DateDifferenceHelper.f(LastVisite ?? Model.Vehicule.Date, 0, 6, 0);
             }
-            else {
-                if (LastVisite != null)
-                {
-                    ffvis = DateDifferenceHelper.f(LastVid, 0, 6, 0);
-                }
-                else
-                {
-                    ffvis = DateDifferenceHelper.f(LastVid, 0, 0, 1);
-                }
+            else
+            {
+                ffvis = DateDifferenceHelper.f(Model.Vehicule.Date, 0, 0, 1);
             }
         }
         <tr class=" @(NotifVisite ? "table-danger" : "")">
@@ -71,6 +61,7 @@
                     <i class="fa fa-question-circle" aria-hidden="true" style="color:#007bff !important;"></i> 
                 </span> 
             </td>
+            <td>@Model.lastVisiteTechniques.FirstOrDefault(vst => vst.VehiculeId == Model.Vehicule.Id)?.Date.ToString("dd/MM/yyyy")</td>
             <td>@(ffvis.Days) jous<br />@(ffvis.Months) mois<br />@ffvis.Years années</td>
             <td> 
                 <a asp-page="ListVisiteTechnique" asp-route-vehiculeId="@Model.vehiculeId" class="btn btn-warning">Historique</a> 
@@ -83,6 +74,7 @@
                     <i class="fa fa-question-circle" aria-hidden="true" style="color:#007bff !important;"></i> 
                 </span> 
             </td>
+            <td>@Model.lastVidanges.FirstOrDefault(vdg => vdg.VehiculeId == Model.Vehicule.Id)?.Date.ToString("dd/MM/yyyy")</td>
             <td>@(ffvid.Days) jous<br />@(ffvid.Months) mois<br />@ffvid.Years années</td>
             <td> 
                 <a asp-page="ListVidange" asp-route-vehiculeId="@Model.vehiculeId" class="btn btn-warning">Historique</a> 
@@ -92,7 +84,7 @@
         {
             bool NotifDepense = false;
             DateTime LastDepense = Model.lastDepenses.FirstOrDefault(dps => dps.VehiculeId == Model.Vehicule.Id && dps.NotificationId == n.Id)?.Date ?? Model.Vehicule.Date;
-            DateTime d = LastDepense.AddDays((double?)n.Jours ?? 0).AddMonths(n.Mois ?? 0).AddYears(n.Annees ?? 0);
+            DateTime d = LastDepense.AddDays((double?)n.Jours ?? 0).AddMonths(n.Mois ?? 0).AddYears(n.Annees ?? 0).AddMonths(-1);
             NotifDepense = d < DateTime.Now;
             var ff = DateDifferenceHelper.f(LastDepense,n.Jours ?? 0, n.Mois ?? 0, n.Annees ?? 0);
 
@@ -103,6 +95,7 @@
                         <i class="fa fa-question-circle" aria-hidden="true" style="color:#007bff !important;"></i>
                     </span>
                 </td>
+                <td>@Model.lastDepenses.FirstOrDefault(dps => dps.VehiculeId == Model.Vehicule.Id && dps.NotificationId == n.Id)?.Date.ToString("dd/MM/yyyy")</td>
                 <td>@(ff.Days) jous<br />@(ff.Months) mois<br />@ff.Years années</td>
                 <td>
                     <a asp-page="ListDepense" asp-route-vehiculeId="@Model.vehiculeId" asp-route-notificationId="@n.Id" class="btn btn-warning">Historique</a>

@@ -17,6 +17,7 @@ public class ListDepenseModel(ApplicationDbContext _context) : PageModel
     public string VehiculeMarque { get; set; }
     public string VehiculeModel { get; set; }
     public string VehiculeImmatriculation { get; set; }
+    public string VehiculeDate { get; set; }
 
     [BindProperty(SupportsGet = true)] public string Sort { get; set; }
     [BindProperty(SupportsGet = true)] public DateTime? StartDate { get; set; }
@@ -46,6 +47,7 @@ public class ListDepenseModel(ApplicationDbContext _context) : PageModel
             VehiculeMarque = vehicule.Model.Marque;
             VehiculeModel = vehicule.Model.Nom;
             VehiculeImmatriculation = vehicule.Immatriculation;
+            VehiculeDate = vehicule.Date.ToString("dd/MM/yyyy");
         }
 
         var query = _context.Depenses.Where(d => d.VehiculeId == vehiculeId && d.Date >= sd && d.Date < ed && d.NotificationId== NotificationId);

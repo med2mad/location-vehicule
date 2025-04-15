@@ -133,16 +133,16 @@
             int? restKilometrage = 0 ;
             if (v.KilometrageActuel>0 && v.KilometrageEntreVidanges > 0) { restKilometrage = v.KilometrageActuel % v.KilometrageEntreVidanges; }
             else{ restKilometrage = 1; }
-            bool NotifVidange = restKilometrage == 0 || LastVid < DateTime.Now.AddYears(-1);
+            bool NotifVidange = restKilometrage == 0 || LastVid < DateTime.Now.AddYears(-1).AddMonths(1);
 
             DateTime? LastVisite = Model.lastVisiteTechniques.FirstOrDefault(vst => vst.VehiculeId == v.Id)?.Date;
-            bool NotifVisite = LastVisite != null ? LastVisite?.AddMonths(6) < DateTime.Now : v.Date.AddYears(1) < DateTime.Now;
+            bool NotifVisite = LastVisite != null ? LastVisite?.AddMonths(6).AddMonths(-1) < DateTime.Now : v.Date.AddYears(1).AddMonths(-1) < DateTime.Now;
 
             bool NotifDepense = false;
             @foreach (var n in Model.Notifications)
             {
                 DateTime? LastDepense = Model.lastDepenses.FirstOrDefault(dps => dps.VehiculeId == v.Id && dps.NotificationId == n.Id)?.Date ?? v.Date;
-                DateTime? d = LastDepense?.AddDays((double?)n.Jours ?? 0).AddMonths(n.Mois ?? 0).AddYears(n.Annees ?? 0);
+                DateTime? d = LastDepense?.AddDays((double?)n.Jours ?? 0).AddMonths(n.Mois ?? 0).AddYears(n.Annees ?? 0).AddMonths(-1);
                 NotifDepense = d != null ? d < DateTime.Now:false;
                 if (NotifDepense){ break; }
             }
