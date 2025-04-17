@@ -19,7 +19,7 @@
     </style>
 }
 
-<h2>Détails de la Location : #@Model.Location.Id.ToString("D6")</h2>
+<h2>Location N° : #@Model.Location.Id.ToString("D6")</h2>
 
 <div>
     <div>
@@ -78,6 +78,6 @@
         <a asp-page="CarsList" class="btn btn-secondary">Liste de Véhicules</a>
     </div>
     <div>
-        <a asp-page="Impression" asp-route-id="@Model.Location.Id" class="btn btn-danger">Facture en PDF</a>
+        <a asp-page="Facture" asp-route-id="@Model.Location.Id" class="btn btn-primary">Facture</a>
     </div>
 </div>

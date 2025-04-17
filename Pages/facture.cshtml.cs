@@ -7,7 +7,7 @@ using RPtest.Models;
 
 namespace RPtest.Pages;
 
-public class factureModel(ApplicationDbContext _context) : PageModel
+public class FactureModel(ApplicationDbContext _context) : PageModel
 {
     public Location Location { get; set; }
 

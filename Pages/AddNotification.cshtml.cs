@@ -40,12 +40,18 @@ public class AddNotificationModel(ApplicationDbContext _context) : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
+        if (!Notification.Jours.HasValue && !Notification.Mois.HasValue && !Notification.Annees.HasValue)
+        {
+            ModelState.AddModelError(string.Empty, "Donnez une période");
+        }
+
         if (!ModelState.IsValid)
         {
             return Page();
         }
-        
-        if (await _context.Notifications.AnyAsync(n => n.Titre == Notification.Titre && n.Id != Notification.Id))
+
+        bool any = await _context.Notifications.AnyAsync(n => n.Titre == Notification.Titre && n.Id != Notification.Id);
+        if (any || Notification.Titre== "Visites Techniques" || Notification.Titre == "Vidanges" || Notification.Titre == "Visite Technique" || Notification.Titre == "Vidange")
         {
             ModelState.AddModelError("Notification.Titre", "Notification déjà existante");
             return Page();

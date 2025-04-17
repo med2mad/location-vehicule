@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Drawing;
+using Microsoft.EntityFrameworkCore;
 
 namespace RPtest.Models;
 
@@ -21,11 +22,11 @@ public class Vehicule
 
     [ForeignKey("Model")]
     public int? ModelId { get; set; }
+    [DeleteBehavior(DeleteBehavior.SetNull)]
     public Model? Model { get; set; }
 
     public ICollection<Location>? Locations { get; set; }
     public ICollection<Depense>? Depenses { get; set; }
     public ICollection<Vidange>? Vidanges { get; set; } //1 ans + input KilometrageEntreVidanges for each vehicule
     public ICollection<VisiteTechnique>? VisitesTechniques { get; set; } //1 ans la premiere foi et 6 mois apres pour location (5/1 pour normal)
-
 }

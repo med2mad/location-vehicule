@@ -12,6 +12,6 @@ public class VisiteTechnique
 
     [ForeignKey("Vehicule")]
     public int? VehiculeId { get; set; }
-    [DeleteBehavior(DeleteBehavior.Cascade)]
+    [DeleteBehavior(DeleteBehavior.SetNull)]
     public Vehicule? Vehicule { get; set; }
 }
