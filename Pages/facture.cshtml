@@ -98,27 +98,6 @@
     </div>
 
     <div class="card">
-        <h5 class="card-title">Paiement</h5>
-        <div style="margin-left:10px;">
-            <div class="dotted-line">
-                <div class="leader">Montant : </div>
-                <div>@Model.Location.Paiements.FirstOrDefault().Montant DH</div>
-                <div class="dotted"></div>
-            </div>
-            <div class="dotted-line">
-                <div class="leader">Rib : </div>
-                <div>@Model.Location.Paiements.FirstOrDefault().Rib</div>
-                <div class="dotted"></div>
-            </div>
-            <div class="dotted-line">
-                <div class="leader">date d'expiration de la carte bancaire : </div>
-                <div>@Model.Location.Paiements.FirstOrDefault().Expiration</div>
-                <div class="dotted"></div>
-            </div>
-        </div>
-    </div>
-
-    <div class="card">
         <h5 class="card-title">Véhicule</h5>
         <div style="margin-left:10px;">
             <div class="dotted-line">
@@ -149,6 +128,27 @@
             <div class="dotted-line">
                 <div class="leader">Boîte de vitesses : </div>
                 <div>@Model.Location.Vehicule.Boite</div>
+                <div class="dotted"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h5 class="card-title">Paiement</h5>
+        <div style="margin-left:10px;">
+            <div class="dotted-line">
+                <div class="leader">Rib : </div>
+                <div>@Model.Location.Paiements.FirstOrDefault().Rib</div>
+                <div class="dotted"></div>
+            </div>
+            <div class="dotted-line">
+                <div class="leader">date d'expiration de la carte bancaire : </div>
+                <div>@Model.Location.Paiements.FirstOrDefault().Expiration</div>
+                <div class="dotted"></div>
+            </div>
+            <div class="dotted-line mt-3" style="font-size:2rem;">
+                <div class="leader">Montant : </div>
+                <div>@Model.Location.Paiements.FirstOrDefault().Montant DH</div>
                 <div class="dotted"></div>
             </div>
         </div>

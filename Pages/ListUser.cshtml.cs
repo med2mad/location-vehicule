@@ -16,7 +16,7 @@ public class UserWithRoleViewModel
     public string Role { get; set; }
 }
 
-[Authorize(Roles = "Super Administrateur")] // Restrict to super admins only
+[Authorize(Roles = "Super Administrateur")]
 public class ListUserModel(UserManager<IdentityUser> _userManager) : PageModel
 {
     [TempData]

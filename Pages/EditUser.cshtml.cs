@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace RPtest.Pages;
@@ -48,6 +49,11 @@ public class EditUserModel(UserManager<IdentityUser> _userManager, SignInManager
 
         var user = await _userManager.FindByIdAsync(id);
         if (user == null)
+        {
+            return NotFound();
+        }
+
+        if (!User.IsInRole("Super Administrateur") &&  User.FindFirstValue(ClaimTypes.NameIdentifier) != id)
         {
             return NotFound();
         }
