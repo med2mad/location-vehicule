@@ -22,6 +22,9 @@
         .form-range{
             padding:0 !important;
         }
+        .label{
+            width: 120px
+        }
 
         @@media (max-width: 767px) {
             h1 strong {
@@ -32,6 +35,12 @@
             }
             .normal-logo{
                 width:100px !important;
+            }
+            .site-section{
+                margin-top: 200px;
+            }
+            label, input, select {
+                margin-bottom:5px !important;
             }
         }
     </style>
@@ -51,9 +60,9 @@
                 <div class="col-lg-10">
                     <form method="get" class="trip-form mb-2" style="padding:0 10px 5px 10px;">
 
-                        <div class="row align-items-end justify-content-center">
-                            <div class="mb-0 col-md-3 g">
-                                <label for="type" id="typelab">Type : </label>
+                        <div class="pt-1 pt-md-0 row align-items-end justify-content-center">
+                            <div class="mb-0 col-md-3 g d-flex d-sm-block align-items-center">
+                                <div class="label"><label for="type" id="typelab">Type : </label></div>
                                 <select asp-for="Model.Type" id="type" class="custom-select form-control">
                                     <option value="" selected></option>
                                     @foreach (var type in Model.Types)
@@ -62,8 +71,8 @@
                                     }
                                 </select>
                             </div>
-                            <div class="mb-0 col-md-3 g">
-                                <label for="marques">Marque : </label>
+                            <div class="mb-0 col-md-3 g d-flex d-sm-block align-items-center">
+                                <div class="label"><label for="marques">Marque : </label></div>
                                 <select asp-for="Model.Marque" id="marques" class="custom-select form-control">
                                     <option value="" selected></option>
                                     @foreach (var marque in Model.Marques)
@@ -72,20 +81,20 @@
                                     }
                                 </select>
                             </div>
-                            <div class="mb-md-0 col-md-3">
-                                <label for="modeles" id="modellab" class="form-label">Modèle :</label>
+                            <div class="mb-md-0 col-md-3 d-flex d-sm-block align-items-center">
+                                <div class="label"><label for="modeles" id="modellab" class="form-label">Modèle :</label></div>
                                 <select asp-for="Model.Nom" id="modeles" class="custom-select form-control"></select>
                             </div>
-                            <div class="mb-0 col-md-3">
-                                <label for="climatisation" id="climatisationlab">Climatisation :</label>
+                            <div class="mb-0 col-md-3 d-flex d-sm-block align-items-center">
+                                <div class="label"><label for="climatisation" id="climatisationlab">Climatisation :</label></div>
                                 <select asp-for="Vehicule.Climatisation" id="climatisation" class="custom-select form-control">
                                     <option value="" selected></option>
                                     <option value="Avec">Avec</option>
                                     <option value="Sans">Sans</option>
                                 </select>
                             </div>
-                            <div class="mb-0 col-md-3">
-                                <label for="couleur" id="couleurlab">Couleur : </label>
+                            <div class="mb-0 col-md-3 d-flex d-sm-block align-items-center">
+                                <div class="label"><label for="couleur" id="couleurlab">Couleur : </label></div>
                                 <select asp-for="Vehicule.Couleur" id="couleur" class="custom-select form-control">
                                     <option value="" selected></option>
                                     @foreach (var couleur in Model.Couleurs)
@@ -94,8 +103,8 @@
                                     }
                                 </select>
                             </div>
-                            <div class="mb-0 col-md-3 g">
-                                <label style="position:relative; top:10px;" id="prix1">Prix Minimum :</label>
+                            <div class="mb-0 col-md-3 g d-flex d-sm-block align-items-center">
+                                <div class ="label"><label style="position:relative; top:10px;" id="prix1">Prix Minimum :</label></div>
                                 <div style="position:relative; top:10px; display:flex; gap:10px; justify-content:center;">
                                     <div>
                                         <label for="prixmin" id="prixminlab" class="form-label">@Model.PrixMin</label>
@@ -105,8 +114,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="mb-0 col-md-3 g">
-                                <label style="position:relative; top:10px;" id="prix2">Prix Maximum :</label>
+                            <div class="mb-0 col-md-3 g d-flex d-sm-block align-items-center">
+                                <div class="label"><label style="position:relative; top:10px;" id="prix2">Prix Maximum :</label></div>
                                 <div style="position:relative; top:10px; display:flex; gap:10px; justify-content:center;">
                                     <div>
                                         <label for="prixmax" id="prixmaxlab" class="form-label">@Model.PrixMax</label>

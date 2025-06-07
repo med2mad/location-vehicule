@@ -7,6 +7,7 @@ using RPtest.Models;
 using System.Text.Json;
 
 namespace RPtest.Pages;
+
 [Authorize]
 public class CarsList(ApplicationDbContext _context) : PageModel
 {
