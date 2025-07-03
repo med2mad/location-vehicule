@@ -1,3 +1,4 @@
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -12,10 +13,9 @@ public class IndexModel(ApplicationDbContext _context) : PageModel
     public List<string> Marques { get; set; } = new();
     public Location Location { get; set; } //just for dd/MM/yyyy format
 
-    public async void OnGet()
+    public void OnGet()
     {
-        Vehicules = await _context.Vehicules.Include(v => v.Model).Take(8).OrderByDescending(v => v.Id).ToListAsync();
+        Vehicules = _context.Vehicules.Include(v => v.Model).Take(8).OrderByDescending(v => v.Id).ToList();
         Marques = _context.Models.Select(m => m.Marque).Distinct().ToList();
-
     }
 }

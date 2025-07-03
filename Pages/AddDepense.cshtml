@@ -2,11 +2,14 @@
 @model RPtest.Pages.AddDepenseModel
 @{
     Layout = "Dashboard";
-    ViewData["Title"] = Model.IsNew ? "Ajouter une dépense (" + Model.Notification.Titre + ")" : "Modifier une dépense (" + Model.Notification.Titre + ")";
+    ViewData["Title"] = Model.IsNew ? "Ajouter une dépense (" + Model.Notification.Titre + ")" : "Modifier une dépense (" +
+    Model.Notification.Titre + ")";
 }
 @section Head {
     <style>
-        input, select, textarea {
+        input,
+        select,
+        textarea {
             margin-bottom: 15px;
             border: solid gray 1px !important;
         }
@@ -25,7 +28,7 @@
 
             <div class="form-group">
                 <label asp-for="Depense.Montant" class="control-label"></label>
-                <input asp-for="Depense.Montant" type="number" class="form-control" required/>
+                <input asp-for="Depense.Montant" type="number" class="form-control" required />
 
             </div>
 
@@ -50,7 +53,8 @@
                 {
                     <button type="submit" class="btn btn-success">Enregistrer</button>
                 }
-                <a asp-page="ListDepense" asp-route-vehiculeId="@Model.VehiculeId" asp-route-notificationId="@Model.NotificationId" class="btn btn-secondary">Annuler</a>
+                <a asp-page="ListDepense" asp-route-vehiculeId="@Model.VehiculeId"
+                    asp-route-notificationId="@Model.NotificationId" class="btn btn-secondary">Annuler</a>
             </div>
         </form>
     </div>
