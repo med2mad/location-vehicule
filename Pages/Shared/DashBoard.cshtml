@@ -3,6 +3,7 @@
 
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,15 +17,17 @@
         body {
             padding-top: 56px;
         }
+
         .sidebar {
             height: 100vh;
             position: fixed;
             width: 250px;
-            background: linear-gradient(to bottom,#495057,#1d2024 );
+            background: linear-gradient(to bottom, #495057, #1d2024);
             border-right: solid 5px #a0a5ad;
             transition: all 0.3s;
             z-index: 999;
         }
+
         .sidebar a {
             padding: 10px 15px;
             text-decoration: none;
@@ -33,25 +36,31 @@
             display: block;
             transition: all 0.3s;
         }
+
         .sidebar a:hover {
             color: #ffffff;
             background-color: #495057;
         }
+
         .sidebar a i {
             margin-right: 10px;
         }
+
         .sidebar .active {
             color: #ffffff;
             background-color: #007bff;
         }
+
         .main-content {
             margin-left: 250px;
             padding: 20px;
         }
-        .logo{
+
+        .logo {
             width: 100%;
             max-width: 240px;
         }
+
         .navbar h2 {
             color: wheat;
             margin-bottom: 0;
@@ -59,23 +68,28 @@
             font-size: 1.5rem;
         }
 
-         @@media (max-width: 768px) {
+        @@media (max-width: 768px) {
             .sidebar {
                 width: 0;
                 overflow: hidden;
             }
+
             .main-content {
                 margin-left: 0;
             }
+
             .sidebar.show {
                 width: 250px;
             }
-            .navbar-brand{
-                display:none;
+
+            .navbar-brand {
+                display: none;
             }
+
             .username {
                 display: none;
             }
+
             .navbar h2 {
                 font-size: 1rem;
             }
@@ -84,6 +98,7 @@
 
     @RenderSection("Head", required: false)
 </head>
+
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style="padding-bottom:10px;">
@@ -98,16 +113,20 @@
             <div class="d-flex align-items-center">
                 <span class="text-white me-3 username">@User.Identity?.Name</span>
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-bs-toggle="dropdown">
                         <i class="fas fa-user-circle"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a asp-page="EditUser" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)" asp-route-returnUrl="@Url.Page("/HomeBoard", new { area = "" })" class="dropdown-item">Profil</a></li>
+                        <li><a asp-page="EditUser" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)"
+                                asp-route-returnUrl="@Url.Page("/HomeBoard", new { area = "" })"
+                                class="dropdown-item">Profil</a></li>
                         <li><a class="dropdown-item" href="#">
-                            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
-                                <button type="submit" class="nav-link btn btn-link text-dark">Déconnexion</button>
-                            </form>
-                        </a></li>
+                                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout"
+                                    asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+                                    <button type="submit" class="nav-link btn btn-link text-dark">Déconnexion</button>
+                                </form>
+                            </a></li>
                     </ul>
                 </div>
             </div>
@@ -121,27 +140,32 @@
         </div>
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a href="/HomeBoard" class="nav-link @(ViewData["Title"]?.ToString() == "Résumé du Mois : " + @DateTime.Now.ToString("MM/yyyy")?"active":"")">
+                <a href="/HomeBoard"
+                    class="nav-link @(ViewData["Title"]?.ToString() == "Résumé du Mois : " + @DateTime.Now.ToString("MM/yyyy") ? "active" : "")">
                     <i class="fas fa-home"></i> Accueil
                 </a>
             </li>
             <li class="nav-item">
-                <a href="/ListLocations" class="nav-link @(ViewData["Title"]?.ToString() == "Locations"?"active":"")">
+                <a href="/ListLocations"
+                    class="nav-link @(ViewData["Title"]?.ToString() == "Locations" ? "active" : "")">
                     <i class="fa-solid fa-calendar-days"></i> Locations
                 </a>
             </li>
-			<li class="nav-item">
-				<a asp-page="Revenus" class="nav-link @(ViewData["Title"]?.ToString() == "Revenu par Véhicule"?"active":"")">
-					<i class="fa-solid fa-money-bill-1"></i> Revenus
-				</a>
-			</li>
-			<li class="nav-item">
-                <a href="/CarsList" class="nav-link @(ViewData["Title"]?.ToString().Contains("List de Véhicules")==true?"active":"")">
+            <li class="nav-item">
+                <a asp-page="Revenus"
+                    class="nav-link @(ViewData["Title"]?.ToString() == "Revenu par Véhicule" ? "active" : "")">
+                    <i class="fa-solid fa-money-bill-1"></i> Revenus
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/CarsList"
+                    class="nav-link @(ViewData["Title"]?.ToString().Contains("List de Véhicules") == true ? "active" : "")">
                     <i class="fas fa-car"></i> Véhicules
                 </a>
             </li>
-             <li class="nav-item">
-                <a asp-page="EditVehicule" class="nav-link @(ViewData["Title"]?.ToString() == "Ajouter un Véhicule"?"active":"")">
+            <li class="nav-item">
+                <a asp-page="EditVehicule"
+                    class="nav-link @(ViewData["Title"]?.ToString() == "Ajouter un Véhicule" ? "active" : "")">
                     <i class="fas fa-plus-circle"></i> Ajout de Véhicules
                 </a>
             </li>
@@ -151,27 +175,32 @@
                 </a>
             </li>
             <li class="nav-item" style="margin-left:60px;">
-                <a href="/ListModele" style="padding:0; font-size:0.95rem;" class="nav-link @(ViewData["Title"]?.ToString() == "Modèles"?"active":"")">
-                    - Modèles
-                </a>
-            </li>
-            <li class="nav-item" style="margin-left:60px;">
-                <a href="/ListQuartier" style="padding:0; font-size:0.95rem;" class="nav-link @(ViewData["Title"]?.ToString() == "Liste de Quartiers"?"active":"")">
+                <a href="/ListQuartier" style="padding:0; font-size:0.95rem;"
+                    class="nav-link @(ViewData["Title"]?.ToString() == "Liste de Quartiers" ? "active" : "")">
                     - Quartiers
                 </a>
             </li>
             <li class="nav-item" style="margin-left:60px;">
-                <a href="/ListType" style="padding:0; font-size:0.95rem;" class="nav-link @(ViewData["Title"]?.ToString() == "Types de véhicule"?"active":"")">
+                <a href="/ListModele" style="padding:0; font-size:0.95rem;"
+                    class="nav-link @(ViewData["Title"]?.ToString() == "Modèles" ? "active" : "")">
+                    - Modèles
+                </a>
+            </li>
+            <li class="nav-item" style="margin-left:60px;">
+                <a href="/ListType" style="padding:0; font-size:0.95rem;"
+                    class="nav-link @(ViewData["Title"]?.ToString() == "Types de véhicule" ? "active" : "")">
                     - Types de véhicules
                 </a>
             </li>
             <li class="nav-item" style="margin-left:60px;">
-                <a href="/ListCouleur" style="padding:0; font-size:0.95rem;" class="nav-link @(ViewData["Title"]?.ToString() == "Liste de couleurs"?"active":"")">
+                <a href="/ListCouleur" style="padding:0; font-size:0.95rem;"
+                    class="nav-link @(ViewData["Title"]?.ToString() == "Liste de couleurs" ? "active" : "")">
                     - Couleurs de véhicules
                 </a>
             </li>
             <li class="nav-item" style="margin-left:60px;">
-                <a href="/ListNotification" style="padding:0; font-size:0.95rem;" class="nav-link @(ViewData["Title"]?.ToString() == "Types de dépenses"?"active":"")">
+                <a href="/ListNotification" style="padding:0; font-size:0.95rem;"
+                    class="nav-link @(ViewData["Title"]?.ToString() == "Types de dépenses" ? "active" : "")">
                     - Types de dépenses
                 </a>
             </li>
@@ -179,7 +208,8 @@
             <li class="nav-item mt-2" style="border-top:solid gray 1px;">
                 @if (User.IsInRole("Super Administrateur"))
                 {
-                    <a href="/ListUser" class="nav-link @(ViewData["Title"]?.ToString() == "Administrateurs"?"active":"")">
+                    <a href="/ListUser"
+                        class="nav-link @(ViewData["Title"]?.ToString() == "Administrateurs" ? "active" : "")">
                         <i class="fa fa-user"></i> Administrateurs
                     </a>
                 }
@@ -199,7 +229,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Toggle sidebar on mobile
-        document.getElementById('sidebarToggle').addEventListener('click', function() {
+        document.getElementById('sidebarToggle').addEventListener('click', function () {
             document.getElementById('sidebar').classList.toggle('show');
         });
     </script>
@@ -226,4 +256,5 @@
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>
