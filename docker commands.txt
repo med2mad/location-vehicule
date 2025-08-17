@@ -1,0 +1,20 @@
+
+docker-compose up -d
+docker-compose start / docker-compose restart back-end-net
+
+docker-compose down -v
+docker-compose up --build -d
+
+-------------
+
+docker build -t location .
+docker network create locationnetwork
+docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=YourPassword123!" -p 1433:1433 --name sqlserver --network locationnetwork -d mcr.microsoft.com/mssql/server:2022-latest
+docker run -d --network locationnetwork -p 5081:8080 --name location location
+
+-------------
+
+connection string : "Server=sqlserver,1433;Database=location_vehicule;User Id=sa;Password=YourPassword123!;TrustServerCertificate=True;"
+to connectio via ssms : server name = localhost,1433 , Authentication = SQL server auth , Login = sa , pass = YourPassword123!
+
+
